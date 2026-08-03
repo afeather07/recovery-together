@@ -23,3 +23,18 @@ Local build verified clean (`npm run build`, 0 errors). Nothing deployed yet. No
 
 ## Format going forward
 Each entry: date, then Added / Changed / Fixed / Removed as applicable, then a one-line Status noting what's deployed vs. still local.
+
+## 2026-08-03 (later same day)
+
+### Added
+- `FOUNDER_ACTION_ITEMS.md` — persistent, repo-based tracker for anything needing Aaron's decision or action.
+- `research/` — archived all 5 parallel research reports + 2 HTML UX mockups.
+
+### Fixed
+- Critical: `ai_rate_limit` RLS let clients defeat their own rate limit. Replaced with a SECURITY DEFINER RPC.
+- Onboarding story text had no length cap (unbounded per-call cost). Added 1,200-char truncation.
+- No rate limiting on posts/replies/reports. Added DB-level per-author trigger limits.
+- `/admin` used plain `===` for key comparison. Replaced with constant-time hash comparison.
+
+### Status
+Pushed to GitHub. Nothing deployed yet — next is Supabase project setup (see FOUNDER_ACTION_ITEMS.md).

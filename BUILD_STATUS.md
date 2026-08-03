@@ -53,3 +53,7 @@ Built the full Next.js + Supabase MVP locally: landing page, AI onboarding, anon
 
 ## 2026-08-03 update — cost controls added
 Implemented bootstrapped-first / AI-as-enhancement policy: AI onboarding defaults OFF (app_config table, instant Supabase-side kill switch), per-IP and global daily rate limits, free keyword-fallback path that always returns a usable result. Full policy in COST_AND_AI_POLICY.md. Build still passes clean.
+
+
+## 2026-08-03 update — security/cost fixes applied, research archived, action tracker added
+Fixed the critical ai_rate_limit RLS bug, added onboarding input length cap, added post/reply/report rate limiting, fixed /admin timing-safe comparison. Archived all 5 research reports + 2 UX mockups under research/. Added FOUNDER_ACTION_ITEMS.md as the persistent cross-session to-do tracker. All changes committed and pushed to GitHub -- nothing significant left sandbox-only. Build verified clean.
