@@ -3,7 +3,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 
 // Constant-time comparison via fixed-length hashes -- avoids both a
 // straight-length short-circuit and a variable-time character comparison.
-// Fixed 2026-08-03 (see DECISION_LOG.md); was a plain === before.
+// Fixed 2026-08-03 (see PROJECT_LOG.md); was a plain === before.
 function safeEqual(a: string, b: string) {
   const ah = crypto.createHash("sha256").update(a).digest();
   const bh = crypto.createHash("sha256").update(b).digest();

@@ -39,9 +39,9 @@ function keywordFallback(story: string, nickname: string, stage: string) {
 
 // Turns a free-form story into a draft profile. This route only organizes
 // what the user already said — it never diagnoses, predicts withdrawal
-// severity, or recommends medication/taper decisions (see SAFETY_RULES.md).
+// severity, or recommends medication/taper decisions (see PRINCIPLES.md).
 //
-// Cost policy (see COST_AND_AI_POLICY.md): AI is optional here. This route
+// Cost policy (see PRINCIPLES.md, Part 2): AI is optional here. This route
 // always returns a usable result — via Claude when enabled and under
 // budget, via free keyword matching otherwise. It never hard-fails and
 // never blocks the product on AI being available.
