@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Recovery Together — Direction 1: Quiet Dawn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FBF7F2;
+    --surface: #FFFFFF;
+    --surface-soft: #F6F1EA;
+    --ink: #2B2622;
+    --ink-muted: #6B6259;
+    --primary: #C1694F;
+    --primary-ink: #FFFFFF;
+    --primary-dark: #A6533C;
+    --secondary-bg: #F1E8DC;
+    --secondary-line: #E2D3BE;
+    --moss: #7C9A82;
+    --danger: #B8493A;
+    --danger-bg: #F7E7E3;
+    --ring: rgba(193,105,79,0.35);
+    --shadow: 0 8px 24px rgba(43,38,34,0.08);
+    --shadow-lg: 0 16px 40px rgba(43,38,34,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Karla', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0;
+  }
+  a{color: var(--primary-dark);}
+  .wrap{ max-width: 480px; margin: 0 auto; padding: 0 20px 64px; }
+  @media(min-width:600px){ .wrap{ max-width: 560px; } }
+
+  /* Safety banner */
+  .safety{
+    background: var(--danger-bg);
+    color: var(--danger);
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 10px 16px;
+    text-align: center;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .safety a{ color: var(--danger); text-decoration: underline; }
+
+  /* Header */
+  header{
+    max-width: 480px; margin: 0 auto; padding: 20px 20px 8px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  @media(min-width:600px){ header{ max-width: 560px; } }
+  .logo{
+    font-family:'Fraunces', serif; font-weight:600; font-size: 19px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo .dot{ width:9px; height:9px; border-radius:50%; background: var(--primary); display:inline-block; }
+  .header-link{ font-size: 13.5px; font-weight:600; color: var(--ink-muted); text-decoration:none; }
+
+  /* Hero */
+  .hero{ padding-top: 28px; text-align:center; }
+  .eyebrow{
+    display:inline-block; font-size: 13px; font-weight:700; letter-spacing:0.02em;
+    color: var(--primary-dark); background: var(--secondary-bg); border:1px solid var(--secondary-line);
+    padding: 5px 14px; border-radius: 999px; margin-bottom: 18px;
+  }
+  .hero h1{ font-size: 34px; line-height:1.18; margin-bottom: 14px; }
+  @media(min-width:600px){ .hero h1{ font-size: 40px; } }
+  .hero p.sub{ font-size: 16px; color: var(--ink-muted); max-width: 40ch; margin: 0 auto 26px; }
+
+  .blob{
+    width: 220px; height: 220px; margin: 8px auto 26px;
+    border-radius: 44% 56% 60% 40% / 50% 45% 55% 50%;
+    background: radial-gradient(circle at 32% 28%, #E9C3AE 0%, var(--primary) 55%, #8F5340 100%);
+    box-shadow: var(--shadow-lg);
+    position:relative;
+    animation: breathe 6s ease-in-out infinite;
+  }
+  @keyframes breathe{ 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.035); } }
+  .blob::after{
+    content:"🌅"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size: 54px; filter: saturate(0.9);
+  }
+
+  .cta-row{ display:flex; flex-direction:column; gap:12px; align-items:center; }
+  .btn{
+    appearance:none; border:none; cursor:pointer; font-family:'Karla', sans-serif;
+    font-weight:700; font-size:16px; border-radius: 999px; padding: 16px 30px;
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    width: 100%; max-width: 340px;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:active{ transform: scale(0.98); }
+  .btn-primary{ background: var(--primary); color:#fff; box-shadow: 0 10px 24px rgba(193,105,79,0.35); }
+  .btn-primary:hover{ background: var(--primary-dark); }
+  .btn-secondary{
+    background: transparent; color: var(--ink); border: 1.5px solid var(--secondary-line);
+  }
+  .btn-secondary:hover{ background: var(--surface-soft); }
+  .reassure{ font-size: 13px; color: var(--ink-muted); margin-top: 6px; }
+
+  /* How it works */
+  .section{ margin-top: 56px; }
+  .section h2{ font-size: 22px; text-align:center; margin-bottom: 22px; }
+  .steps{ display:flex; flex-direction:column; gap:14px; }
+  .step{
+    background: var(--surface); border-radius: 20px; padding: 18px 18px;
+    display:flex; gap:14px; align-items:flex-start; box-shadow: var(--shadow);
+  }
+  .step-num{
+    flex:0 0 auto; width:34px; height:34px; border-radius:50%; background: var(--secondary-bg);
+    color: var(--primary-dark); font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center;
+  }
+  .step h3{ font-size:16px; margin-bottom:4px; }
+  .step p{ font-size: 14px; color: var(--ink-muted); margin:0; }
+
+  /* Room preview */
+  .room-card{
+    margin-top: 56px; background: var(--surface); border-radius: 24px; padding: 20px;
+    box-shadow: var(--shadow); border: 1px solid rgba(43,38,34,0.05);
+  }
+  .room-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .room-title{ font-weight:700; font-size:15px; display:flex; align-items:center; gap:8px; }
+  .live-dot{ width:8px; height:8px; border-radius:50%; background:#5B8A66; display:inline-block; animation: pulse 1.8s infinite; }
+  @keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(91,138,102,0.5);} 70%{ box-shadow:0 0 0 8px rgba(91,138,102,0);} 100%{ box-shadow:0 0 0 0 rgba(91,138,102,0);} }
+  .room-count{ font-size:12.5px; color: var(--ink-muted); }
+  .bubble{
+    background: var(--surface-soft); border-radius: 16px; padding: 12px 14px; margin-bottom:10px; font-size:14.5px;
+  }
+  .bubble .who{ font-weight:700; font-size:12.5px; color: var(--primary-dark); margin-bottom:3px; display:block; }
+  .bubble.me{ background: var(--secondary-bg); }
+
+  footer{ text-align:center; margin-top:50px; font-size:12.5px; color: var(--ink-muted); }
+  footer a{ color: var(--ink-muted); text-decoration: underline; }
+
+  /* Modal */
+  .modal-backdrop{
+    position:fixed; inset:0; background: rgba(43,38,34,0.45); backdrop-filter: blur(2px);
+    display:none; align-items:flex-end; justify-content:center; z-index: 50;
+  }
+  .modal-backdrop.open{ display:flex; }
+  @media(min-width:600px){ .modal-backdrop{ align-items:center; } }
+  .modal{
+    background: var(--bg); width:100%; max-width: 420px; border-radius: 28px 28px 0 0;
+    padding: 26px 22px 30px; box-shadow: var(--shadow-lg);
+    animation: rise .25s ease-out;
+  }
+  @media(min-width:600px){ .modal{ border-radius: 28px; } }
+  @keyframes rise{ from{ transform: translateY(24px); opacity:0;} to{ transform:none; opacity:1;} }
+  .modal-dots{ display:flex; gap:6px; justify-content:center; margin-bottom:18px; }
+  .modal-dots span{ width:22px; height:5px; border-radius:3px; background: var(--secondary-line); }
+  .modal-dots span.active{ background: var(--primary); }
+  .modal h3{ font-size:20px; text-align:center; margin-bottom:6px; }
+  .modal p.hint{ text-align:center; font-size:13.5px; color:var(--ink-muted); margin:0 0 20px; }
+  .mood-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:10px; margin-bottom: 22px; }
+  .mood-btn{
+    background: var(--surface); border:1.5px solid var(--secondary-line); border-radius:18px;
+    padding: 16px 6px; text-align:center; cursor:pointer; font-family:'Karla',sans-serif;
+  }
+  .mood-btn .emoji{ font-size: 26px; display:block; margin-bottom:6px; }
+  .mood-btn .label{ font-size:12.5px; font-weight:600; color: var(--ink-muted); }
+  .mood-btn.selected{ border-color: var(--primary); background: var(--secondary-bg); }
+  .mood-btn.selected .label{ color: var(--primary-dark); }
+  .modal-close{
+    position:absolute; top:16px; right:20px; background:none; border:none; font-size:20px;
+    color: var(--ink-muted); cursor:pointer;
+  }
+  .modal-inner{ position:relative; }
+  .mic-row{ display:flex; align-items:center; justify-content:center; gap:10px; margin: 4px 0 20px; }
+  .mic-btn{
+    width:56px; height:56px; border-radius:50%; background: var(--secondary-bg); border:1.5px solid var(--secondary-line);
+    display:flex; align-items:center; justify-content:center; font-size:22px; cursor:pointer;
+  }
+  .mic-label{ font-size:13px; color: var(--ink-muted); max-width: 20ch; }
+</style>
+</head>
+<body>
+
+  <div class="safety">
+    ⛑️ In immediate danger? <a href="tel:988">Call or text 988</a> — free, 24/7
+  </div>
+
+  <header>
+    <div class="logo"><span class="dot"></span>Recovery Together</div>
+    <a class="header-link" href="#safety">Crisis resources</a>
+  </header>
+
+  <div class="wrap">
+    <section class="hero">
+      <span class="eyebrow">Quiet Dawn · Direction 1</span>
+      <h1>However today is going, you don't have to sit with it alone.</h1>
+      <p class="sub">A calm room of people who understand 7-OH withdrawal and recovery — no diagnoses, no judgment, just company.</p>
+
+      <div class="blob" aria-hidden="true"></div>
+
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="document.getElementById('onboard').classList.add('open')">
+          Enter a support room
+        </button>
+        <button class="btn btn-secondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">
+          See how it works
+        </button>
+        <p class="reassure">No email. No typing required. Anonymous by default.</p>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <h2>How it works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <h3>Tap how you're feeling</h3>
+            <p>Three taps, no typing — we'll match you with the right room.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <h3>Get a gentle nickname</h3>
+            <p>We suggest one automatically. You stay anonymous the whole time.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <h3>Sit with people who get it</h3>
+            <p>Read, react, or post whenever you're ready — never required.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="room-card">
+      <div class="room-head">
+        <div class="room-title"><span class="live-dot"></span> Night Shift Room</div>
+        <div class="room-count">14 here now</div>
+      </div>
+      <div class="bubble"><span class="who">quietwillow</span>3am and still awake but the urge is finally fading. small win.</div>
+      <div class="bubble me"><span class="who">steadyriver</span>proud of you for texting in instead of using. we're here.</div>
+      <div class="bubble"><span class="who">calmharbor22</span>day 4. sweating through everything but still here.</div>
+    </section>
+  </div>
+
+  <footer>
+    Peer support only, not medical advice. <a href="#">Privacy</a> · <a href="#">Crisis resources</a>
+  </footer>
+
+  <!-- Onboarding entry modal -->
+  <div class="modal-backdrop" id="onboard">
+    <div class="modal">
+      <div class="modal-inner">
+        <button class="modal-close" onclick="document.getElementById('onboard').classList.remove('open')">✕</button>
+        <div class="modal-dots">
+          <span class="active"></span><span></span><span></span>
+        </div>
+        <h3>How are you doing right now?</h3>
+        <p class="hint">Takes about 10 seconds. Tap one — no typing needed.</p>
+        <div class="mood-grid">
+          <div class="mood-btn selected"><span class="emoji">😮‍💨</span><span class="label">Overwhelmed</span></div>
+          <div class="mood-btn"><span class="emoji">😐</span><span class="label">Getting by</span></div>
+          <div class="mood-btn"><span class="emoji">🙂</span><span class="label">Hopeful</span></div>
+        </div>
+        <div class="mic-row">
+          <div class="mic-btn">🎙️</div>
+          <div class="mic-label">Or just talk — hold to speak instead of typing</div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;max-width:none;">Continue</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
