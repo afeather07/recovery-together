@@ -57,3 +57,7 @@ Implemented bootstrapped-first / AI-as-enhancement policy: AI onboarding default
 
 ## 2026-08-03 update — security/cost fixes applied, research archived, action tracker added
 Fixed the critical ai_rate_limit RLS bug, added onboarding input length cap, added post/reply/report rate limiting, fixed /admin timing-safe comparison. Archived all 5 research reports + 2 UX mockups under research/. Added FOUNDER_ACTION_ITEMS.md as the persistent cross-session to-do tracker. All changes committed and pushed to GitHub -- nothing significant left sandbox-only. Build verified clean.
+
+
+## 2026-08-03 update — Supabase live
+Connected to the real "Recovery Together" Supabase project via the official MCP connector. Full schema + RLS + rate-limit fixes applied as a migration and verified (8 tables, RLS enabled, 6 rooms seeded). One trigger-function exposure found by the security advisor and fixed on the spot. Local build passes against the real project URL/anon key. Still needed before anyone can use the app: Aaron enables Anonymous Sign-Ins in the Supabase dashboard (cannot be done via the connector). Vercel not yet connected.

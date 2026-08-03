@@ -38,3 +38,15 @@ Each entry: date, then Added / Changed / Fixed / Removed as applicable, then a o
 
 ### Status
 Pushed to GitHub. Nothing deployed yet — next is Supabase project setup (see FOUNDER_ACTION_ITEMS.md).
+
+## 2026-08-03 (Supabase connected)
+
+### Added
+- Live Supabase project ("Recovery Together") connected via the official MCP connector.
+- Full schema, RLS policies, and all 2026-08-03 rate-limit/cost fixes applied as a single migration.
+
+### Fixed
+- `enforce_author_rate_limit()` was publicly callable via PostgREST's auto-exposed RPC (should only fire as a trigger). Revoked EXECUTE from anon/authenticated/public.
+
+### Status
+Database is live and verified. Still blocking launch: Aaron must enable Anonymous Sign-Ins in the Supabase dashboard (one toggle, outside connector reach). Vercel deployment not started.
