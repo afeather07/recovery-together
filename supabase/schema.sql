@@ -141,9 +141,95 @@ create table public.ai_rate_limit (
   primary key (ip_hash, day)
 );
 alter table public.ai_rate_limit enable row level security;
-create policy "ai_rate_limit anon read/write" on public.ai_rate_limit
-  for all using (true) with check (true);
--- Known tradeoff: an anon client could reset or spam its own counter row.
--- Worst case, that only pushes that caller onto the free keyword fallback
--- (fails toward the cheaper path, never toward risk). The real backstop is
--- the Hard Limit set in console.anthropic.com, which no client can touch.
+-- No policies for anon/authenticated at all: default-deny. The earlier
+-- version of this table used "for all using (true) with check (true)",
+-- which let any client read AND overwrite any row -- including resetting
+-- its own counter to defeat the limit entirely. Fixed 2026-08-03 (see
+-- DECISION_LOG.md). Reads/writes now only happen through the SECURITY
+-- DEFINER function below, which the anon/authenticated roles may EXECUTE
+-- but cannot use to touch the table directly.
+
+create or replace function public.check_and_increment_ai_rate_limit(
+  p_ip_hash text,
+  p_per_ip_limit int,
+  p_global_limit int
+)
+returns boolean
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_today date := current_date;
+  v_ip_count int;
+  v_global_count int;
+begin
+  select count into v_ip_count from public.ai_rate_limit
+    where ip_hash = p_ip_hash and day = v_today;
+  v_ip_count := coalesce(v_ip_count, 0);
+
+  select count(*) into v_global_count from public.ai_rate_limit where day = v_today;
+
+  if v_ip_count >= p_per_ip_limit or v_global_count >= p_global_limit then
+    return false;
+  end if;
+
+  insert into public.ai_rate_limit (ip_hash, day, count)
+  values (p_ip_hash, v_today, 1)
+  on conflict (ip_hash, day) do update set count = ai_rate_limit.count + 1;
+
+  return true;
+end;
+$$;
+
+grant execute on function public.check_and_increment_ai_rate_limit(text, int, int)
+  to anon, authenticated;
+
+-- ── Per-author rate limiting on posts/replies/reports (prevents flooding
+-- a room or spamming reports; DB-level, so it holds regardless of client) ──
+create or replace function public.enforce_author_rate_limit()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_limit int;
+  v_window interval;
+  v_count int;
+begin
+  if TG_TABLE_NAME = 'posts' then
+    v_limit := 15; v_window := interval '10 minutes';
+    select count(*) into v_count from public.posts
+      where author_id = new.author_id and created_at > now() - v_window;
+  elsif TG_TABLE_NAME = 'replies' then
+    v_limit := 20; v_window := interval '10 minutes';
+    select count(*) into v_count from public.replies
+      where author_id = new.author_id and created_at > now() - v_window;
+  elsif TG_TABLE_NAME = 'reports' then
+    v_limit := 20; v_window := interval '1 hour';
+    select count(*) into v_count from public.reports
+      where reporter_id = new.reporter_id and created_at > now() - v_window;
+  else
+    return new;
+  end if;
+
+  if v_count >= v_limit then
+    raise exception 'Rate limit exceeded for %, please slow down.', TG_TABLE_NAME;
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists posts_rate_limit on public.posts;
+create trigger posts_rate_limit before insert on public.posts
+  for each row execute function public.enforce_author_rate_limit();
+
+drop trigger if exists replies_rate_limit on public.replies;
+create trigger replies_rate_limit before insert on public.replies
+  for each row execute function public.enforce_author_rate_limit();
+
+drop trigger if exists reports_rate_limit on public.reports;
+create trigger reports_rate_limit before insert on public.reports
+  for each row execute function public.enforce_author_rate_limit();
