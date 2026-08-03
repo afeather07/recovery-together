@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Peer support for people preparing for or recovering from 7-OH and concentrated kratom products." />
+  <title>Recovery Together</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Recovery Together home">
+      <span class="brand-mark">RT</span>
+      <span>Recovery Together</span>
+    </a>
+    <a class="header-link" href="#safety">Safety</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="eyebrow">Peer support for 7-OH recovery</div>
+      <h1>You do not have to go through this alone.</h1>
+      <p class="hero-copy">
+        Join a calm, anonymous community of people preparing to stop, currently stopping,
+        or recovering from 7-OH and concentrated kratom products.
+      </p>
+      <div class="hero-actions">
+        <button class="primary-btn" id="open-intake">Find my group</button>
+        <a class="secondary-btn" href="#how-it-works">How it works</a>
+      </div>
+      <p class="microcopy">No medical claims. No judgment. Minimum personal information.</p>
+    </section>
+
+    <section class="trust-strip" aria-label="Platform principles">
+      <div><strong>Anonymous</strong><span>Use a nickname</span></div>
+      <div><strong>Simple</strong><span>Low cognitive load</span></div>
+      <div><strong>Human</strong><span>People who understand</span></div>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <div class="section-heading">
+        <span class="eyebrow">How it works</span>
+        <h2>One small step at a time.</h2>
+      </div>
+      <div class="steps">
+        <article>
+          <span class="step-number">1</span>
+          <h3>Tell us where you are</h3>
+          <p>Speak or type. A simple intake turns your story into a basic anonymous profile.</p>
+        </article>
+        <article>
+          <span class="step-number">2</span>
+          <h3>Enter the right room</h3>
+          <p>Join people preparing, in the first few days, or further into recovery.</p>
+        </article>
+        <article>
+          <span class="step-number">3</span>
+          <h3>Stay connected</h3>
+          <p>Check in, reply, encourage someone, or simply read when talking feels hard.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section room-preview">
+      <div>
+        <span class="eyebrow">Community preview</span>
+        <h2>Day 2–3 support room</h2>
+        <p>Quiet, structured peer support without pretending to replace medical care.</p>
+      </div>
+      <div class="chat-card">
+        <div class="chat-header">
+          <div>
+            <strong>Day 2–3</strong>
+            <span>18 people checking in</span>
+          </div>
+          <span class="status-dot">Live</span>
+        </div>
+        <div class="messages">
+          <div class="message">
+            <span class="avatar">J</span>
+            <div><strong>Jay</strong><p>Hour 38. I finally ate half a banana.</p></div>
+          </div>
+          <div class="message">
+            <span class="avatar">M</span>
+            <div><strong>MaybeTomorrow</strong><p>That counts. I’m going to try soup next.</p></div>
+          </div>
+          <div class="message">
+            <span class="avatar">A</span>
+            <div><strong>Anonymous</strong><p>I just needed somewhere to say I’m still here.</p></div>
+          </div>
+        </div>
+        <button class="room-btn" id="open-intake-2">Join this community</button>
+      </div>
+    </section>
+
+    <section class="section safety" id="safety">
+      <div class="safety-icon">!</div>
+      <div>
+        <span class="eyebrow">Important</span>
+        <h2>This is peer support, not medical detox.</h2>
+        <p>
+          Recovery Together does not diagnose, prescribe, provide taper instructions,
+          or replace professional treatment. If you cannot stay safe, are severely dehydrated,
+          have chest pain, trouble breathing, confusion, a seizure, or another emergency,
+          call emergency services now.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Recovery Together</span>
+    <span>Built for connection, not medical treatment.</span>
+  </footer>
+
+  <dialog id="intake-dialog">
+    <form method="dialog" class="intake">
+      <div class="dialog-top">
+        <div>
+          <span class="eyebrow">Find your group</span>
+          <h2>What is happening right now?</h2>
+        </div>
+        <button class="close-btn" value="cancel" aria-label="Close">×</button>
+      </div>
+
+      <label for="story">Speak naturally or type a few sentences.</label>
+      <textarea id="story" rows="6" placeholder="Example: I am preparing to stop 7-OH tomorrow. I am scared about sleep and I want to talk with people who understand."></textarea>
+
+      <div class="grid-2">
+        <label>
+          Nickname
+          <input id="nickname" type="text" placeholder="Anonymous is fine" />
+        </label>
+        <label>
+          Current stage
+          <select id="stage">
+            <option>Preparing</option>
+            <option>Day 1</option>
+            <option>Day 2</option>
+            <option>Day 3</option>
+            <option>Day 4–7</option>
+            <option>Week 2+</option>
+            <option>Maintaining recovery</option>
+          </select>
+        </label>
+      </div>
+
+      <button type="button" class="primary-btn full" id="build-profile">Build my profile</button>
+
+      <div class="profile-result" id="profile-result" hidden aria-live="polite">
+        <span class="eyebrow">Profile ready</span>
+        <h3 id="profile-title"></h3>
+        <p id="profile-summary"></p>
+        <button type="button" class="room-btn full" id="enter-room">Enter my room</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
