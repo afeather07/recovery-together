@@ -1,49 +1,34 @@
 # Current Task
 
 ## Objective
-Select and initialize the production MVP platform without adding features.
+Get real credentials wired in, deploy to Vercel, and launch by August 5.
 
 ## Current state
-- Public static prototype is live through GitHub Pages.
-- GitHub repository exists.
-- The static site demonstrates the visual direction and onboarding concept.
-- The prototype does not have accounts, a database, real rooms, posts, replies, moderation, or AI.
-- Claude Cowork has received the product brief.
-- Production platform has not been finalized or initialized.
+Working Next.js app built and verified (`npm run build` succeeds, 0 errors):
+- Landing page ported from the static prototype, with a real onboarding dialog.
+- `/api/onboarding` calls the Claude API to turn a free-text story into a draft profile (nickname, stage, support need). User confirms before anything saves.
+- Anonymous Supabase auth on profile creation. Public profile data and private identity data are in separate tables with separate RLS policies (see `supabase/schema.sql`).
+- Six stage-based rooms, posts, replies, live updates via Supabase Realtime.
+- Report button on posts/replies, writing to a `reports` table.
+- `/admin` — password-gated (via `ADMIN_KEY` env var), read-only moderation view listing open reports with content.
+- `/safety` — static crisis/safety resources page (988, Crisis Text Line, SAMHSA, Poison Control), not AI-generated.
+- Old static prototype preserved at `legacy-static-prototype/` (not deleted).
 
-## Current task owner
-Aaron + Claude Cowork
+Nothing is deployed yet. Nothing has real credentials yet — everything above was verified locally with placeholder env values.
 
-## Required action
-Claude must review the repository and the available current build options, then produce a short implementation recommendation comparing only:
-1. Lovable + Supabase
-2. Replit Agent
-3. Next.js + Supabase + Vercel using Claude Code/Cowork
+## Blocking on Aaron (3 things, ~15 minutes total)
+1. GitHub token so this can be pushed (fine-grained PAT, repo-scoped, Contents read/write).
+2. Supabase project (free tier): create it, then send the Project URL, anon public key, and service_role key from Project Settings > API.
+3. Anthropic API key from console.anthropic.com for the app's server-side calls.
 
-The recommendation must prioritize:
-- a usable MVP in 2–4 days,
-- strong mobile responsiveness,
-- minimal founder configuration,
-- code portability,
-- safe authentication/database handling,
-- real-time community capability,
-- ability for Claude to continue implementation,
-- lowest probability of a dead-end rebuild.
-
-## Required output
-Create `PLATFORM_DECISION.md` containing:
-- selected stack,
-- concise rationale,
-- exact MVP components,
-- migration/use of the current prototype,
-- first implementation task,
-- estimated launch sequence,
-- explicit tools/accounts Aaron must create,
-- major security and moderation risks.
-
-Do not implement a new stack until Aaron approves the recommendation.
+## Next task once unblocked
+1. Push this code to GitHub.
+2. Run `supabase/schema.sql` in the Supabase SQL editor.
+3. Set env vars in Vercel (see `.env.example`), connect the repo, deploy.
+4. Full click-through test on a phone-sized viewport.
+5. Launch.
 
 ## Definition of done
-- `PLATFORM_DECISION.md` exists in the repository.
-- `BUILD_STATUS.md` is updated.
-- The next single founder action is stated.
+- App is live on a real Vercel URL.
+- A stranger can land, onboard, enter a room, post, reply, and report without help.
+- `/safety` and `/admin` both work.

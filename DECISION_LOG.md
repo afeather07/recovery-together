@@ -20,3 +20,12 @@ Use this format:
 
 ### YYYY-MM-DD — Decision title
 Decision, reason, and consequences in no more than one short paragraph.
+
+### 2026-08-03 — Claude is sole technical lead, single-agent workflow
+Removed the two-agent (ChatGPT plans / Claude builds) structure. It was producing coordination overhead without speeding up the build. Claude now owns technical planning and implementation end to end; Aaron approves scope/spending/launch and supplies credentials Claude cannot generate. `WORKFLOW.md` and `CLAUDE.md` updated accordingly.
+
+### 2026-08-03 — Platform decision executed
+Built the Next.js + Supabase + Vercel MVP recommended in `PLATFORM_DECISION.md`. Local build verified clean. Not yet deployed — pending Supabase/Vercel/Anthropic credentials and a GitHub push token from Aaron.
+
+### 2026-08-03 — Bootstrapped-first / AI-as-enhancement is a permanent requirement
+Adopted Aaron's cost-protection principles as equal priority to safety. AI onboarding ships OFF by default (`app_config.ai_onboarding_enabled = false`), with an instant no-redeploy kill switch, a hard env override, per-IP and global daily rate limits, and a free keyword-matching fallback so the product never depends on AI to function. See `COST_AND_AI_POLICY.md`. Model reference in `/api/onboarding` corrected to `claude-sonnet-5` (current model string).

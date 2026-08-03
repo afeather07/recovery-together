@@ -34,10 +34,22 @@ Foundation and platform selection
 - No production privacy implementation.
 
 ## Current blocker
-Production stack has not been approved and initialized.
+Waiting on Aaron for: GitHub push token, Supabase project keys, Anthropic API key. Nothing is deployed yet.
 
 ## Current task
 See `CURRENT_TASK.md`.
 
 ## Update rule
 The implementation agent updates this file at the end of every completed work order. Never mark a feature complete unless it works in the deployed environment or the file clearly states that it is local-only.
+
+
+## 2026-08-03 update
+`PLATFORM_DECISION.md` created: recommends Next.js + Supabase + Vercel over Lovable+Supabase and Replit Agent. No code implemented yet, per CURRENT_TASK.md instruction to wait for approval.
+
+
+## 2026-08-03 update — MVP built, not yet deployed
+Built the full Next.js + Supabase MVP locally: landing page, AI onboarding, anonymous profiles with public/private data separation, stage rooms, posts, replies, realtime, reporting, moderation view, static safety page. `npm run build` passes with 0 errors. Blocked on credentials to deploy (see CURRENT_TASK.md). Static prototype preserved at legacy-static-prototype/, not deleted.
+
+
+## 2026-08-03 update — cost controls added
+Implemented bootstrapped-first / AI-as-enhancement policy: AI onboarding defaults OFF (app_config table, instant Supabase-side kill switch), per-IP and global daily rate limits, free keyword-fallback path that always returns a usable result. Full policy in COST_AND_AI_POLICY.md. Build still passes clean.
