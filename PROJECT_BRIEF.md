@@ -130,3 +130,24 @@ Uses the same phase numbering as the AI roadmap in `PRINCIPLES.md` — the two t
 - **Phase 2:** Level 2 (email-based persistent accounts) — only once there's a real, observed reason members want to keep an identity across visits, not before.
 - **Phase 3:** Level 3 (optional verified badges) and early Level 4 (manual trust recognition, no automation).
 - **Phase 4:** Level 5 (community leader promotion), automating trust signals only if manual vetting becomes the bottleneck, Google/Apple login if warranted by then.
+
+---
+
+## Future integration: Founder OS Dashboard data source (post-MVP — non-blocking)
+
+Recovery Together will not build its own dashboard. Instead, whenever a separate "Founder OS Dashboard" gets built later, Recovery Together should already be positioned to feed it clean, stable, read-only data — project/engineering status, deployment status, and operational/community health — without needing heavy new engineering at that point. Nothing in this section affects the current MVP or launch timeline.
+
+### What's already true today, at zero cost
+- **Project/engineering status** (roadmap, action items, decision history) already lives as plain files in this repo (`FOUNDER_ACTION_ITEMS.md`, `PROJECT_LOG.md`, `PROJECT_BRIEF.md`). GitHub's own API already serves file contents over a stable, read-only, authenticated endpoint. A future dashboard reads these directly from GitHub — nothing new to build, ever.
+- **Deployment status** (build success/failure, latest deploy, logs) will live on Vercel once deployed there. Vercel has its own stable read-only API for exactly this.
+- **AI spend data** lives on Anthropic's side; console.anthropic.com's billing has its own API.
+- **Database/operational data** (user counts, posts today, open reports, room activity) already technically has a read-only interface: Supabase auto-generates a REST API (PostgREST) over every table, gated by the same RLS already in place. This already exists — it isn't something to build later.
+
+### The one real gap, and the plan for it (not built yet, deliberately)
+The Supabase auto-API exposes raw tables one at a time, which is either too narrow (no aggregation) or would require the service_role key to safely combine data across tables — not what a dashboard asking "how many open reports, how many posts today, how close to the AI rate limit" actually needs. The clean fix, when this becomes relevant: a small number of read-only SQL views (e.g., one `stats_daily_summary` view) that pre-aggregate exactly the counts a dashboard needs, with a scoped read-only role granted access to those views only — never raw user content, never the service_role key itself.
+
+### Why this isn't being built now
+It's cheap, but premature — we don't yet know exactly which metrics the eventual Founder OS Dashboard needs, and guessing wrong now means redoing it later for no benefit today. Build this once that dashboard project actually exists and can specify what it wants. The schema is already clean and aggregate-friendly (same "already forward-compatible" pattern as the identity-ladder section above), so none of this blocks or complicates that future work.
+
+### Design discipline going forward
+Keep this loosely in mind for future Recovery Together features: prefer schema/data shapes that are easy to aggregate cleanly (counts, statuses, timestamps) over ones that entangle PII with operational metrics. A reminder to stay aware of, not a new rule needing enforcement machinery today.
