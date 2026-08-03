@@ -6,6 +6,9 @@ This file is for depth. For "what's the state right now and what do I need to do
 
 ---
 
+### 2026-08-03 — Long-term vision adopted: Progressive Identity (not implemented)
+Aaron's product vision: anonymous should stay the default, not the permanent identity model -- members should be able to build a persistent identity, reputation, and eventually a leadership role over time if they choose. Added a full "Long-term vision" section to PROJECT_BRIEF.md with a 5-level identity ladder (Anonymous -> Persistent Member -> Verified Member -> Trusted Community Member -> Community Leader) and a phased roadmap. Evaluated the account-provider suggestions on their merits rather than adopting the list wholesale: recommend email (magic link) first when Level 2 gets built, Google as a reasonable Phase 2/3 addition, Apple lower-priority but roadmap-worthy; recommend against Facebook (real-name social graph cuts against this audience's need for privacy around a stigmatized condition) and agree TikTok/Instagram aren't worth it (also not mature identity providers, not just low-value). Confirmed the current schema needs zero changes for this -- Supabase's anonymous-to-permanent account linking already preserves the same auth.users.id, posts, and history. Nothing implemented; MVP scope and launch timeline are unaffected.
+
 ### 2026-08-03 — Documentation consolidated (11 files → 5)
 Merged `SAFETY_RULES.md` + `COST_AND_AI_POLICY.md` → `PRINCIPLES.md`. Merged `WORKFLOW.md` into `CLAUDE.md`. Merged `DECISION_LOG.md` + `CHANGELOG.md` + `PLATFORM_DECISION.md` → this file. Merged `CURRENT_TASK.md` + `BUILD_STATUS.md` into a "Right now" section at the top of `FOUNDER_ACTION_ITEMS.md`. Reason: too many overlapping process files for a solo non-technical founder to track; the goal is that "catch me up" always means one file (`FOUNDER_ACTION_ITEMS.md`), not a search across several.
 

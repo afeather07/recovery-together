@@ -33,6 +33,8 @@ Code is pushed to GitHub. Supabase is live, connected via the official MCP conne
 
 ## Later (not launch-blocking)
 
+- [ ] When ready for persistent accounts (Phase 2 of the identity roadmap), build email-based Level 2 accounts per `PROJECT_BRIEF.md`'s "Long-term vision" section. Supabase already supports this without schema changes.
+
 - [ ] Consider Turnstile/hCaptcha on anonymous sign-up if bot-created accounts become a real problem post-launch (not urgent pre-launch since there's no traffic yet).
 - [ ] Add a DELETE policy so users can retract their own posts/replies (harm-reduction nicety, not a security hole).
 - [ ] Decide whether to eventually build the in-app moderation dashboard properly, vs. continuing to use the Supabase table editor manually.
