@@ -5,20 +5,20 @@ import MarketingHome from "@/components/MarketingHome";
 import ReturnScreen from "@/components/ReturnScreen";
 
 export default function HomeGate() {
-  const [checked, setChecked] = useState(false);
+  // Default to the real, server-rendered marketing content immediately --
+  // this is what most visitors (and any crawler) see, and it must never be
+  // blank. Only swap to the personalized return screen once we've actually
+  // confirmed a session client-side. A brief flash of the marketing page
+  // for a returning visitor is a far smaller cost than a blank homepage
+  // for every new visitor.
   const [hasSession, setHasSession] = useState(false);
 
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getSession().then(({ data }) => {
       setHasSession(!!data.session?.user);
-      setChecked(true);
     });
   }, []);
-
-  // Deliberately render nothing while we check -- a returning visitor should
-  // never see a flash of the "new visitor" marketing homepage first.
-  if (!checked) return null;
 
   if (hasSession) {
     return <ReturnScreen onNoSession={() => setHasSession(false)} />;
