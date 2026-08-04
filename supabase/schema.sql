@@ -260,3 +260,42 @@ grant insert on public.reports to authenticated;
 grant all privileges on all tables in schema public to service_role;
 grant all privileges on all sequences in schema public to service_role;
 grant execute on all functions in schema public to service_role;
+
+-- ---------------------------------------------------------------------------
+-- Recovery journey & continuity model (2026-08-04)
+-- ---------------------------------------------------------------------------
+-- See PROJECT_BRIEF.md "Recovery journey & continuity model" for the design.
+-- Applied to production via migration: recovery_journey_continuity.
+alter table public.profiles
+  add column if not exists stage_updated_at timestamptz not null default now(),
+  add column if not exists last_active_at timestamptz not null default now();
+
+alter table public.profile_private
+  add column if not exists notify_email text;
+
+-- Tracks per-room "last seen" so we can compute unread-reply counts on
+-- return visits without any read-receipt/seen-indicator on individual
+-- messages (explicitly ruled out in the design doc).
+create table if not exists public.room_visits (
+  user_id uuid not null references auth.users(id) on delete cascade,
+  room_id uuid not null references public.rooms(id) on delete cascade,
+  last_seen_at timestamptz not null default now(),
+  primary key (user_id, room_id)
+);
+
+alter table public.room_visits enable row level security;
+
+create policy "room_visits owner only select" on public.room_visits
+  for select using (auth.uid() = user_id);
+create policy "room_visits owner only insert" on public.room_visits
+  for insert with check (auth.uid() = user_id);
+create policy "room_visits owner only update" on public.room_visits
+  for update using (auth.uid() = user_id);
+
+grant select, insert, update on public.room_visits to authenticated;
+grant all privileges on public.room_visits to service_role;
+
+-- Guarantees the single non-judgmental re-engagement email is sent at most
+-- once ever per person, regardless of cron timing drift.
+alter table public.profile_private
+  add column if not exists reengagement_sent_at timestamptz;

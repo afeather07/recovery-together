@@ -49,12 +49,22 @@ export default function OnboardingDialog() {
     setError("");
     const supabase = createClient();
     try {
-      const { data: signInData, error: signInError } =
-        await supabase.auth.signInAnonymously();
-      if (signInError || !signInData.user) throw signInError;
+      // Reuse an existing session if one already exists instead of always
+      // minting a brand-new anonymous identity. Without this, every pass
+      // through onboarding forked a returning visitor into a new identity
+      // and orphaned their previous posts.
+      const { data: existingSession } = await supabase.auth.getSession();
+      let userId = existingSession.session?.user?.id ?? null;
 
-      const userId = signInData.user.id;
+      if (!userId) {
+        const { data: signInData, error: signInError } =
+          await supabase.auth.signInAnonymously();
+        if (signInError || !signInData.user) throw signInError;
+        userId = signInData.user.id;
+      }
+
       const finalNickname = nickname.trim() || "Anonymous";
+      const now = new Date().toISOString();
 
       const { error: profileError } = await supabase.from("profiles").upsert({
         id: userId,
@@ -62,6 +72,8 @@ export default function OnboardingDialog() {
         avatar_seed: finalNickname.slice(0, 1).toUpperCase(),
         stage,
         support_need: supportNeed,
+        stage_updated_at: now,
+        last_active_at: now,
       });
       if (profileError) throw profileError;
 

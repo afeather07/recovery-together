@@ -17,6 +17,8 @@ export default function RoomView({ slug }: { slug: string }) {
   const [replyDraft, setReplyDraft] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [notice, setNotice] = useState("");
+  const [showEmailPrompt, setShowEmailPrompt] = useState(false);
+  const [emailDraft, setEmailDraft] = useState("");
 
   useEffect(() => {
     let channel: ReturnType<typeof supabase.channel> | null = null;
@@ -68,6 +70,12 @@ export default function RoomView({ slug }: { slug: string }) {
 
       setLoading(false);
 
+      // Record this visit so a return trip to the home screen can compute
+      // "N new replies since you were last here" for this room.
+      supabase
+        .from("room_visits")
+        .upsert({ user_id: userData.user.id, room_id: roomRow.id, last_seen_at: new Date().toISOString() });
+
       channel = supabase
         .channel(`room-${roomRow.id}`)
         .on(
@@ -110,7 +118,28 @@ export default function RoomView({ slug }: { slug: string }) {
     if (!userId || !draft.trim() || !room) return;
     const body = draft.trim();
     setDraft("");
+
+    // Detect a first-ever post (across all rooms) so we can offer the
+    // one-time, optional "notify me by email" upgrade right after -- never
+    // at first-time entry, only once someone has already gotten value.
+    const { count } = await supabase
+      .from("posts")
+      .select("id", { count: "exact", head: true })
+      .eq("author_id", userId);
+    const isFirstPost = (count || 0) === 0;
+
     await supabase.from("posts").insert({ room_id: room.id, author_id: userId, body });
+    if (isFirstPost) setShowEmailPrompt(true);
+  }
+
+  async function saveNotifyEmail() {
+    if (!userId) return;
+    const email = emailDraft.trim();
+    setShowEmailPrompt(false);
+    if (!email) return;
+    await supabase.from("profile_private").update({ notify_email: email }).eq("id", userId);
+    setNotice("Saved. We'll email you if someone replies here.");
+    setTimeout(() => setNotice(""), 4000);
   }
 
   async function submitReply(postId: string) {
@@ -196,6 +225,26 @@ export default function RoomView({ slug }: { slug: string }) {
         />
         <button className="primary-btn" onClick={submitPost}>Post</button>
       </div>
+
+      {showEmailPrompt && (
+        <div className="stage-confirm" style={{ marginTop: 16 }}>
+          <p>
+            Want us to email you if someone replies? Totally optional -- we'll never
+            require this or share it.
+          </p>
+          <div className="stage-confirm-actions">
+            <input
+              type="email"
+              placeholder="you@example.com"
+              value={emailDraft}
+              onChange={(e) => setEmailDraft(e.target.value)}
+              style={{ flex: 1, minWidth: 180, padding: "8px 10px", borderRadius: 8, border: "1px solid var(--muted)" }}
+            />
+            <button className="secondary-btn" onClick={saveNotifyEmail}>Save</button>
+            <button className="link-btn" onClick={() => setShowEmailPrompt(false)}>No thanks</button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

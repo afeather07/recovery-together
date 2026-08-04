@@ -51,6 +51,8 @@ body {
 .chat-card { background: white; border-radius: var(--radius); overflow: hidden; margin-top: 16px; }
 .chat-header { display: flex; justify-content: space-between; padding: 14px 16px; background: var(--accent-soft); }
 .status-dot { color: var(--accent); font-size: 12px; font-weight: 600; }
+.status-dot.example-dot { color: var(--muted, #6b7280); }
+.preview-caption { padding: 0 16px 16px; margin: 0; font-size: 13px; color: var(--muted, #6b7280); line-height: 1.5; }
 .messages { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
 .message { display: flex; gap: 10px; }
 .avatar { background: var(--accent); color: white; border-radius: 999px; width: 28px; height: 28px; text-align: center; line-height: 28px; font-size: 13px; flex-shrink: 0; }
@@ -77,4 +79,27 @@ label { font-size: 13px; color: var(--muted); display: flex; flex-direction: col
 @media (min-width: 720px) {
   .hero-actions { flex-direction: row; justify-content: center; }
   .steps { flex-direction: row; }
+}
+
+/* Return screen (Recovery journey & continuity model) */
+.return-screen-loading { padding: 60px 20px; text-align: center; color: var(--muted); }
+.return-hero .primary-btn.full { display: block; text-align: center; text-decoration: none; margin-top: 20px; }
+.link-btn { background: none; border: none; cursor: pointer; font-size: 14px; color: var(--muted); text-decoration: underline; padding: 0; }
+.stage-confirm {
+  background: var(--accent-soft); border-radius: var(--radius); padding: 16px;
+  margin: 20px 0; text-align: left;
+}
+.stage-confirm p { margin: 0 0 12px; font-size: 14px; }
+.stage-confirm-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.stage-confirm-actions select { padding: 8px 10px; border-radius: 8px; border: 1px solid var(--muted); }
+.past-rooms .section-heading h2 { font-size: 18px; }
+.past-room-list { display: flex; flex-direction: column; gap: 10px; }
+.past-room-item {
+  display: flex; justify-content: space-between; align-items: center;
+  background: white; border-radius: var(--radius); padding: 14px 16px;
+  text-decoration: none; color: var(--ink); font-weight: 600;
+}
+.unread-badge {
+  background: var(--accent); color: white; border-radius: 999px;
+  padding: 4px 10px; font-size: 12px; font-weight: 600;
 }
