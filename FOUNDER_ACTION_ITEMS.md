@@ -6,13 +6,12 @@
 
 ## Right now (overwritten each session — this is a snapshot, not a log)
 
-Code is pushed to GitHub. Supabase is live, connected via the official MCP connector, full schema + RLS + rate-limit fixes applied and verified. Anonymous sign-in is enabled. Nothing is deployed to a public URL yet — Vercel is the next step. Documentation was just consolidated from 11 files down to 5 (this file, `PROJECT_BRIEF.md`, `PRINCIPLES.md`, `PROJECT_LOG.md`, `CLAUDE.md`) for founder clarity.
+Live at **https://recovery-together.vercel.app** — deployed via Vercel, git-linked to `main`, Supabase connected and schema-complete, anonymous sign-in enabled, Vercel Authentication (SSO wall) disabled so real visitors can actually reach it. Zero runtime errors in the last 24h. Next: a full click-through test of onboarding -> room -> post -> reply -> report, then the remaining blocking items below.
 
 **Definition of launched:** app is live on a real Vercel URL, a stranger can land, onboard, enter a room, post, reply, and report without help, and everything in "Blocking launch" below is checked off.
 
 ## Blocking launch
 
-- [ ] **Connect the repo to Vercel** and set environment variables there (see `.env.example`). This is the next concrete step.
 - [ ] **Set an Anthropic monthly Hard Limit + spend alert** at console.anthropic.com → Billing, before ever setting `app_config.ai_onboarding_enabled` to `true`. Not urgent since AI ships off by default, but must happen before flipping that flag, ever.
 - [ ] **Create/confirm an Anthropic API key** for the app (only needed if/when AI onboarding is turned on — not needed to launch).
 - [ ] **Spend 5–10 minutes personally reading r/quittingkratom and r/OPMS's current rules** before posting anything there. The launch-strategy research (`research/research-C-launch-strategy.md`) couldn't fetch Reddit directly and flagged this as something only Aaron can verify firsthand.
@@ -23,6 +22,8 @@ Code is pushed to GitHub. Supabase is live, connected via the official MCP conne
 - [ ] **Confirm you're fine launching with AI onboarding off by default.** Both the cost review and the security review independently landed here already — this is a "tell me if you disagree" item, not an open question.
 
 ## Resolved (kept for the record — see `PROJECT_LOG.md` for full detail on any of these)
+
+- [x] Deployed to Vercel, git-linked, env vars set, Vercel Authentication (SSO wall) disabled so the public can actually reach the site (2026-08-04).
 
 - [x] Documentation consolidated: 11 process files → 5 (2026-08-03).
 - [x] Anonymous sign-in enabled in Supabase; resulting RLS advisor warnings reviewed and confirmed expected/by-design (2026-08-03).
