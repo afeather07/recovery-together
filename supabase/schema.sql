@@ -233,3 +233,30 @@ create trigger replies_rate_limit before insert on public.replies
 drop trigger if exists reports_rate_limit on public.reports;
 create trigger reports_rate_limit before insert on public.reports
   for each row execute function public.enforce_author_rate_limit();
+
+-- ---------------------------------------------------------------------------
+-- Base table grants for anon / authenticated / service_role
+-- ---------------------------------------------------------------------------
+-- RLS policies only filter ROWS. Postgres still requires a base-level GRANT
+-- on the table itself before RLS is even evaluated. This project had
+-- `alter default privileges ... revoke ...` run against anon/authenticated/
+-- service_role before this schema was first applied, which silently removed
+-- the standard grants Supabase normally provisions for new tables. Without
+-- this block, every anon/authenticated request fails with a hard
+-- "permission denied for table X" instead of an RLS-filtered empty result.
+-- Applied directly in production on 2026-08-04 (migration:
+-- restore_base_table_grants); recorded here so schema.sql stays the source
+-- of truth for a fresh environment.
+grant usage on schema public to anon, authenticated, service_role;
+
+grant select on public.app_config to anon, authenticated;
+grant select on public.rooms to authenticated;
+grant select, insert, update on public.profiles to authenticated;
+grant select, insert, update on public.profile_private to authenticated;
+grant select, insert on public.posts to authenticated;
+grant select, insert on public.replies to authenticated;
+grant insert on public.reports to authenticated;
+
+grant all privileges on all tables in schema public to service_role;
+grant all privileges on all sequences in schema public to service_role;
+grant execute on all functions in schema public to service_role;

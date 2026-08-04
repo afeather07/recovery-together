@@ -56,17 +56,22 @@ export default function OnboardingDialog() {
       const userId = signInData.user.id;
       const finalNickname = nickname.trim() || "Anonymous";
 
-      await supabase.from("profiles").upsert({
+      const { error: profileError } = await supabase.from("profiles").upsert({
         id: userId,
         nickname: finalNickname,
         avatar_seed: finalNickname.slice(0, 1).toUpperCase(),
         stage,
         support_need: supportNeed,
       });
-      await supabase.from("profile_private").upsert({
-        id: userId,
-        reveal_identity: false,
-      });
+      if (profileError) throw profileError;
+
+      const { error: privateError } = await supabase
+        .from("profile_private")
+        .upsert({
+          id: userId,
+          reveal_identity: false,
+        });
+      if (privateError) throw privateError;
 
       const slug = STAGE_TO_SLUG[stage] || "preparing";
       window.location.href = `/rooms/${slug}`;

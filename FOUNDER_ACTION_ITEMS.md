@@ -6,7 +6,7 @@
 
 ## Right now (overwritten each session — this is a snapshot, not a log)
 
-Live at **https://recovery-together.vercel.app** — deployed via Vercel, git-linked to `main`, Supabase connected and schema-complete, anonymous sign-in enabled, Vercel Authentication (SSO wall) disabled so real visitors can actually reach it. Zero runtime errors in the last 24h. Next: a full click-through test of onboarding -> room -> post -> reply -> report, then the remaining blocking items below.
+Live at **https://recovery-together.vercel.app** — deployed via Vercel, git-linked to `main`, Supabase connected and schema-complete, anonymous sign-in enabled, Vercel Authentication (SSO wall) disabled so real visitors can actually reach it. Just fixed a real bug: onboarding threw "Room not found" because `anon`/`authenticated` never had base-level table permissions in Supabase (a `revoke default privileges` statement had run on the project before the schema was created — RLS policies existed, but the underlying GRANTs they depend on didn't). Applied a migration granting the correct table-level permissions and confirmed them directly in `information_schema`. **Aaron: please redo the click-through test (onboard -> enter a room -> post -> reply -> report) and confirm it works.** Next: that retest, then the remaining blocking items below.
 
 **Definition of launched:** app is live on a real Vercel URL, a stranger can land, onboard, enter a room, post, reply, and report without help, and everything in "Blocking launch" below is checked off.
 
@@ -23,6 +23,7 @@ Live at **https://recovery-together.vercel.app** — deployed via Vercel, git-li
 
 ## Resolved (kept for the record — see `PROJECT_LOG.md` for full detail on any of these)
 
+- [x] Fixed "Room not found" bug: restored missing base Postgres GRANTs on all app tables for `anon`/`authenticated`/`service_role` (2026-08-04). Awaiting Aaron's retest to fully close out.
 - [x] Deployed to Vercel, git-linked, env vars set, Vercel Authentication (SSO wall) disabled so the public can actually reach the site (2026-08-04).
 
 - [x] Documentation consolidated: 11 process files → 5 (2026-08-03).
