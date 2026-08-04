@@ -133,6 +133,51 @@ Uses the same phase numbering as the AI roadmap in `PRINCIPLES.md` — the two t
 
 ---
 
+## Recovery journey & continuity model (post-MVP — design approved before build)
+
+Aaron's framing, and it's the right one: this isn't a "rooms and dashboards" problem, it's a "the site should remember someone's recovery, not just their last click" problem. This section is the answer to that, and the design of record for the next build phase. Nothing here changes MVP scope; it's the spec for what comes right after. Two live bugs found during a code review directly motivate this (see `PROJECT_LOG.md`, 2026-08-04 entry): onboarding currently creates a brand-new anonymous identity on every visit instead of reusing an existing session, and there is no notification mechanism of any kind. Both get fixed as part of this, not separately.
+
+### The one architectural decision everything else depends on
+There are two different kinds of "remembering," and conflating them is what made this feel harder than it is:
+1. **Session continuity — free, automatic, applies to every single visitor, anonymous or not.** Supabase's anonymous auth already persists via a cookie in the same browser. Fixing the reuse bug means anyone who returns on the same device is already recognized, with zero account and zero extra consent needed, because it's the same mechanism "anonymous sign-in" already implies.
+2. **Cross-device persistence — requires something durable, i.e. an optional account.** A different phone, a cleared browser, or wanting your history to survive on purpose needs an email tied to the account. This is exactly Level 2 from the identity ladder above, and it should ship now rather than staying theoretical, since it's also the fix for notifications (below).
+
+Aaron asked whether identity should be tracked "through accounts or IP address." Explicitly ruling out IP: it's unreliable for this (shared/mobile/VPN IPs make it useless as an identity signal) and it's a real privacy liability to associate an IP address with someone's recovery status on a stigmatized health topic, for no actual gain over the session/account model above. Not doing this.
+
+### Rooms aren't a single membership, they're a history
+Recovery isn't a single room, it's a path through several. The model: a person has exactly one **current room** (matches their actual, self-confirmed stage today) and a growing list of **past rooms** they remain a full member of — they can still read, reply, and be replied to in every room they've ever posted in. Nothing is archived or locked. The home experience always leads with the current room and surfaces past-room activity as a secondary, collapsed list — never a wall of equal-weight options.
+
+### Answering the ten questions directly
+
+**1. First 30 minutes.** Unchanged from today's flow, and it should stay unchanged: anonymous by default, one intake, straight into a matched room. The account offer does *not* belong at the front door — putting a "log in / create account / stay anonymous" choice before someone has told their story reintroduces the exact signup-wall friction the anonymous-first design was built to avoid, at the worst possible moment (scared, exhausted, first 30 seconds). Instead, the optional-account offer appears once, lightly, right after their first post: "Want us to save this and let you know if someone replies? Just needs an email — totally optional." That's the whole ask, and it's the one place in this doc where Aaron's ChatGPT-sourced instinct needed correcting rather than adopting.
+
+**2. Day 2.** They return (ideally prompted by a reply-notification email — see below). Landing on the marketing homepage again would be a regression; anyone with a valid session goes straight to a personalized return screen instead: one primary action ("Continue to Day 2"), plus "2 replies waiting in Day 1" as a secondary line. Their stage is never silently reassigned — see question 6.
+
+**3. Day 5.** Same return screen, now showing a simple journey trail (Day 1 → Day 2–3 → Day 4–7, today) with an unread count per past room, and their current room leading. This is the multi-room membership model made visible.
+
+**4. Disappears for two weeks.** At most one re-engagement email, sent once, with zero guilt framing — "Whenever you're ready, your room is still here" and nothing else. This is a hard constraint, not a style preference: shame is a known relapse trigger, and a drip-campaign re-engagement sequence (the default pattern most growth playbooks reach for) would be actively harmful for this specific audience. On return, ask neutrally which stage they're actually on rather than assuming linear progress — recovery isn't a calendar timer, and treating it like one would be both wrong and alienating.
+
+**5. Anonymous to trusted member over time.** Already specified above in the identity ladder — this section is that ladder's UX, not a new model. Level 1 gets session continuity for free today (once the bug is fixed). Level 2 (optional email) is what's being greenlit here. Levels 3–5 stay exactly as scoped, unlocked by behavior, never by public metrics.
+
+**6. How the system knows the next action without overwhelming.** Hard rule: the return screen has exactly one primary button, always. Everything else — past-room replies, stage confirmation, account prompts — is secondary and collapsed. Stage never auto-changes silently; it's suggested ("It's been 2 days since your last check-in — still Day 1, or has it moved?") and confirmed in one tap, never overwritten without asking.
+
+**7. What the software should remember.** Which rooms someone has posted or replied in, their current self-confirmed stage and when it last changed, unread-reply counts per room they're a member of, nickname and avatar seed, opt-in email if they added one, last-active timestamp. That's the complete list.
+
+**8. What it should never remember.** Real name or identity unless a member deliberately adds it via the optional account upgrade — never inferred or collected passively. No IP-based tracking (see above). No device fingerprinting, no precise location. No read receipts or "seen" indicators on individual messages — that creates the exact social pressure this product is designed to avoid. No engagement-scoring or analytics beyond what the room/notification mechanics themselves need.
+
+**9. Notifications.** Opt-in email only for now — no push (no native app to justify the complexity yet), no SMS (a phone number is identifying information this product has no reason to collect). Batched, not per-message: "You have 2 new replies" as a digest, not one email per reply — instant-per-message notifications would push this toward the social-media dopamine loop the whole product is deliberately built to avoid. Re-engagement email capped at one per absence period per question 4.
+
+**10. Home screen after the first visit.** The public marketing homepage is for new, logged-out visitors only. Anyone with an existing session — anonymous or account — never sees it again; they land directly on the personalized return screen described above.
+
+### What this unlocks, in build order (not started — waiting on approval per Aaron's instruction)
+1. Fix the onboarding session-reuse bug (no new anonymous identity on repeat visits).
+2. Build the personalized return screen (replaces homepage for anyone with a session) with one primary CTA and the stage-confirmation micro-interaction.
+3. Add the optional post-first-post email capture, tied to the existing Level 2 account-linking path Supabase already supports.
+4. Add the batched reply-notification email and the single non-judgmental re-engagement email.
+5. Replace the landing page's fake "18 people checking in / Live" room preview with honest copy (found during the same review, unrelated to this doc but should ship alongside it — see `FOUNDER_ACTION_ITEMS.md`).
+
+---
+
 ## Future integration: Founder OS Dashboard data source (post-MVP — non-blocking)
 
 Recovery Together will not build its own dashboard. Instead, whenever a separate "Founder OS Dashboard" gets built later, Recovery Together should already be positioned to feed it clean, stable, read-only data — project/engineering status, deployment status, and operational/community health — without needing heavy new engineering at that point. Nothing in this section affects the current MVP or launch timeline.

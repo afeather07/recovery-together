@@ -6,7 +6,7 @@
 
 ## Right now (overwritten each session — this is a snapshot, not a log)
 
-Live at **https://recovery-together.vercel.app** — deployed via Vercel, git-linked to `main`, Supabase connected and schema-complete, anonymous sign-in enabled, Vercel Authentication (SSO wall) disabled so real visitors can actually reach it. Just fixed a real bug: onboarding threw "Room not found" because `anon`/`authenticated` never had base-level table permissions in Supabase (a `revoke default privileges` statement had run on the project before the schema was created — RLS policies existed, but the underlying GRANTs they depend on didn't). Applied a migration granting the correct table-level permissions and confirmed them directly in `information_schema`. **Aaron: please redo the click-through test (onboard -> enter a room -> post -> reply -> report) and confirm it works.** Next: that retest, then the remaining blocking items below.
+Live at **https://recovery-together.vercel.app** — Aaron confirmed onboarding -> room entry now works (the permission bug is fixed); posting/reply/report haven't been explicitly retested yet but should work now that grants are correct. Found two real product gaps during review: the homepage's "18 people checking in / Live" room preview is entirely fake/hardcoded copy (misleads visitors before they even see the real, empty rooms), and onboarding creates a brand-new anonymous identity on every visit instead of reusing the existing session (so return visits currently don't actually work as "the same person"). Both are folded into the recovery-journey design below rather than patched ad hoc. Design for the fix (identity continuity, optional accounts, notifications) is written up in `PROJECT_BRIEF.md`'s new "Recovery journey & continuity model" section — **Aaron is reviewing that design; nothing below gets built until he approves it.**
 
 **Definition of launched:** app is live on a real Vercel URL, a stranger can land, onboard, enter a room, post, reply, and report without help, and everything in "Blocking launch" below is checked off.
 
@@ -15,8 +15,11 @@ Live at **https://recovery-together.vercel.app** — deployed via Vercel, git-li
 - [ ] **Set an Anthropic monthly Hard Limit + spend alert** at console.anthropic.com → Billing, before ever setting `app_config.ai_onboarding_enabled` to `true`. Not urgent since AI ships off by default, but must happen before flipping that flag, ever.
 - [ ] **Create/confirm an Anthropic API key** for the app (only needed if/when AI onboarding is turned on — not needed to launch).
 - [ ] **Spend 5–10 minutes personally reading r/quittingkratom and r/OPMS's current rules** before posting anything there. The launch-strategy research (`research/research-C-launch-strategy.md`) couldn't fetch Reddit directly and flagged this as something only Aaron can verify firsthand.
+- [ ] **Don't recruit real users yet.** Two trust-breaking gaps need fixing first (fake room preview, identity-forking bug) -- see "Recovery journey" build queue below. Recruiting before these ship risks burning the 7-OH news-cycle window on a bad first impression.
 
 ## Needs your opinion, not your technical work
+
+- [ ] **Approve or push back on the recovery-journey design** in `PROJECT_BRIEF.md` before Claude builds any of it (Aaron's own instruction). Once approved, build order is: (1) fix the fake landing-page preview, (2) fix the identity-forking bug + personalized return screen, (3) optional post-first-post email capture, (4) batched reply-notification email + single non-judgmental re-engagement email.
 
 - [ ] **Pick a visual direction** from `research/research-B-ux-ui-directions.md` — open the two mockups in `research/mockups/` in a browser and say which one (or a blend). No need to read the full report; the mockups are the fast path.
 - [ ] **Confirm you're fine launching with AI onboarding off by default.** Both the cost review and the security review independently landed here already — this is a "tell me if you disagree" item, not an open question.
