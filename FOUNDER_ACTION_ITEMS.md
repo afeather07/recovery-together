@@ -6,7 +6,7 @@
 
 ## Right now (overwritten each session — this is a snapshot, not a log)
 
-Live at **https://recovery-together.vercel.app**. Aaron approved the recovery-journey design and it's now built and pushed: the fake landing-page preview is honest now, the identity-forking bug is fixed (returning visitors on the same browser are recognized), there's a new personalized "Welcome back" screen with unread-reply counts per past room, an optional post-first-post email capture, and a daily digest/re-engagement email job (currently OFF -- see Blocking launch below). **This has not been click-tested live yet** -- no browser tool was available this session, only a clean `npm run build`. Next: Aaron should click through as a genuinely new anonymous visitor, then close the tab and reopen the site to confirm the "Welcome back" screen actually appears and looks right.
+Live at **https://recovery-together.vercel.app**. Browser tooling was available this session, so the return-visit flow got a real click-test end to end (see Resolved below) — it passed with no bugs found. Aaron has also handed Claude a broader "V1.1" product mandate (adaptive peer-support network: Explore, My Journey, structured resource library, progressive identity/trust) and asked for it deployed the same day as this test. Claude's recommendation, not yet actioned pending Aaron's read: treat honesty/navigation/trust fixes (nav shell, Explore, legal pages, analytics) as this launch's scope, and treat My Journey personalization / progressive identity / resource library as fast-follow rather than cramming both a first-ever verified launch and a large scope expansion into one day. See "Needs your opinion" below.
 
 **Definition of launched:** app is live on a real Vercel URL, a stranger can land, onboard, enter a room, post, reply, and report without help, and everything in "Blocking launch" below is checked off.
 
@@ -15,16 +15,18 @@ Live at **https://recovery-together.vercel.app**. Aaron approved the recovery-jo
 - [ ] **Set an Anthropic monthly Hard Limit + spend alert** at console.anthropic.com → Billing, before ever setting `app_config.ai_onboarding_enabled` to `true`. Not urgent since AI ships off by default, but must happen before flipping that flag, ever.
 - [ ] **Create/confirm an Anthropic API key** for the app (only needed if/when AI onboarding is turned on — not needed to launch).
 - [ ] **Spend 5–10 minutes personally reading r/quittingkratom and r/OPMS's current rules** before posting anything there. The launch-strategy research (`research/research-C-launch-strategy.md`) couldn't fetch Reddit directly and flagged this as something only Aaron can verify firsthand.
-- [ ] **Click-test the new return-visit flow** before recruiting real users: onboard as a new anonymous visitor, post once, close the tab, reopen the site, confirm you land on "Welcome back" (not the marketing homepage) and see the right room + unread count.
 - [ ] **Get a free Resend API key** (resend.com, 100 emails/day free) if/when you want reply-notification emails actually sending -- the whole system is built and wired up but silently no-ops until `RESEND_API_KEY` and `EMAIL_NOTIFICATIONS_ENABLED=true` are set in Vercel's env vars. Not needed to launch; notifications just won't go out until this is set.
 
 ## Needs your opinion, not your technical work
 
 - [ ] **Pick a visual direction** from `research/research-B-ux-ui-directions.md` — open the two mockups in `research/mockups/` in a browser and say which one (or a blend). No need to read the full report; the mockups are the fast path.
 - [ ] **Confirm you're fine launching with AI onboarding off by default.** Both the cost review and the security review independently landed here already — this is a "tell me if you disagree" item, not an open question.
+- [ ] **Sequencing for the V1.1 mandate:** ship honesty/nav/Explore/legal/analytics today, defer My Journey personalization + progressive identity + resource library to fast-follow (Claude's recommendation) — or push everything into today's deploy regardless of same-day-as-first-real-launch risk? This changes scope and roadmap, which is why it's flagged rather than just decided.
+- [ ] **Review draft legal/trust pages** (Community Guidelines, Privacy Policy, Terms of Use) once Claude produces them — these are going out under Recovery Together's name on a health-adjacent topic and shouldn't ship without Aaron's eyes on the actual text, even as a first draft.
 
 ## Resolved (kept for the record — see `PROJECT_LOG.md` for full detail on any of these)
 
+- [x] Click-tested the full return-visit flow live against production (2026-08-05): onboarded as a new anonymous visitor, posted, closed/reopened the site, landed on "Welcome back" with the correct room and the post intact. No bugs found. Test profile/post/room_visit rows deleted from prod afterward via Supabase SQL so no synthetic data lingers in this brand-new community.
 - [x] Recovery journey & continuity model built: fixed identity-forking bug, added personalized return screen, fixed fake landing preview, added optional email capture + daily digest/re-engagement email system (off until Resend key is set) (2026-08-04).
 
 - [x] Fixed "Room not found" bug: restored missing base Postgres GRANTs on all app tables for `anon`/`authenticated`/`service_role` (2026-08-04). Awaiting Aaron's retest to fully close out.
