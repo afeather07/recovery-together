@@ -7,6 +7,40 @@ Core promise:
 
 **You do not have to go through this alone.**
 
+## Founder Vision
+
+Recovery Together exists because the founder personally became dependent on
+concentrated 7-OH — using it just to function and to keep withdrawal away,
+spending more on it than intended, and searching Reddit alone late at
+night trying to understand what was happening. He didn't tell family or
+friends. Even while reading other people online going through the exact
+same thing, he still felt completely alone with it. That specific gap —
+not a lack of information, a lack of somewhere calm and anonymous to not
+be alone with it — is what this product is built to close, and it's the
+standard every design decision should be measured against.
+
+**The emotional target for every page, every flow, every piece of copy:**
+someone exhausted, anxious, sleep-deprived, ashamed, scared, and dealing
+with brain fog should come away feeling —
+- I found my people.
+- I am not alone.
+- I know what to do next.
+
+If a feature or piece of content doesn't move toward that, question
+whether it belongs.
+
+**Founder identity:** stays publicly anonymous for now. Public-facing
+content refers to him only as "Founder of Recovery Together" — no name,
+no identifying details, ever, without his explicit direction otherwise.
+
+**Non-negotiable, tied directly to the founder's own experience of
+isolation:** never create fake users, fake posts, fake testimonials, fake
+statistics, or fake activity of any kind. Manufacturing a sense of
+crowdedness to make a lonely person feel less alone would be exactly the
+kind of dishonesty this product exists to be the opposite of. (See also
+`PRINCIPLES.md`'s privacy and trust rules, which this reinforces rather
+than duplicates.)
+
 ## User condition
 Assume the user may be exhausted, frightened, sweating, restless, unable to sleep, unable to focus, and unwilling to complete long forms. Every interaction must minimize decisions, typing, reading, and navigation.
 

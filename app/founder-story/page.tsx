@@ -19,17 +19,27 @@ export default function FounderStoryPage() {
       </p>
 
       <p>
-        I built Recovery Together because I experienced firsthand how hard
-        it is to find calm, trustworthy peer support during withdrawal —
-        somewhere to be honest about what was happening without it turning
-        into a whole ordeal, without judgment, and without having to hand
-        over your real identity just to talk to someone who understood.
+        I became dependent on concentrated 7-OH. I was taking it just to
+        function and to keep withdrawal away, spending more on it than I
+        meant to, and searching Reddit late at night trying to understand
+        what was happening to me. I didn&apos;t tell my family or friends.
+        Even though I could see, right there in those late-night threads,
+        that plenty of other people were going through the exact same
+        thing — I still felt completely alone with it.
       </p>
 
       <p>
-        That gap is what this is trying to close. Not a replacement for
-        medical care — a place to not be alone with it, organized simply
-        enough that using it doesn&apos;t take more energy than you have.
+        That&apos;s the specific gap Recovery Together is trying to close.
+        Not a replacement for medical care — a calm, anonymous place where
+        someone in that exact moment can find people who actually understand
+        it, without it turning into a whole ordeal and without having to
+        hand over their real identity just to talk to someone who gets it.
+      </p>
+
+      <p>
+        If you&apos;re here because some version of that sounds familiar —
+        I built this hoping you&apos;d land here and think: I found my
+        people. I&apos;m not alone in this. And I know what to do next.
       </p>
 
       <p>

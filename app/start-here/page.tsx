@@ -47,8 +47,9 @@ export default function StartHerePage() {
       <span className="eyebrow">Start Here</span>
       <h1>You&apos;re in the right place.</h1>
       <p className="lede">
-        If you&apos;re scared, exhausted, or don&apos;t know where to begin —
-        this page is for you. No forms to fill out yet, just answers.
+        If you&apos;re scared, exhausted, ashamed, or too foggy to think
+        straight right now — you&apos;re not the only one who&apos;s felt
+        exactly that here. No forms yet, just answers.
       </p>
 
       <div style={{ marginTop: 16 }}>
@@ -62,7 +63,8 @@ export default function StartHerePage() {
 
       <div className="callout">
         Ready when you are — no rush. <Link href="/#top">Find your group</Link>{" "}
-        takes under a minute, and you can stay anonymous the whole time.
+        takes under a minute, you can stay anonymous the whole time, and
+        you&apos;ll land somewhere that already knows what to say next.
       </div>
 
       <p style={{ marginTop: 24 }}>

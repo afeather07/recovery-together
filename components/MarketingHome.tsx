@@ -97,8 +97,10 @@ export default function MarketingHome() {
 
           <div className="founder-note">
             <p className="founder-quote">
-              &quot;I built this because I know firsthand how hard it is to
-              find calm, trustworthy peer support during withdrawal.&quot;
+              &quot;I built this because I&apos;ve been there — dependent,
+              hiding it from everyone, searching Reddit alone at 2am. I know
+              what it&apos;s like to feel alone in a room full of people
+              going through the same thing.&quot;
             </p>
             <Link href="/founder-story" className="secondary-btn">
               Read the full story →
