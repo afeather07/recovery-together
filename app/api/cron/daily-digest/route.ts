@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { SITE_URL } from "@/lib/site";
 
 const RESEND_API_URL = "https://api.resend.com/emails";
 const FROM_ADDRESS =
@@ -103,7 +104,7 @@ export async function GET(req: NextRequest) {
         unreadTotal === 1
           ? "Someone replied to you on Recovery Together"
           : `${unreadTotal} new replies on Recovery Together`,
-        `You have ${unreadTotal} new repl${unreadTotal === 1 ? "y" : "ies"} waiting on Recovery Together. Come see: https://recovery-together.vercel.app`
+        `You have ${unreadTotal} new repl${unreadTotal === 1 ? "y" : "ies"} waiting on Recovery Together. Come see: ${SITE_URL}`
       );
       digestsSent += 1;
     }

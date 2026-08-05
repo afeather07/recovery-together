@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const SITE_URL = "https://recovery-together.vercel.app";
+import { SITE_URL } from "@/lib/site";
 
 const ROUTES = [
   "",
@@ -10,6 +9,7 @@ const ROUTES = [
   "/resources/withdrawal-timeline",
   "/resources/sleep",
   "/resources/hydration-nutrition",
+  "/resources/anxiety-and-panic",
   "/resources/mental-health-and-cravings",
   "/resources/exercise-and-movement",
   "/resources/when-to-seek-professional-help",

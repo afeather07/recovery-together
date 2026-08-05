@@ -3,8 +3,8 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { SITE_URL } from "@/lib/site";
 
-const SITE_URL = "https://recovery-together.vercel.app";
 const DESCRIPTION =
   "Peer support for people preparing to stop, currently stopping, or recovering from 7-OH and concentrated kratom products. Anonymous, mobile-first, always free to join.";
 

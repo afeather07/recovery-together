@@ -40,7 +40,11 @@ export default function MentalHealthPage() {
         Feeling flat, irritable, or anxious in the days and weeks after
         stopping is common and usually improves with time. Movement, sleep,
         hydration, and connection with other people all tend to help more
-        than willpower alone.
+        than willpower alone. If anxiety is tipping into full panic —
+        racing heart, tight chest, a wave of dread — see{" "}
+        <Link href="/resources/anxiety-and-panic">Anxiety &amp; panic</Link>{" "}
+        for grounding techniques and how to tell it apart from an
+        emergency.
       </p>
 
       <h2>Mental health support beyond this site</h2>

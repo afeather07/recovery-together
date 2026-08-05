@@ -17,6 +17,16 @@ Written 2026-08-05, synthesizing `research-C-launch-strategy.md` (2026-08-03) in
 
 **What "learning" means concretely:** watch what people actually say when they land — do they find their room, post, come back. `FOUNDER_ACTION_ITEMS.md`'s "Right now" section is the place this gets reported back, session to session.
 
+### Phase A, made concrete — a sequenced first week
+
+1. **Day 0:** decide on the Aug 5 timing question (see top of `FOUNDER_ACTION_ITEMS.md`). If proceeding: read `research-C-launch-strategy.md`'s Day 0-1 steps in full before doing anything else.
+2. **Day 0-1:** start commenting/helping in r/quittingkratom and r/OPMS, no link yet — builds the account history `research-C` says is the prerequisite for everything else.
+3. **Day 1-2:** modmail r/quittingkratom and r/OPMS per `research-C`'s script; in parallel, DM the four named Facebook group admins.
+4. **Day 2-3 (once approved):** post the founder story as a text post to r/quittingkratom, then r/OPMS, spaced out (not same-day) per the anti-spam posture in `research-C`.
+5. **Day 3-5:** r/kratom last, with the "quitting concentrated extract" framing `research-C` specifies, not "quitting kratom."
+6. **Ongoing from day 1:** comment (don't just post) on already-viral 7-OH/Feel Free videos on TikTok/YouTube — the single highest ROI-per-minute tactic on the list for a brand-new account.
+7. **Throughout:** watch `FOUNDER_ACTION_ITEMS.md`'s "Right now" snapshot and `first-week-operations.md` for the daily operating rhythm.
+
 ## Phase B — First 100 users: strengthen what's working
 
 Once people begin returning (visible via Vercel Analytics + Supabase activity, not guesswork):
@@ -28,7 +38,7 @@ Once people begin returning (visible via Vercel Analytics + Supabase activity, n
 
 ## Phase C — First 1,000 users: relationship-based outreach
 
-Research and prepare **personalized, founder-approved** outreach to recovery coaches, therapists, treatment centers, recovery influencers, podcasters, and nonprofits. Explicitly not automated, not spam, nothing sent without Aaron reading and approving it first — see the Outreach Assistant playbook below for how this gets prepared without ever auto-sending anything.
+Research and prepare **personalized, founder-approved** outreach to recovery coaches, therapists, treatment centers, recovery influencers, podcasters, and nonprofits. Explicitly not automated, not spam, nothing sent without Aaron reading and approving it first — see the Outreach Assistant playbook below for how this gets prepared without ever auto-sending anything. `research/growth-targets.md` has real, verified candidates already researched (7-HOPE Alliance, the Kratom Sobriety Podcast, Dr. Kirsten Smith at Johns Hopkins, among others) — none contacted yet, deliberately, since a cold outreach from a brand-new empty product undersells it.
 
 ## What only Aaron can do (not delegable to Claude)
 

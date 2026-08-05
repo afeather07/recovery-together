@@ -24,9 +24,14 @@ const RESOURCES = [
     description: "Small, doable steps for days when eating and drinking feel impossible.",
   },
   {
+    href: "/resources/anxiety-and-panic",
+    title: "Anxiety & panic",
+    description: "What panic can feel like, how to tell it apart from an emergency, and grounding techniques that help.",
+  },
+  {
     href: "/resources/mental-health-and-cravings",
     title: "Mental health & cravings",
-    description: "Mood swings, anxiety, and cravings are common — what tends to help, and when to get more support.",
+    description: "Mood swings and cravings are common — what tends to help, and when to get more support.",
   },
   {
     href: "/resources/exercise-and-movement",
