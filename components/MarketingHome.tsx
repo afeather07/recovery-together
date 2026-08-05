@@ -4,14 +4,6 @@ import OnboardingDialog from "@/components/OnboardingDialog";
 export default function MarketingHome() {
   return (
     <>
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="Recovery Together home">
-          <span className="brand-mark">RT</span>
-          <span>Recovery Together</span>
-        </a>
-        <Link className="header-link" href="/safety">Safety</Link>
-      </header>
-
       <main id="top">
         <section className="hero">
           <div className="eyebrow">Peer support for 7-OH recovery</div>
@@ -107,11 +99,6 @@ export default function MarketingHome() {
           </div>
         </section>
       </main>
-
-      <footer>
-        <span>Recovery Together</span>
-        <span>Built for connection, not medical treatment.</span>
-      </footer>
     </>
   );
 }

@@ -156,18 +156,13 @@ export default function ReturnScreen({ onNoSession }: { onNoSession: () => void 
 
   return (
     <main className="return-screen">
-      <header className="site-header">
-        <a className="brand" href="/" aria-label="Recovery Together home">
-          <span className="brand-mark">RT</span>
-          <span>Recovery Together</span>
-        </a>
-        <button className="header-link link-btn" onClick={startFreshAnonymous}>
-          Not you? Start fresh
-        </button>
-      </header>
-
       <section className="hero return-hero">
-        <div className="eyebrow">Welcome back</div>
+        <div className="return-hero-top">
+          <span className="eyebrow">Welcome back</span>
+          <button className="link-btn" onClick={startFreshAnonymous}>
+            Not you? Start fresh
+          </button>
+        </div>
         <h1>Good to see you, {nickname}.</h1>
 
         {showStagePrompt && (

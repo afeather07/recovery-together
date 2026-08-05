@@ -1,3 +1,11 @@
+import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Safety",
+  description: "Crisis and safety resources, and what Recovery Together is and isn't.",
+};
+
 export default function SafetyPage() {
   return (
     <main className="section" style={{ maxWidth: 640, margin: "0 auto" }}>
@@ -30,6 +38,13 @@ export default function SafetyPage() {
         planning to stop and have a history of seizures, heart conditions, are
         pregnant, or use other substances alongside 7-OH, talk to a doctor before you
         stop.
+      </p>
+
+      <h2 style={{ marginTop: 28 }}>More resources</h2>
+      <p>
+        <Link href="/resources">Withdrawal, sleep, hydration, and mental health resources</Link> ·{" "}
+        <Link href="/community-guidelines">Community Guidelines</Link> ·{" "}
+        <Link href="/privacy">Privacy Policy</Link>
       </p>
     </main>
   );
