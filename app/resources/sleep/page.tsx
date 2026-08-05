@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
   title: "Sleep during recovery",
@@ -11,6 +12,7 @@ export default function SleepPage() {
     <main className="section content-page">
       <span className="eyebrow">Resources</span>
       <h1>Sleep</h1>
+      <EduBadge />
       <p className="lede">
         Broken or absent sleep is one of the most common things people
         describe in the first days. It is exhausting, and it is not a sign

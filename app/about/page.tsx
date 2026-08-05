@@ -41,7 +41,8 @@ export default function AboutPage() {
         unfunded and run deliberately lean — see the{" "}
         <Link href="/resources/faq">FAQ</Link> for more on how it&apos;s
         built and paid for. It launched because the need seemed real and
-        immediate, not because it was easy.
+        immediate, not because it was easy. Read the{" "}
+        <Link href="/founder-story">founder&apos;s story</Link> for why.
       </p>
 
       <h2>How the community is kept safe</h2>

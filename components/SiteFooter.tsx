@@ -14,13 +14,14 @@ export default function SiteFooter() {
 
         <div className="footer-cols">
           <div>
-            <h3>Community</h3>
+            <h3>Get started</h3>
+            <Link href="/start-here">Start Here</Link>
             <Link href="/explore">Explore rooms</Link>
             <Link href="/journey">My Journey</Link>
-            <Link href="/resources">Resources</Link>
           </div>
           <div>
             <h3>Support</h3>
+            <Link href="/resources">Recovery Library</Link>
             <Link href="/safety">Safety &amp; crisis resources</Link>
             <Link href="/resources/faq">FAQ</Link>
             <Link href="/contact">Contact</Link>
@@ -28,6 +29,7 @@ export default function SiteFooter() {
           <div>
             <h3>About</h3>
             <Link href="/about">About Recovery Together</Link>
+            <Link href="/founder-story">Founder Story</Link>
             <Link href="/community-guidelines">Community Guidelines</Link>
             <Link href="/privacy">Privacy Policy</Link>
             <Link href="/terms">Terms of Use</Link>

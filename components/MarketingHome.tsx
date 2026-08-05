@@ -17,6 +17,10 @@ export default function MarketingHome() {
             <a className="secondary-btn" href="#how-it-works">How it works</a>
           </div>
           <p className="microcopy">No medical claims. No judgment. Minimum personal information.</p>
+          <p className="microcopy">
+            First time here? <Link href="/start-here">Start Here</Link> for a
+            calmer walkthrough.
+          </p>
         </section>
 
         <section className="trust-strip" aria-label="Platform principles">
@@ -82,6 +86,48 @@ export default function MarketingHome() {
               works, not people currently online. If you post, you may be one of the first
               voices here. That&apos;s a real, welcome thing to be.
             </p>
+          </div>
+        </section>
+
+        <section className="section welcome-section">
+          <div className="section-heading">
+            <span className="eyebrow">A quick, honest welcome</span>
+            <h2>From the founder, and where things stand.</h2>
+          </div>
+
+          <div className="founder-note">
+            <p className="founder-quote">
+              &quot;I built this because I know firsthand how hard it is to
+              find calm, trustworthy peer support during withdrawal.&quot;
+            </p>
+            <Link href="/founder-story" className="secondary-btn">
+              Read the full story →
+            </Link>
+          </div>
+
+          <p className="welcome-status">
+            This community is brand new — there&apos;s no large crowd here
+            yet, and we won&apos;t pretend otherwise. The real goal right now
+            is simple: be genuinely useful to the first people who find it,
+            one honest conversation at a time.
+          </p>
+
+          <div className="featured-resources">
+            <span className="eyebrow">Start with something useful</span>
+            <div className="resource-grid">
+              <Link href="/resources/withdrawal-timeline" className="resource-card">
+                <h2>What withdrawal can look like</h2>
+                <p>A general, non-clinical picture of the first weeks.</p>
+              </Link>
+              <Link href="/resources/sleep" className="resource-card">
+                <h2>Sleep</h2>
+                <p>Why it gets so hard early on, and what can help.</p>
+              </Link>
+              <Link href="/start-here" className="resource-card">
+                <h2>New here?</h2>
+                <p>Start Here answers the questions you probably have.</p>
+              </Link>
+            </div>
           </div>
         </section>
 

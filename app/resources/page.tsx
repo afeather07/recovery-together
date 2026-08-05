@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Resources",
+  title: "Recovery Library",
   description:
-    "Plain-language recovery resources: withdrawal timelines, sleep, hydration and nutrition, mental health, a glossary, and frequently asked questions.",
+    "Plain-language recovery resources: withdrawal timelines, sleep, hydration and nutrition, mental health, exercise, when to seek professional help, a glossary, and FAQ.",
 };
 
 const RESOURCES = [
@@ -29,6 +29,16 @@ const RESOURCES = [
     description: "Mood swings, anxiety, and cravings are common — what tends to help, and when to get more support.",
   },
   {
+    href: "/resources/exercise-and-movement",
+    title: "Exercise & movement",
+    description: "Why gentle movement helps, and how to approach it on low-energy days.",
+  },
+  {
+    href: "/resources/when-to-seek-professional-help",
+    title: "When to seek professional help",
+    description: "Clear, non-alarmist guidance on when it's time to involve a doctor.",
+  },
+  {
     href: "/resources/glossary",
     title: "Glossary",
     description: "Plain-language definitions for terms used around this site and in recovery spaces generally.",
@@ -43,13 +53,15 @@ const RESOURCES = [
 export default function ResourcesPage() {
   return (
     <main className="section content-page">
-      <span className="eyebrow">Resources</span>
+      <span className="eyebrow">Recovery Library</span>
       <h1>Information you can use right now.</h1>
       <p className="lede">
         General, non-medical information written to be readable when you&apos;re
-        exhausted or can&apos;t focus. None of this replaces a doctor —
-        see the <Link href="/safety">Safety page</Link> if you need help
-        immediately.
+        exhausted or can&apos;t focus — the beginning of a knowledge base
+        we&apos;ll keep growing. This is educational content, separate from
+        peer experience shared in the rooms, and none of it replaces a
+        doctor — see the <Link href="/safety">Safety page</Link> if you need
+        help immediately.
       </p>
 
       <div className="resource-grid">

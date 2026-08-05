@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
   title: "Mental health & cravings",
@@ -11,6 +12,7 @@ export default function MentalHealthPage() {
     <main className="section content-page">
       <span className="eyebrow">Resources</span>
       <h1>Mental health &amp; cravings</h1>
+      <EduBadge />
       <p className="lede">
         Irritability, anxiety, low mood, and cravings are some of the most
         common things people describe here — during withdrawal and for a

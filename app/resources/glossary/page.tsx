@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
   title: "Glossary",
@@ -24,6 +25,7 @@ export default function GlossaryPage() {
     <main className="section content-page">
       <span className="eyebrow">Resources</span>
       <h1>Glossary</h1>
+      <EduBadge />
       <p className="lede">Plain-language definitions for terms used around this site.</p>
 
       {TERMS.map((t) => (

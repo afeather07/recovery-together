@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
   title: "Hydration & nutrition",
@@ -11,6 +12,7 @@ export default function HydrationNutritionPage() {
     <main className="section content-page">
       <span className="eyebrow">Resources</span>
       <h1>Hydration &amp; nutrition</h1>
+      <EduBadge />
       <p className="lede">
         Nausea and low appetite are extremely common early on. The goal on
         the hardest days isn&apos;t a full meal — it&apos;s not zero.

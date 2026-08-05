@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
   title: "What withdrawal can look like",
@@ -11,6 +12,7 @@ export default function WithdrawalTimelinePage() {
     <main className="section content-page">
       <span className="eyebrow">Resources</span>
       <h1>What withdrawal can look like</h1>
+      <EduBadge />
       <p className="lede">
         Every person and every case is different — this is a general pattern
         other people have described, not a prediction of what will happen to
