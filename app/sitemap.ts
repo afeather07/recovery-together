@@ -15,6 +15,8 @@ const ROUTES = [
   "/resources/when-to-seek-professional-help",
   "/resources/glossary",
   "/resources/faq",
+  "/resources/is-7-oh-the-same-as-kratom",
+  "/resources/7-oh-ban-what-changes",
   "/safety",
   "/start-here",
   "/founder-story",

@@ -53,6 +53,16 @@ const RESOURCES = [
     title: "Frequently asked questions",
     description: "What Just Another Friend is, what it isn't, and how to use it.",
   },
+  {
+    href: "/resources/is-7-oh-the-same-as-kratom",
+    title: "Is 7-OH the same as kratom?",
+    description: "What 7-OH actually is, how it differs from kratom leaf, and why that matters.",
+  },
+  {
+    href: "/resources/7-oh-ban-what-changes",
+    title: "The 7-OH ban: what changes, and what doesn't",
+    description: "A plain-language look at the 2026 scheduling and state bans, and what actually matters if you're stopping.",
+  },
 ];
 
 export default function ResourcesPage() {
