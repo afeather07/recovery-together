@@ -6,6 +6,17 @@ This file is for depth. For "what's the state right now and what do I need to do
 
 ---
 
+### 2026-08-06 — Returning-user "Today" experience, FOUNDER_ACTION_ITEMS cleanup, r/OPMS ban
+Aaron confirmed the Vercel domain flipped to verified (SSL live) and relayed another ChatGPT-authored prompt asking for several things at once; reviewed it against what's already done rather than executing wholesale, consistent with the pattern established this session. Declined redoing the final production test from scratch (already done thoroughly the prior session, including catching and fixing a real gap) and declined a fresh 48-hour "Opportunity Scout" pass in the literal sense requested -- Reddit itself is blocked from automated fetching in this environment and general web search doesn't reliably index real-time Reddit discussion, so fabricating a list of "current opportunities" without being able to verify them would have been dishonest busywork; said so directly instead of producing a hollow-looking list.
+
+Strengthened `ReturnScreen.tsx` (the personalized "Today" experience for anyone with a session) with three real-data additions: a total-unread-replies headline, a "while you were away" recap of real recent posts from other people in the person's current room, and a "someone could use a reply" section surfacing real unanswered posts across rooms the person is part of (queried via a real reply-count check, not guessed) -- plus one stage-relevant Recovery Library link via a new small `lib/stage-resource.ts` map, and Explore/Resources quick links. Kept the existing hard rule intact: exactly one primary button ("Continue to [room]"), everything else secondary. `npm run build`: clean, 0 errors, 30 routes.
+
+Aaron reported r/OPMS is now banned -- plausible and consistent with the regulatory-crackdown context `research-C-launch-strategy.md` was built around -- so it's dropped from the active target list; r/kratom (already scoped in that research as the third, harder-sell target) becomes the next Reddit attempt, with its own modmail drafted using the "concentrated extract, not kratom" framing that research specified.
+
+Rewrote `FOUNDER_ACTION_ITEMS.md` top-to-bottom rather than incrementally patching it again -- removed every stale item about picking/buying a domain, pending rebrand work, and the old brand name (all resolved by the prior session's rebrand), consolidated the "Right now" snapshot to directly answer the four questions Aaron's prompt asked for (is production healthy, what's blocking users, what does Aaron need to do, what is Claude doing next), and moved genuinely resolved history into the Resolved section rather than leaving it duplicated at the top. No new file created, per standing instruction.
+
+Connected `mcp__claude-in-chrome` tools to help Aaron verify his own Reddit modmail send, but the extension isn't connected this session (not installed/signed in) -- gave him the install link and a manual self-check instead of blocking on it.
+
 ### 2026-08-06 — Rebrand to "Just Another Friend"; domain connected via direct Porkbun API
 Aaron made the brand decision final (relayed via a ChatGPT prompt, which Claude reviewed critically before acting rather than implementing wholesale): renamed to "Just Another Friend," purchased `justanotherfriend.com` via Porkbun. Ran the same USPTO check used for "Recovery Together" -- no exact trademark match, no existing company using the name, a meaningfully cleaner signal than last time.
 

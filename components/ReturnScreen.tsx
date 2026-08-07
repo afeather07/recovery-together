@@ -2,12 +2,19 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { STAGE_OPTIONS, STAGE_TO_SLUG } from "@/lib/stages";
+import { STAGE_RESOURCE } from "@/lib/stage-resource";
 
 type RoomInfo = { id: string; slug: string; name: string; stage_label: string };
 type JourneyRoom = RoomInfo & { unread: number; isCurrent: boolean };
+type RecentPost = { id: string; body: string; nickname: string; room_slug: string; room_name: string };
 
 const EPOCH = "1970-01-01T00:00:00Z";
 const STAGE_RECONFIRM_DAYS = 2;
+const SNIPPET_LEN = 90;
+
+function snippet(body: string) {
+  return body.length > SNIPPET_LEN ? body.slice(0, SNIPPET_LEN).trim() + "…" : body;
+}
 
 export default function ReturnScreen({ onNoSession }: { onNoSession: () => void }) {
   const [loading, setLoading] = useState(true);
@@ -17,6 +24,8 @@ export default function ReturnScreen({ onNoSession }: { onNoSession: () => void 
   const [daysSinceCheckIn, setDaysSinceCheckIn] = useState(0);
   const [journeyRooms, setJourneyRooms] = useState<JourneyRoom[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
+  const [recentInRoom, setRecentInRoom] = useState<RecentPost[]>([]);
+  const [needsReply, setNeedsReply] = useState<RecentPost[]>([]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -116,6 +125,82 @@ export default function ReturnScreen({ onNoSession }: { onNoSession: () => void 
 
       rooms.sort((a, b) => (a.isCurrent === b.isCurrent ? 0 : a.isCurrent ? -1 : 1));
       setJourneyRooms(rooms);
+
+      // "What happened while you were away" -- real recent posts from other
+      // people in the current room, and real unanswered posts across rooms
+      // this person is part of. No fake activity, and nothing shown unless
+      // real data supports it.
+      const currentRoomRow = rooms.find((r) => r.isCurrent);
+      if (currentRoomRow) {
+        const { data: recentPosts } = await supabase
+          .from("posts")
+          .select("id, body, author_id, created_at")
+          .eq("room_id", currentRoomRow.id)
+          .neq("author_id", uid)
+          .order("created_at", { ascending: false })
+          .limit(3);
+
+        if (recentPosts?.length) {
+          const authorIds = Array.from(new Set(recentPosts.map((p) => p.author_id)));
+          const { data: authorProfiles } = await supabase
+            .from("profiles")
+            .select("id, nickname")
+            .in("id", authorIds);
+          const nameById: Record<string, string> = {};
+          (authorProfiles || []).forEach((p) => (nameById[p.id] = p.nickname));
+          setRecentInRoom(
+            recentPosts.map((p) => ({
+              id: p.id,
+              body: snippet(p.body),
+              nickname: nameById[p.author_id] || "Someone",
+              room_slug: currentRoomRow.slug,
+              room_name: currentRoomRow.name,
+            }))
+          );
+        }
+      }
+
+      if (journeyRoomIds.length) {
+        const { data: candidatePosts } = await supabase
+          .from("posts")
+          .select("id, body, author_id, room_id, created_at")
+          .in("room_id", journeyRoomIds)
+          .neq("author_id", uid)
+          .order("created_at", { ascending: false })
+          .limit(15);
+
+        if (candidatePosts?.length) {
+          const candidateIds = candidatePosts.map((p) => p.id);
+          const { data: repliesOnCandidates } = await supabase
+            .from("replies")
+            .select("post_id")
+            .in("post_id", candidateIds);
+          const repliedIds = new Set((repliesOnCandidates || []).map((r) => r.post_id));
+          const unanswered = candidatePosts.filter((p) => !repliedIds.has(p.id)).slice(0, 2);
+
+          if (unanswered.length) {
+            const authorIds = Array.from(new Set(unanswered.map((p) => p.author_id)));
+            const { data: authorProfiles } = await supabase
+              .from("profiles")
+              .select("id, nickname")
+              .in("id", authorIds);
+            const nameById: Record<string, string> = {};
+            (authorProfiles || []).forEach((p) => (nameById[p.id] = p.nickname));
+            const roomById: Record<string, JourneyRoom> = {};
+            rooms.forEach((r) => (roomById[r.id] = r));
+            setNeedsReply(
+              unanswered.map((p) => ({
+                id: p.id,
+                body: snippet(p.body),
+                nickname: nameById[p.author_id] || "Someone",
+                room_slug: roomById[p.room_id]?.slug || currentSlug,
+                room_name: roomById[p.room_id]?.name || "",
+              }))
+            );
+          }
+        }
+      }
+
       setLoading(false);
 
       // Mark this visit -- doesn't touch stage_updated_at, just "we saw them today."
@@ -153,6 +238,8 @@ export default function ReturnScreen({ onNoSession }: { onNoSession: () => void 
 
   const currentRoom = journeyRooms.find((r) => r.isCurrent);
   const pastRooms = journeyRooms.filter((r) => !r.isCurrent);
+  const totalUnread = journeyRooms.reduce((sum, r) => sum + r.unread, 0);
+  const stageResource = STAGE_RESOURCE[stage];
 
   return (
     <main className="return-screen">
@@ -164,6 +251,12 @@ export default function ReturnScreen({ onNoSession }: { onNoSession: () => void 
           </button>
         </div>
         <h1>Good to see you, {nickname}.</h1>
+
+        {totalUnread > 0 && (
+          <p className="unread-summary">
+            You have {totalUnread} new repl{totalUnread === 1 ? "y" : "ies"} waiting for you.
+          </p>
+        )}
 
         {showStagePrompt && (
           <div className="stage-confirm">
@@ -199,6 +292,23 @@ export default function ReturnScreen({ onNoSession }: { onNoSession: () => void 
         )}
       </section>
 
+      {recentInRoom.length > 0 && (
+        <section className="section away-recap">
+          <div className="section-heading">
+            <span className="eyebrow">While you were away</span>
+            <h2>Recent in {currentRoom?.name}</h2>
+          </div>
+          <div className="recap-list">
+            {recentInRoom.map((p) => (
+              <a key={p.id} href={`/rooms/${p.room_slug}`} className="recap-item">
+                <strong>{p.nickname}</strong>
+                <span>{p.body}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
       {pastRooms.length > 0 && (
         <section className="section past-rooms">
           <div className="section-heading">
@@ -219,6 +329,42 @@ export default function ReturnScreen({ onNoSession }: { onNoSession: () => void 
           </div>
         </section>
       )}
+
+      {needsReply.length > 0 && (
+        <section className="section needs-reply">
+          <div className="section-heading">
+            <span className="eyebrow">You might be able to help</span>
+            <h2>Someone could use a reply</h2>
+          </div>
+          <div className="recap-list">
+            {needsReply.map((p) => (
+              <a key={p.id} href={`/rooms/${p.room_slug}`} className="recap-item">
+                <strong>{p.nickname} · {p.room_name}</strong>
+                <span>{p.body}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section className="section explore-more">
+        <div className="explore-more-links">
+          {stageResource && (
+            <a href={stageResource.href} className="resource-card">
+              <span className="eyebrow">For where you are now</span>
+              <h2>{stageResource.label}</h2>
+            </a>
+          )}
+          <a href="/explore" className="resource-card">
+            <span className="eyebrow">Browse</span>
+            <h2>Explore all rooms</h2>
+          </a>
+          <a href="/resources" className="resource-card">
+            <span className="eyebrow">Browse</span>
+            <h2>Recovery Library</h2>
+          </a>
+        </div>
+      </section>
     </main>
   );
 }

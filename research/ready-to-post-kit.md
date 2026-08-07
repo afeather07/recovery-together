@@ -2,10 +2,13 @@
 
 Written 2026-08-05, in response to Aaron wanting to move on outreach now but feeling like there's too much happening to reach it all. This is deliberately narrow: 2-3 highest-leverage moves, copy-paste ready, not a sprawling campaign. Nothing here has been posted — Aaron posts it himself, under his own identity, per `research-C-launch-strategy.md`'s and `launch-plan.md`'s standing guidance (Claude has no identity to disclose and platforms require the founder's own account).
 
-## Do these two things first, before any posting
+## Status
 
-1. **Buy `recoverytogetherapp.com`** — confirmed available at Namecheap for **$11.28/yr** (checked live, 2026-08-05). Takes about 5 minutes. The moment you have it, tell Claude and it's wired up same-day (DNS + Vercel + the site already reads the domain from a single config value — no code changes needed).
-2. **Read r/quittingkratom's and r/OPMS's current rules yourself** (5-10 min) — this is the one step in the whole plan that only you can verify, since it directly affects whether the modmail below gets a "yes."
+Domain is live: **https://justanotherfriend.com**. Use that as the `[link]` below.
+
+## Do this first, before any posting
+
+**Read r/quittingkratom's and r/OPMS's current rules yourself** (5-10 min) — this is the one step in the whole plan that only you can verify, since it directly affects whether the modmail below gets a "yes."
 
 ## The modmail (send to both r/quittingkratom and r/OPMS mods, same text)
 

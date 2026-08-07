@@ -159,6 +159,20 @@ label { font-size: 13px; color: var(--muted); display: flex; flex-direction: col
   background: var(--accent); color: white; border-radius: 999px;
   padding: 4px 10px; font-size: 12px; font-weight: 600;
 }
+.unread-summary { color: var(--accent); font-weight: 600; font-size: 15px; margin: 4px 0 0; }
+.recap-list { display: flex; flex-direction: column; gap: 10px; }
+.recap-item {
+  display: block; background: white; border-radius: var(--radius); padding: 14px 16px;
+  text-decoration: none; color: var(--ink);
+}
+.recap-item strong { display: block; font-size: 14px; margin-bottom: 4px; }
+.recap-item span { display: block; font-size: 14px; color: var(--muted); }
+.needs-reply .recap-item { border-left: 3px solid var(--accent); }
+.explore-more-links { display: flex; flex-direction: column; gap: 10px; }
+@media (min-width: 720px) {
+  .explore-more-links { flex-direction: row; }
+  .explore-more-links .resource-card { flex: 1; }
+}
 
 /* Homepage "alive" welcome section */
 .welcome-section { }
