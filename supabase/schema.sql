@@ -91,17 +91,21 @@ create policy "profile_private owner only update" on public.profile_private
 create policy "rooms readable by authenticated" on public.rooms
   for select using (auth.role() = 'authenticated');
 
--- posts: authenticated users can read all, insert their own
+-- posts: authenticated users can read all, insert their own, delete their own
 create policy "posts readable by authenticated" on public.posts
   for select using (auth.role() = 'authenticated');
 create policy "posts insert own" on public.posts
   for insert with check (auth.uid() = author_id);
+create policy "posts delete own" on public.posts
+  for delete using (auth.uid() = author_id);
 
 -- replies: same pattern as posts
 create policy "replies readable by authenticated" on public.replies
   for select using (auth.role() = 'authenticated');
 create policy "replies insert own" on public.replies
   for insert with check (auth.uid() = author_id);
+create policy "replies delete own" on public.replies
+  for delete using (auth.uid() = author_id);
 
 -- reports: users can insert their own reports, cannot read any reports (moderation reads via service role only)
 create policy "reports insert own" on public.reports
@@ -253,8 +257,8 @@ grant select on public.app_config to anon, authenticated;
 grant select on public.rooms to authenticated;
 grant select, insert, update on public.profiles to authenticated;
 grant select, insert, update on public.profile_private to authenticated;
-grant select, insert on public.posts to authenticated;
-grant select, insert on public.replies to authenticated;
+grant select, insert, delete on public.posts to authenticated;
+grant select, insert, delete on public.replies to authenticated;
 grant insert on public.reports to authenticated;
 
 grant all privileges on all tables in schema public to service_role;

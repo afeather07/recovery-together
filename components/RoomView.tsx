@@ -157,6 +157,18 @@ export default function RoomView({ slug }: { slug: string }) {
     setTimeout(() => setNotice(""), 3000);
   }
 
+  async function deletePost(postId: string) {
+    if (!confirm("Delete this check-in? This can't be undone.")) return;
+    await supabase.from("posts").delete().eq("id", postId);
+    setPosts((prev) => prev.filter((p) => p.id !== postId));
+  }
+
+  async function deleteReply(replyId: string) {
+    if (!confirm("Delete this reply? This can't be undone.")) return;
+    await supabase.from("replies").delete().eq("id", replyId);
+    setReplies((prev) => prev.filter((r) => r.id !== replyId));
+  }
+
   if (loading) return <main className="section">Loading room…</main>;
   if (!room) return <main className="section">Room not found. <a href="/">Go back</a>.</main>;
 
@@ -176,12 +188,23 @@ export default function RoomView({ slug }: { slug: string }) {
                 <div style={{ flex: 1 }}>
                   <strong>{profiles[post.author_id]?.nickname || "Someone"}</strong>
                   <p>{post.body}</p>
-                  <button
-                    onClick={() => report("post", post.id)}
-                    style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
-                  >
-                    Report
-                  </button>
+                  <div style={{ display: "flex", gap: 12 }}>
+                    {post.author_id === userId ? (
+                      <button
+                        onClick={() => deletePost(post.id)}
+                        style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
+                      >
+                        Delete
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => report("post", post.id)}
+                        style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
+                      >
+                        Report
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -192,12 +215,21 @@ export default function RoomView({ slug }: { slug: string }) {
                     <div style={{ flex: 1 }}>
                       <strong>{profiles[reply.author_id]?.nickname || "Someone"}</strong>
                       <p>{reply.body}</p>
-                      <button
-                        onClick={() => report("reply", reply.id)}
-                        style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
-                      >
-                        Report
-                      </button>
+                      {reply.author_id === userId ? (
+                        <button
+                          onClick={() => deleteReply(reply.id)}
+                          style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
+                        >
+                          Delete
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => report("reply", reply.id)}
+                          style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
+                        >
+                          Report
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
