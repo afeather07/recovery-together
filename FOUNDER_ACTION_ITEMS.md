@@ -12,7 +12,7 @@
 
 **What does Aaron need to do?** Work through "Blocking launch" below, in order. None of it is code.
 
-**What is Claude doing next?** Continuing to watch `research/mention-digest.md`'s daily sweep, ready to draft/adjust outreach copy as new communities or opportunities come up, and picking off the "Later" backlog opportunistically.
+**What is Claude doing next?** Overnight (2026-08-06→07), while Aaron slept: shipped the post/reply delete feature below, improved the mention-digest cron to produce more actionable findings, added a lightweight site/moderation watchdog (checks every 2 hours, only alerts on a real problem), and finished the full launch asset kit (bios, comment drafts, social posts, video scripts) in `research/ready-to-post-kit.md`. Continuing to watch the digest and pick off "Later" backlog items opportunistically. Reminder: none of the scheduled jobs are durable across sessions closing — they only run while this session stays open.
 
 ## Blocking launch (all non-technical now)
 
@@ -34,6 +34,7 @@
 
 ## Resolved (kept for the record — see `PROJECT_LOG.md` for full detail on any of these)
 
+- [x] Post/reply delete feature shipped overnight (2026-08-07): owner-only DELETE RLS policies (live migration + `schema.sql` sync), Delete button replaces Report on a user's own content.
 - [x] Returning-user "Today" experience strengthened (2026-08-06): real recent-activity recap, real unanswered-post surfacing ("someone could use a reply"), a stage-relevant Recovery Library link, Explore/Resources quick links — all real data, one primary button preserved.
 - [x] Rebrand to "Just Another Friend" complete and verified live on the real domain (2026-08-06): domain purchased and DNS-connected via direct Porkbun API, SSL verified in Vercel, full public-facing copy/metadata/brand-mark rebrand, USPTO check came back clean, full click-through QA passed on production, one real test-data mixup (a test post under the founder's real first name) found and fixed.
 - [x] Launch-readiness pass (2026-08-05): friction/link audit, `research/launch-checklist.md`, `research/first-week-operations.md`, `research/growth-targets.md`, sequenced first-100-users steps, Anxiety & Panic library page.
@@ -47,7 +48,6 @@
 - [ ] Founder OS Dashboard read-only views, once that project actually exists (`PROJECT_BRIEF.md`'s "Future integration" section).
 - [ ] Level 2 (email-based persistent accounts), once members actually want cross-device identity.
 - [ ] Turnstile/hCaptcha if bot signups become a real problem (no traffic yet, not urgent).
-- [ ] DELETE policy so users can retract their own posts/replies.
 - [ ] Decide on a proper in-app moderation dashboard vs. the Supabase table editor.
 - [ ] Next.js 14 → 16 major upgrade to clear one low-risk lingering `npm audit` advisory (build-tooling only, not attacker-reachable).
 - [ ] Search — not yet appropriate given how little content/how few rooms exist.
