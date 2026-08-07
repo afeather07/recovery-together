@@ -51,7 +51,7 @@ const RESOURCES = [
   {
     href: "/resources/faq",
     title: "Frequently asked questions",
-    description: "What Recovery Together is, what it isn't, and how to use it.",
+    description: "What Just Another Friend is, what it isn't, and how to use it.",
   },
 ];
 

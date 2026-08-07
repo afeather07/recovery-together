@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "How to reach Recovery Together, and what to do instead in an emergency.",
+  description: "How to reach Just Another Friend, and what to do instead in an emergency.",
 };
 
 export default function ContactPage() {
@@ -12,7 +12,7 @@ export default function ContactPage() {
       <span className="eyebrow">Contact</span>
       <h1>Get in touch</h1>
       <p className="lede">
-        Recovery Together is run by a single founder. Response times won&apos;t
+        Just Another Friend is run by a single founder. Response times won&apos;t
         be instant — for anything urgent, use the resources below instead of
         waiting on a reply here.
       </p>

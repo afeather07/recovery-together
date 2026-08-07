@@ -4,14 +4,14 @@ import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
   title: "Glossary",
-  description: "Plain-language definitions for terms used on Recovery Together and in recovery spaces generally.",
+  description: "Plain-language definitions for terms used on Just Another Friend and in recovery spaces generally.",
 };
 
 const TERMS = [
   { term: "7-OH (7-hydroxymitragynine)", def: "A compound found in and derived from kratom, sold in concentrated form in some products. It's the substance this community is centered around recovering from." },
   { term: "Kratom", def: "A plant whose leaves are used to make various products, including concentrated 7-OH extracts." },
   { term: "Withdrawal", def: "The physical and mental symptoms that can happen when a substance your body adjusted to is stopped or reduced." },
-  { term: "Taper", def: "Gradually reducing use over time rather than stopping all at once. Recovery Together does not provide taper plans or dosing guidance — talk to a doctor about whether tapering makes sense for you." },
+  { term: "Taper", def: "Gradually reducing use over time rather than stopping all at once. Just Another Friend does not provide taper plans or dosing guidance — talk to a doctor about whether tapering makes sense for you." },
   { term: "Stage room", def: "A chat space grouped by where someone is in their process — Preparing, Day 1, Day 2–3, Day 4–7, Week 2+, or Maintaining recovery." },
   { term: "Peer support", def: "Support from people with lived experience of the same thing, as opposed to clinical or professional treatment." },
   { term: "Anonymous profile", def: "A profile identified only by a nickname you choose — no real name or contact info required." },

@@ -4,7 +4,7 @@ import { SITE_URL } from "@/lib/site";
 
 const RESEND_API_URL = "https://api.resend.com/emails";
 const FROM_ADDRESS =
-  process.env.NOTIFY_FROM_EMAIL || "Recovery Together <onboarding@resend.dev>";
+  process.env.NOTIFY_FROM_EMAIL || "Just Another Friend <onboarding@resend.dev>";
 const REENGAGEMENT_MIN_DAYS = 10;
 const EPOCH = "1970-01-01T00:00:00Z";
 
@@ -102,9 +102,9 @@ export async function GET(req: NextRequest) {
       await sendEmail(
         person.notify_email,
         unreadTotal === 1
-          ? "Someone replied to you on Recovery Together"
-          : `${unreadTotal} new replies on Recovery Together`,
-        `You have ${unreadTotal} new repl${unreadTotal === 1 ? "y" : "ies"} waiting on Recovery Together. Come see: ${SITE_URL}`
+          ? "Someone replied to you on Just Another Friend"
+          : `${unreadTotal} new replies on Just Another Friend`,
+        `You have ${unreadTotal} new repl${unreadTotal === 1 ? "y" : "ies"} waiting on Just Another Friend. Come see: ${SITE_URL}`
       );
       digestsSent += 1;
     }
@@ -131,7 +131,7 @@ export async function GET(req: NextRequest) {
     await sendEmail(
       priv.notify_email,
       "Whenever you're ready",
-      "Whenever you're ready, your room on Recovery Together is still here. No pressure, no streaks to keep -- just people who understand, whenever you want them."
+      "Whenever you're ready, your room on Just Another Friend is still here. No pressure, no streaks to keep -- just people who understand, whenever you want them."
     );
     await supabase
       .from("profile_private")

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Community Guidelines",
-  description: "What's expected of everyone in Recovery Together's rooms, and what gets reported.",
+  description: "What's expected of everyone in Just Another Friend's rooms, and what gets reported.",
 };
 
 export default function CommunityGuidelinesPage() {

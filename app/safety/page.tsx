@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Safety",
-  description: "Crisis and safety resources, and what Recovery Together is and isn't.",
+  description: "Crisis and safety resources, and what Just Another Friend is and isn't.",
 };
 
 export default function SafetyPage() {
@@ -30,7 +30,7 @@ export default function SafetyPage() {
       <p><strong>SAMHSA National Helpline</strong> — <strong>1-800-662-4357</strong>, free, confidential, 24/7, English and Spanish.</p>
       <p><strong>Poison Control</strong> — <strong>1-800-222-1222</strong>.</p>
 
-      <h2 style={{ marginTop: 28 }}>What Recovery Together is not</h2>
+      <h2 style={{ marginTop: 28 }}>What Just Another Friend is not</h2>
       <p>
         This platform is peer support only. It is not a detox provider, medical
         treatment, individualized medical advice, or a tapering service. It does not

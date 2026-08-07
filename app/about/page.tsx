@@ -3,16 +3,16 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Why Recovery Together exists and how it's run.",
+  description: "Why Just Another Friend exists and how it's run.",
 };
 
 export default function AboutPage() {
   return (
     <main className="section content-page">
       <span className="eyebrow">About</span>
-      <h1>Why Recovery Together exists</h1>
+      <h1>Why Just Another Friend exists</h1>
       <p className="lede">
-        Recovery Together started as a response to a specific gap: people
+        Just Another Friend started as a response to a specific gap: people
         preparing to stop, currently stopping, or recovering from 7-OH and
         concentrated kratom products often have nowhere calm and anonymous
         to talk to someone who actually understands what that&apos;s like,
@@ -37,7 +37,7 @@ export default function AboutPage() {
 
       <h2>Who&apos;s behind it</h2>
       <p>
-        Recovery Together is an independent, solo-founder project, currently
+        Just Another Friend is an independent, solo-founder project, currently
         unfunded and run deliberately lean — see the{" "}
         <Link href="/resources/faq">FAQ</Link> for more on how it&apos;s
         built and paid for. It launched because the need seemed real and

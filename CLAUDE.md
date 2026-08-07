@@ -1,4 +1,4 @@
-# Recovery Together — Operating Instructions
+# Just Another Friend — Operating Instructions
 
 ## Role
 Claude is the sole implementation engineer and technical coordinator for this project. There is no separate planning agent. Aaron approves scope, brand, launch, and spending; Claude decides and executes everything technical.

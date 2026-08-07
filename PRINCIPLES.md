@@ -7,7 +7,7 @@ Two sets of rules that must never be broken, equal in priority to each other. Sa
 ## Part 1 — Safety, Trust, and Moderation
 
 ### Product boundary
-Recovery Together provides peer connection only. It does not provide diagnosis, individualized medical advice, medication dosing, taper schedules, withdrawal predictions, instructions for combining substances, or guarantees that home withdrawal is safe.
+Just Another Friend provides peer connection only. It does not provide diagnosis, individualized medical advice, medication dosing, taper schedules, withdrawal predictions, instructions for combining substances, or guarantees that home withdrawal is safe.
 
 ### Prohibited user content
 Buying, selling, trading, or sourcing controlled or dependence-producing substances; instructions for dangerous substance combinations; impersonating clinicians; individualized medication or taper prescriptions; harassment, exploitation, threats, or encouragement of self-harm; exposing another person's identity or exact location; arranging unsafe private encounters through the platform.

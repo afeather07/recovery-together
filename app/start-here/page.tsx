@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Start Here",
-  description: "New here and not sure what this is? Start here — a calm walkthrough of what Recovery Together is and how to use it.",
+  description: "New here and not sure what this is? Start here — a calm walkthrough of what Just Another Friend is and how to use it.",
 };
 
 const QA = [
   {
-    q: "What is Recovery Together?",
+    q: "What is Just Another Friend?",
     a: "An anonymous peer-support community for people preparing to stop, currently stopping, or recovering from 7-OH and concentrated kratom products. Real people, organized by recovery stage, talking to each other.",
   },
   {

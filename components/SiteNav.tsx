@@ -18,9 +18,9 @@ export default function SiteNav() {
   return (
     <header className="site-nav">
       <div className="site-nav-bar">
-        <Link href="/" className="brand" aria-label="Recovery Together home" onClick={() => setOpen(false)}>
-          <span className="brand-mark">RT</span>
-          <span>Recovery Together</span>
+        <Link href="/" className="brand" aria-label="Just Another Friend home" onClick={() => setOpen(false)}>
+          <span className="brand-mark">JAF</span>
+          <span>Just Another Friend</span>
         </Link>
 
         <nav className="site-nav-links" aria-label="Primary">

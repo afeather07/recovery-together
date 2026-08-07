@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms of Use",
-  description: "The terms for using Recovery Together.",
+  description: "The terms for using Just Another Friend.",
 };
 
 export default function TermsPage() {
@@ -13,7 +13,7 @@ export default function TermsPage() {
       <h1>Terms of Use</h1>
       <p className="updated">Draft — last reviewed 2026-08-05.</p>
 
-      <h2>What Recovery Together is</h2>
+      <h2>What Just Another Friend is</h2>
       <p>
         A peer-support community for people preparing to stop, currently
         stopping, or recovering from 7-OH and concentrated kratom products.
@@ -30,7 +30,7 @@ export default function TermsPage() {
       </p>
 
       <h2>Eligibility</h2>
-      <p>You must be at least 18 years old to use Recovery Together.</p>
+      <p>You must be at least 18 years old to use Just Another Friend.</p>
 
       <h2>Your account</h2>
       <p>
@@ -51,7 +51,7 @@ export default function TermsPage() {
 
       <h2>No warranty</h2>
       <p>
-        Recovery Together is provided &quot;as is,&quot; without guarantees
+        Just Another Friend is provided &quot;as is,&quot; without guarantees
         about availability, accuracy of user-submitted content, or outcomes.
         Peer support content reflects individual experiences, not
         professional advice.
@@ -59,7 +59,7 @@ export default function TermsPage() {
 
       <h2>Limitation of liability</h2>
       <p>
-        To the fullest extent permitted by law, Recovery Together and its
+        To the fullest extent permitted by law, Just Another Friend and its
         founder aren&apos;t liable for decisions made based on content
         posted by other members, or for outcomes related to substance use
         or withdrawal. This service does not replace professional medical

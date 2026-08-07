@@ -5,9 +5,9 @@ export default function SiteFooter() {
     <footer className="site-footer">
       <div className="site-footer-top">
         <div className="footer-brand">
-          <span className="brand-mark">RT</span>
+          <span className="brand-mark">JAF</span>
           <p className="footer-tagline">
-            Recovery Together — peer support for 7-OH and kratom recovery. Not
+            Just Another Friend — peer support for 7-OH and kratom recovery. Not
             medical treatment.
           </p>
         </div>
@@ -28,7 +28,7 @@ export default function SiteFooter() {
           </div>
           <div>
             <h3>About</h3>
-            <Link href="/about">About Recovery Together</Link>
+            <Link href="/about">About Just Another Friend</Link>
             <Link href="/founder-story">Founder Story</Link>
             <Link href="/community-guidelines">Community Guidelines</Link>
             <Link href="/privacy">Privacy Policy</Link>
@@ -38,7 +38,7 @@ export default function SiteFooter() {
       </div>
 
       <p className="footer-bottom">
-        Recovery Together does not provide medical treatment, diagnosis, or
+        Just Another Friend does not provide medical treatment, diagnosis, or
         emergency monitoring. If you are in danger, call 911 (US) or go to
         the nearest emergency room.
       </p>

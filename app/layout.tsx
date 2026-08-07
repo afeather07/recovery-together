@@ -11,20 +11,20 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Recovery Together — You do not have to go through this alone",
-    template: "%s — Recovery Together",
+    default: "Just Another Friend — You do not have to go through this alone",
+    template: "%s — Just Another Friend",
   },
   description: DESCRIPTION,
   openGraph: {
-    title: "Recovery Together",
+    title: "Just Another Friend",
     description: "You do not have to go through this alone.",
-    siteName: "Recovery Together",
+    siteName: "Just Another Friend",
     url: SITE_URL,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Recovery Together",
+    title: "Just Another Friend",
     description: "You do not have to go through this alone.",
   },
 };

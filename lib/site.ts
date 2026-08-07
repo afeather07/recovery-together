@@ -1,5 +1,5 @@
 // Single source of truth for the site's public URL. Set NEXT_PUBLIC_SITE_URL
-// in Vercel to switch domains (e.g. after buying a custom domain) without
-// touching code -- falls back to the current Vercel URL if unset.
+// in Vercel to override -- defaults to the production domain now that
+// justanotherfriend.com is purchased and DNS-connected (2026-08-06).
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://recovery-together.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://justanotherfriend.com";

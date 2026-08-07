@@ -83,6 +83,7 @@ textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible {
 .hero { padding: 32px 20px 24px; max-width: 640px; margin: 0 auto; text-align: center; }
 .eyebrow { color: var(--accent); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; }
 .hero h1 { font-size: 32px; line-height: 1.2; margin: 8px 0 12px; }
+.hero-tagline { color: var(--accent); font-size: 18px; font-weight: 600; margin: 0 0 14px; }
 .hero-copy { color: var(--muted); font-size: 17px; margin-bottom: 20px; }
 .hero-actions { display: flex; flex-direction: column; gap: 10px; }
 .primary-btn {

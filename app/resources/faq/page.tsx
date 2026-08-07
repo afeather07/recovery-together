@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Frequently asked questions",
-  description: "What Recovery Together is, what it isn't, and how to use it.",
+  description: "What Just Another Friend is, what it isn't, and how to use it.",
 };
 
 const FAQS = [
   {
-    q: "Is Recovery Together medical treatment?",
+    q: "Is Just Another Friend medical treatment?",
     a: "No. It's peer support — connection with other people who understand what you're going through. It doesn't diagnose, prescribe, provide taper instructions, or replace professional care. See the Safety page for what to do in an emergency.",
   },
   {

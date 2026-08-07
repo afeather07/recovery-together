@@ -3,13 +3,13 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Founder Story",
-  description: "Why the founder of Recovery Together built this.",
+  description: "Why the founder of Just Another Friend built this.",
 };
 
 export default function FounderStoryPage() {
   return (
     <main className="section content-page">
-      <span className="eyebrow">Founder of Recovery Together</span>
+      <span className="eyebrow">Founder of Just Another Friend</span>
       <h1>Why this exists</h1>
 
       <p className="lede">
@@ -29,7 +29,7 @@ export default function FounderStoryPage() {
       </p>
 
       <p>
-        That&apos;s the specific gap Recovery Together is trying to close.
+        That&apos;s the specific gap Just Another Friend is trying to close.
         Not a replacement for medical care — a calm, anonymous place where
         someone in that exact moment can find people who actually understand
         it, without it turning into a whole ordeal and without having to
@@ -57,7 +57,7 @@ export default function FounderStoryPage() {
       </div>
 
       <Link href="/about" className="back-link">
-        ← About Recovery Together
+        ← About Just Another Friend
       </Link>
     </main>
   );

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "What Recovery Together collects, why, and how it's protected.",
+  description: "What Just Another Friend collects, why, and how it's protected.",
 };
 
 export default function PrivacyPage() {

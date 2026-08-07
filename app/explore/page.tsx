@@ -86,7 +86,7 @@ export default function ExplorePage() {
             <div>
               <h2>Frequently asked questions</h2>
               <p className="muted" style={{ margin: "4px 0 0" }}>
-                What Recovery Together is, and isn&apos;t.
+                What Just Another Friend is, and isn&apos;t.
               </p>
             </div>
           </Link>

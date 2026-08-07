@@ -8,6 +8,10 @@ export default function MarketingHome() {
         <section className="hero">
           <div className="eyebrow">Peer support for 7-OH recovery</div>
           <h1>You do not have to go through this alone.</h1>
+          <p className="hero-tagline">
+            Sometimes you don&apos;t need another expert. Sometimes you just
+            need someone who&apos;s been there.
+          </p>
           <p className="hero-copy">
             Join a calm, anonymous community of people preparing to stop, currently
             stopping, or recovering from 7-OH and concentrated kratom products.
@@ -139,7 +143,7 @@ export default function MarketingHome() {
             <span className="eyebrow">Important</span>
             <h2>This is peer support, not medical detox.</h2>
             <p>
-              Recovery Together does not diagnose, prescribe, provide taper instructions,
+              Just Another Friend does not diagnose, prescribe, provide taper instructions,
               or replace professional treatment. If you cannot stay safe, are severely
               dehydrated, have chest pain, trouble breathing, confusion, a seizure, or
               another emergency, call emergency services now. <Link href="/safety">See all resources.</Link>
