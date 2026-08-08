@@ -8,6 +8,10 @@ Ongoing log of public web/news/forum mentions of 7-OH, kratom withdrawal, and re
 
 ---
 
+## 2026-08-08 — morning sweep
+
+One genuine update since yesterday: **North Dakota's kratom ban is now actually in effect** (took effect Wednesday 5:00pm, not just "declared" as reported yesterday), with fines up to $1,000 for violations ([KX News](https://www.kxnet.com/news/local-news/kratom-ban-now-in-effect-in-north-dakota/), [KFYR](https://www.kfyrtv.com/2026/08/05/kratom-ban-goes-into-effect/)). Nothing else genuinely new turned up this pass — the LA County overdose figures, the federal scheduling status, and the Dutchess County vote are the same story already logged 2026-08-07, not new developments. Reddit still can't be checked directly in this environment, same known gap as every prior sweep.
+
 ## 2026-08-07 — morning sweep
 
 New regulatory developments since the last entry, all genuinely new and verifiable:
