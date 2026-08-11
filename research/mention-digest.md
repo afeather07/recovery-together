@@ -8,6 +8,15 @@ Ongoing log of public web/news/forum mentions of 7-OH, kratom withdrawal, and re
 
 ---
 
+## 2026-08-10 — morning sweep
+
+- **Florida's 7-OH ban is being legally challenged in court** ([CBS Miami](https://www.cbsnews.com/miami/news/kratom-7oh-ban-challenge-florida/)) — genuinely new this pass. Didn't verify the specific rule date referenced alongside it in one source (an "August 15" emergency-rule date that doesn't line up with the calendar), so leaving that detail out rather than repeat something that looks internally inconsistent. *No action needed — background only.*
+- **A separate wrongful-death lawsuit was filed by a Kansas couple** against several kratom retailers/brands including OPMS Kratom, alleging their son's death was linked to 7-OH products sold without adequate warnings — a different case from the Missouri lawsuit already logged 2026-08-07. *No action needed, same caution as prior lawsuit mentions: active litigation, not something to reference casually.*
+- **CDC context (not new news, but new to this log):** poison-control centers received 14,449 kratom exposure reports over the past 11 years, roughly a 1,200% increase versus 2015, with a sharp additional spike in 2025 specifically. Useful background if this ever comes up, not an action item.
+- Federal DEA timing itself is unchanged from what's already logged — still the same July 1 notice, still no confirmed Federal Register publication date found this pass.
+
+Nothing here rises to "wake Aaron up for it." Reddit still can't be checked directly in this environment, same known gap as every prior sweep.
+
 ## 2026-08-09 — morning sweep
 
 - **Correction/clarification on federal timing:** a headline surfaced this pass ("DEA blinks on emergency ban") that looked alarming on first read, but checking it directly shows it's about the DEA's **2016** kratom scheduling attempt (withdrawn after public opposition a decade ago), not the current 2026 action — unrelated story, easy to conflate. The actual 2026 status as of 2026-08-07: the temporary Schedule I order has **not** been withdrawn, but had also not yet appeared in the Federal Register as of that date — delayed, not cancelled, still genuinely uncertain on exact timing ([Bicycle Health tracker](https://www.bicyclehealth.com/kratom/7-oh-legal-status-2026)). Flagging this correction so a wrong impression doesn't carry forward into anything Aaron references.
