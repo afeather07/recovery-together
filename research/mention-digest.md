@@ -8,6 +8,15 @@ Ongoing log of public web/news/forum mentions of 7-OH, kratom withdrawal, and re
 
 ---
 
+## 2026-08-09 — morning sweep
+
+- **Correction/clarification on federal timing:** a headline surfaced this pass ("DEA blinks on emergency ban") that looked alarming on first read, but checking it directly shows it's about the DEA's **2016** kratom scheduling attempt (withdrawn after public opposition a decade ago), not the current 2026 action — unrelated story, easy to conflate. The actual 2026 status as of 2026-08-07: the temporary Schedule I order has **not** been withdrawn, but had also not yet appeared in the Federal Register as of that date — delayed, not cancelled, still genuinely uncertain on exact timing ([Bicycle Health tracker](https://www.bicyclehealth.com/kratom/7-oh-legal-status-2026)). Flagging this correction so a wrong impression doesn't carry forward into anything Aaron references.
+- **North Dakota's ban is tied to a reported 23 deaths attributed to 7-OH** in that state specifically, per local coverage ([KX News](https://www.kxnet.com/news/local-news/were-treating-it-like-any-other-illegal-drug-chief-stugelmeyer-on-kratom/)) — a specific, notable number not previously in this log; treat as reported/attributed rather than independently verified, same caution as the earlier "6 fatal overdoses" item. *No action needed, just useful context if this comes up in a room or a comment.*
+- **The Hill reports two more states are expected to ban kratom soon** ([source](https://thehill.com/homenews/state-watch/5926408-why-2-more-states-will-soon-ban-kratom-a-potentially-addictive-herbal-product/)) — specific states not confirmed in this pass, general trend-continuation only.
+- Tennessee's full ban and Utah's ban are both already in effect (since July 1 and earlier respectively) — background context, not new this pass.
+
+Nothing here rises to "wake Aaron up for it." Reddit still can't be checked directly in this environment, same known gap as every prior sweep.
+
 ## 2026-08-08 — morning sweep
 
 One genuine update since yesterday: **North Dakota's kratom ban is now actually in effect** (took effect Wednesday 5:00pm, not just "declared" as reported yesterday), with fines up to $1,000 for violations ([KX News](https://www.kxnet.com/news/local-news/kratom-ban-now-in-effect-in-north-dakota/), [KFYR](https://www.kfyrtv.com/2026/08/05/kratom-ban-goes-into-effect/)). Nothing else genuinely new turned up this pass — the LA County overdose figures, the federal scheduling status, and the Dutchess County vote are the same story already logged 2026-08-07, not new developments. Reddit still can't be checked directly in this environment, same known gap as every prior sweep.
