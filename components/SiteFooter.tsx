@@ -22,6 +22,7 @@ export default function SiteFooter() {
           <div>
             <h3>Support</h3>
             <Link href="/resources">Recovery Library</Link>
+            <Link href="/7oh-withdrawal">7-OH Withdrawal Guide</Link>
             <Link href="/safety">Safety &amp; crisis resources</Link>
             <Link href="/resources/faq">FAQ</Link>
             <Link href="/contact">Contact</Link>

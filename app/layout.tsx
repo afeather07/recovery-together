@@ -15,6 +15,9 @@ export const metadata: Metadata = {
     template: "%s — Just Another Friend",
   },
   description: DESCRIPTION,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Just Another Friend",
     description: "You do not have to go through this alone.",

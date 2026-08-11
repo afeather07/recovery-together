@@ -3,6 +3,7 @@ import { SITE_URL } from "@/lib/site";
 
 const ROUTES = [
   "",
+  "/7oh-withdrawal",
   "/explore",
   "/journey",
   "/resources",

@@ -9,6 +9,11 @@ export const metadata: Metadata = {
 
 const RESOURCES = [
   {
+    href: "/7oh-withdrawal",
+    title: "7-OH Withdrawal: What It Is and What to Expect",
+    description: "A plain-language starting point — what 7-OH is, commonly reported symptoms, and where to find support.",
+  },
+  {
     href: "/resources/withdrawal-timeline",
     title: "What withdrawal can look like",
     description: "A general, non-clinical picture of how symptoms tend to change over the first weeks.",

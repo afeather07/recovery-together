@@ -22,7 +22,8 @@
 - [ ] **Set up a real `@justanotherfriend.com` (or similar) contact email** and update `app/contact/page.tsx` — deliberately left unset rather than publish a fake address. Nothing code-side blocks this; just needs Aaron to create the address (e.g. via the domain registrar's free email forwarding, already active for this domain at Porkbun, or a real mailbox provider) and tell Claude the address to wire in.
 - [ ] **Get a free Resend API key** (resend.com, 100 emails/day free) if/when reply-notification emails should start sending — the system is fully built and wired, silently no-ops until `RESEND_API_KEY` and `EMAIL_NOTIFICATIONS_ENABLED=true` are set in Vercel. Not needed to launch.
 - [ ] **Review the draft legal pages** (`/community-guidelines`, `/privacy`, `/terms`) — say "Draft" on-page until Aaron signs off.
-- [ ] **Rotate the Porkbun and GitHub credentials** pasted in plaintext chat this session, once convenient — used carefully (stored outside the repo, never committed, never re-printed) but plaintext-in-chat isn't ideal hygiene long-term.
+- [ ] **Rotate the Porkbun and GitHub credentials** pasted in plaintext chat this session, once convenient — used carefully (stored outside the repo, never committed, never re-printed) but plaintext-in-chat isn't ideal hygiene long-term. The GitHub token specifically appears already invalid as of 2026-08-09 (`git push` gets "Invalid username or token" directly from GitHub) — a fresh one is needed for Claude to push again, not just a rotation nicety.
+- [ ] **Set up Google Search Console**: go to search.google.com/search-console → Add property → Domain → `justanotherfriend.com` → it gives you a DNS TXT record → send Claude that value and it'll add it to Porkbun directly (already connected) → once verified, submit `https://justanotherfriend.com/sitemap.xml` under Sitemaps. ~10 minutes total, needs your Google account.
 
 ## Needs your opinion, not your technical work
 
