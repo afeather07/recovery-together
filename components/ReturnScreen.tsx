@@ -222,12 +222,6 @@ export default function ReturnScreen({ onNoSession }: { onNoSession: () => void 
     setShowStagePrompt(false);
   }
 
-  async function startFreshAnonymous() {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    window.location.reload();
-  }
-
   if (loading) {
     return (
       <main className="return-screen return-screen-loading">
@@ -246,9 +240,9 @@ export default function ReturnScreen({ onNoSession }: { onNoSession: () => void 
       <section className="hero return-hero">
         <div className="return-hero-top">
           <span className="eyebrow">Welcome back</span>
-          <button className="link-btn" onClick={startFreshAnonymous}>
-            Not you? Start fresh
-          </button>
+          <a className="link-btn" href="/profile" style={{ textDecoration: "underline" }}>
+            Settings
+          </a>
         </div>
         <h1>Good to see you, {nickname}.</h1>
 

@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 // Constant-time comparison via fixed-length hashes -- avoids both a
@@ -8,6 +9,39 @@ function safeEqual(a: string, b: string) {
   const ah = crypto.createHash("sha256").update(a).digest();
   const bh = crypto.createHash("sha256").update(b).digest();
   return crypto.timingSafeEqual(ah, bh);
+}
+
+// Re-verifies the admin key server-side on every moderation action -- the
+// page-level gate above only protects the initial render, not a form POST.
+function requireAdminKey(key: FormDataEntryValue | null) {
+  const expected = process.env.ADMIN_KEY;
+  if (!expected || typeof key !== "string" || !safeEqual(key, expected)) {
+    throw new Error("unauthorized");
+  }
+}
+
+async function dismissReport(formData: FormData) {
+  "use server";
+  const key = formData.get("key");
+  requireAdminKey(key);
+  const reportId = formData.get("report_id") as string;
+  const admin = createAdminClient();
+  await admin.from("reports").update({ status: "dismissed" }).eq("id", reportId);
+  redirect(`/admin?key=${encodeURIComponent(key as string)}`);
+}
+
+async function removeReportedContent(formData: FormData) {
+  "use server";
+  const key = formData.get("key");
+  requireAdminKey(key);
+  const reportId = formData.get("report_id") as string;
+  const targetType = formData.get("target_type") as string;
+  const targetId = formData.get("target_id") as string;
+  const admin = createAdminClient();
+  const table = targetType === "post" ? "posts" : "replies";
+  await admin.from(table).delete().eq("id", targetId);
+  await admin.from("reports").update({ status: "reviewed" }).eq("id", reportId);
+  redirect(`/admin?key=${encodeURIComponent(key as string)}`);
 }
 
 // Minimal, password-gated moderation view. Not linked from the public site.
@@ -61,12 +95,27 @@ export default async function AdminPage({
           </p>
           <p><strong>Content:</strong> {r.content?.body || "(not found, may be deleted)"}</p>
           <p style={{ fontSize: 12, color: "var(--muted)" }}>author_id: {r.content?.author_id}</p>
+          <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+            <form action={dismissReport}>
+              <input type="hidden" name="key" value={key} />
+              <input type="hidden" name="report_id" value={r.id} />
+              <button className="secondary-btn" type="submit">Dismiss (nothing wrong)</button>
+            </form>
+            <form action={removeReportedContent}>
+              <input type="hidden" name="key" value={key} />
+              <input type="hidden" name="report_id" value={r.id} />
+              <input type="hidden" name="target_type" value={r.target_type} />
+              <input type="hidden" name="target_id" value={r.target_id} />
+              <button
+                type="submit"
+                style={{ background: "none", border: "1px solid var(--danger)", color: "var(--danger)", borderRadius: 8, padding: "10px 14px", cursor: "pointer", fontWeight: 600 }}
+              >
+                Delete content
+              </button>
+            </form>
+          </div>
         </div>
       ))}
-      <p style={{ fontSize: 13, color: "var(--muted)" }}>
-        To dismiss or act on a report, use the Supabase table editor for now — this
-        view is read-only in the MVP.
-      </p>
     </main>
   );
 }

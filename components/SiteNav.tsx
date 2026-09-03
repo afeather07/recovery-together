@@ -9,6 +9,7 @@ const LINKS = [
   { href: "/journey", label: "My Journey" },
   { href: "/resources", label: "Resources" },
   { href: "/safety", label: "Safety" },
+  { href: "/profile", label: "Settings" },
 ];
 
 export default function SiteNav() {
