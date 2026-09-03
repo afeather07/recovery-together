@@ -45,6 +45,17 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
+  const supabase = createAdminClient();
+
+  // Touch the database on every run, even when email notifications are off
+  // below. Supabase's free tier auto-pauses a project after ~7 days with no
+  // activity -- before this, an email-notifications-disabled deploy meant
+  // this cron short-circuited before ever querying Supabase, so nothing was
+  // keeping the project awake and it silently paused (found + fixed
+  // 2026-09-03, see PROJECT_LOG.md). This query is free and trivial either
+  // way, so it always runs first.
+  await supabase.from("app_config").select("id").limit(1);
+
   if (
     process.env.EMAIL_NOTIFICATIONS_ENABLED !== "true" ||
     !process.env.RESEND_API_KEY
@@ -55,7 +66,6 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  const supabase = createAdminClient();
   let digestsSent = 0;
   let reengagementsSent = 0;
 
