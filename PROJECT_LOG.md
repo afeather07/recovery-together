@@ -6,6 +6,15 @@ This file is for depth. For "what's the state right now and what do I need to do
 
 ---
 
+### 2026-09-03 — Usability audit: two missing interfaces shipped, content/marketing status checked
+Same session as the outage fix below, continued: Aaron asked for a broader pass -- missing interfaces, general improvement, content gaps, and getting the site found and used. Audited the app page by page rather than guessing at what "lacking interfaces" meant.
+
+Found two real, concrete gaps and shipped both: nothing existed to manage your profile after onboarding (couldn't change your nickname, couldn't turn reply-notification email on/off/change it without going back through a first-post prompt that only fires once), and `/admin` was read-only -- a moderator had to switch to the Supabase table editor to actually dismiss a report or remove content, real friction against the "basic moderation controls" MVP requirement. Built `/profile` (nickname edit, notify-email set/clear, sign out) and added working dismiss/delete actions to `/admin` with the admin key re-verified server-side on each action (the page-level gate alone only protected the initial page load, not a form POST). Both linked from the nav; build and `tsc --noEmit` clean, 34/34 routes.
+
+Checked content next rather than assuming a gap existed: the Recovery Library (11 articles), FAQ, and glossary are already thorough, plain-language, and correctly cross-linked from `/resources`. Didn't add filler content for its own sake -- nothing found worth writing that wasn't already there.
+
+Checked what "market it" can actually mean from inside this environment: growth assets are fully drafted and have been sitting ready in `research/ready-to-post-kit.md` and `research/growth-targets.md` since 2026-08-06, but posting to Reddit/Facebook groups requires Aaron's own accounts and identity -- not something to do on his behalf without explicit execution, same standing rule as every prior session about not posting/publishing autonomously. Google Search Console similarly needs his Google login. Made sure `FOUNDER_ACTION_ITEMS.md` states plainly that this is now the only real gap between the product and actual users, not more code.
+
 ### 2026-09-03 — Production outage: Supabase auto-paused, found and fixed
 Aaron reported the site broken and specifically that there was no way to see if anyone had replied to him -- reported after a gap between sessions with no traffic to the site. Audited the whole stack rather than guessing at the specific symptom. Found the real cause: the Supabase project had auto-paused (`status: INACTIVE`) from the free tier's idle-7-days behavior documented in `PRINCIPLES.md`'s cost table -- this takes down the entire site (auth, posting, replying, everything), which looks identical to "nothing works" no matter which specific feature someone tries first. Restored it via the Supabase API (`restore_project`); confirmed `ACTIVE_HEALTHY` afterward with real data intact (9 profiles, 4 posts, 4 replies untouched) and RLS/security advisors showing only the already-reviewed intentional items plus one irrelevant leaked-password-protection warning (this app has no passwords).
 
