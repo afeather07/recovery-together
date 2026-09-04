@@ -9,6 +9,11 @@ export const metadata: Metadata = {
 
 const RESOURCES = [
   {
+    href: "/updates",
+    title: "News & legal updates",
+    description: "Real headlines on bans, scheduling, and legislation, refreshed automatically every day.",
+  },
+  {
     href: "/7oh-withdrawal",
     title: "7-OH Withdrawal: What It Is and What to Expect",
     description: "A plain-language starting point — what 7-OH is, commonly reported symptoms, and where to find support.",
