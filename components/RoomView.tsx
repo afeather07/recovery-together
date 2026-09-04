@@ -8,6 +8,36 @@ type PostRow = { id: string; room_id: string; author_id: string; body: string; c
 
 const EPOCH = "1970-01-01T00:00:00Z";
 
+function ReportForm({
+  reason,
+  setReason,
+  onSubmit,
+  onCancel,
+}: {
+  reason: string;
+  setReason: (v: string) => void;
+  onSubmit: () => void;
+  onCancel: () => void;
+}) {
+  return (
+    <div style={{ marginTop: 8, display: "flex", gap: 8, flexWrap: "wrap" }}>
+      <input
+        placeholder="What's wrong with this? (optional, helps a moderator triage it)"
+        value={reason}
+        onChange={(e) => setReason(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && onSubmit()}
+        style={{ flex: 1, minWidth: 200, padding: "6px 10px", borderRadius: 8, border: "1px solid var(--muted)", fontSize: 13 }}
+      />
+      <button className="secondary-btn" onClick={onSubmit} style={{ padding: "6px 10px" }}>
+        Send report
+      </button>
+      <button className="link-btn" onClick={onCancel}>
+        Cancel
+      </button>
+    </div>
+  );
+}
+
 export default function RoomView({ slug }: { slug: string }) {
   const supabase = useMemo(() => createClient(), []);
   const [userId, setUserId] = useState<string | null>(null);
@@ -21,6 +51,8 @@ export default function RoomView({ slug }: { slug: string }) {
   const [notice, setNotice] = useState("");
   const [showEmailPrompt, setShowEmailPrompt] = useState(false);
   const [emailDraft, setEmailDraft] = useState("");
+  const [reporting, setReporting] = useState<{ targetType: "post" | "reply"; targetId: string } | null>(null);
+  const [reportReason, setReportReason] = useState("");
   // Snapshot of "when I was last actually here," captured before this visit
   // overwrites it below -- lets a crowded room highlight exactly which of my
   // posts got a reply since then, instead of making someone scan everything.
@@ -167,11 +199,22 @@ export default function RoomView({ slug }: { slug: string }) {
     await supabase.from("replies").insert({ post_id: postId, author_id: userId, body });
   }
 
-  async function report(targetType: "post" | "reply", targetId: string) {
-    if (!userId) return;
-    await supabase.from("reports").insert({ reporter_id: userId, target_type: targetType, target_id: targetId, reason: "user_reported" });
-    setNotice("Reported. A moderator will review this.");
-    setTimeout(() => setNotice(""), 3000);
+  async function submitReport() {
+    if (!userId || !reporting) return;
+    // Reason is invited, not forced -- someone reporting something urgent
+    // shouldn't be blocked behind a required field, but a short "why"
+    // lets a moderator triage severity instead of one undifferentiated
+    // queue (a specific, named gap in comparable apps' own user reviews).
+    await supabase.from("reports").insert({
+      reporter_id: userId,
+      target_type: reporting.targetType,
+      target_id: reporting.targetId,
+      reason: reportReason.trim() || null,
+    });
+    setReporting(null);
+    setReportReason("");
+    setNotice("Reported. A real person reviews every report — thank you for flagging it.");
+    setTimeout(() => setNotice(""), 4000);
   }
 
   async function deletePost(postId: string) {
@@ -258,13 +301,16 @@ export default function RoomView({ slug }: { slug: string }) {
                       </button>
                     ) : (
                       <button
-                        onClick={() => report("post", post.id)}
+                        onClick={() => { setReporting({ targetType: "post", targetId: post.id }); setReportReason(""); }}
                         style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
                       >
                         Report
                       </button>
                     )}
                   </div>
+                  {reporting?.targetType === "post" && reporting.targetId === post.id && (
+                    <ReportForm reason={reportReason} setReason={setReportReason} onSubmit={submitReport} onCancel={() => setReporting(null)} />
+                  )}
                 </div>
               </div>
 
@@ -284,11 +330,14 @@ export default function RoomView({ slug }: { slug: string }) {
                         </button>
                       ) : (
                         <button
-                          onClick={() => report("reply", reply.id)}
+                          onClick={() => { setReporting({ targetType: "reply", targetId: reply.id }); setReportReason(""); }}
                           style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
                         >
                           Report
                         </button>
+                      )}
+                      {reporting?.targetType === "reply" && reporting.targetId === reply.id && (
+                        <ReportForm reason={reportReason} setReason={setReportReason} onSubmit={submitReport} onCancel={() => setReporting(null)} />
                       )}
                     </div>
                   </div>
@@ -316,6 +365,12 @@ export default function RoomView({ slug }: { slug: string }) {
           onChange={(e) => setDraft(e.target.value)}
         />
         <button className="primary-btn" onClick={submitPost}>Post</button>
+        <p style={{ fontSize: 12, color: "var(--muted)", margin: 0, textAlign: "center" }}>
+          In crisis right now?{" "}
+          <a href="/safety" style={{ color: "var(--danger)", fontWeight: 600 }}>
+            Call/text 988, or see all safety resources
+          </a>
+        </p>
       </div>
 
       {showEmailPrompt && (

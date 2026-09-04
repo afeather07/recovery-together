@@ -303,3 +303,29 @@ grant all privileges on public.room_visits to service_role;
 -- once ever per person, regardless of cron timing drift.
 alter table public.profile_private
   add column if not exists reengagement_sent_at timestamptz;
+
+-- ---------------------------------------------------------------------------
+-- Legality/news updates (2026-09-04)
+-- ---------------------------------------------------------------------------
+-- Real headlines only, fetched from public news RSS by the daily cron
+-- (app/api/cron/daily-digest/route.ts) -- never AI-generated or hand-written,
+-- consistent with never presenting fabricated activity/content as real. This
+-- is uncurated external content: it's linked out, not vetted or endorsed
+-- (see the disclaimer on the /updates page).
+create table if not exists public.news_items (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  url text not null unique,
+  source text,
+  published_at timestamptz,
+  fetched_at timestamptz not null default now(),
+  query_tag text
+);
+
+alter table public.news_items enable row level security;
+
+create policy "news_items readable by anyone" on public.news_items
+  for select using (true);
+
+grant select on public.news_items to anon, authenticated;
+grant all privileges on public.news_items to service_role;

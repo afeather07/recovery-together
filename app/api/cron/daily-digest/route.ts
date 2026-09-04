@@ -25,6 +25,71 @@ async function sendEmail(to: string, subject: string, text: string) {
   }
 }
 
+// Google News' public RSS search -- no API key, no cost, no account. Real
+// headlines only: this never generates or paraphrases content, it links out
+// to real articles as-is (see /updates' disclaimer). Kept to a manual regex
+// parse rather than adding an XML-parsing dependency for a handful of tags.
+const NEWS_QUERIES: { tag: string; query: string }[] = [
+  { tag: "legal", query: "7-OH OR kratom ban OR kratom legislation OR DEA scheduling" },
+  { tag: "general", query: "kratom 7-hydroxymitragynine news" },
+];
+const NEWS_KEEP_COUNT = 60;
+
+async function fetchNewsQuery(query: string, tag: string) {
+  const url = `https://news.google.com/rss/search?q=${encodeURIComponent(
+    query
+  )}&hl=en-US&gl=US&ceid=US:en`;
+  try {
+    const res = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" } });
+    if (!res.ok) return [];
+    const xml = await res.text();
+    const items: { title: string; url: string; source: string | null; published_at: string | null; query_tag: string }[] = [];
+    for (const block of xml.split("<item>").slice(1, 9)) {
+      const title = block.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.replace(/<!\[CDATA\[|\]\]>/g, "").trim();
+      const link = block.match(/<link>([\s\S]*?)<\/link>/)?.[1]?.trim();
+      const pubDate = block.match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1]?.trim();
+      const source = block.match(/<source[^>]*>([\s\S]*?)<\/source>/)?.[1]?.replace(/<!\[CDATA\[|\]\]>/g, "").trim();
+      if (!title || !link) continue;
+      const parsedDate = pubDate ? new Date(pubDate) : null;
+      items.push({
+        title,
+        url: link,
+        source: source || null,
+        published_at: parsedDate && !isNaN(parsedDate.getTime()) ? parsedDate.toISOString() : null,
+        query_tag: tag,
+      });
+    }
+    return items;
+  } catch {
+    // A broken feed or network hiccup shouldn't break the whole cron run --
+    // the page just keeps showing whatever it already has.
+    return [];
+  }
+}
+
+async function refreshNews(supabase: ReturnType<typeof createAdminClient>) {
+  const allItems = (
+    await Promise.all(NEWS_QUERIES.map((q) => fetchNewsQuery(q.query, q.tag)))
+  ).flat();
+  if (!allItems.length) return 0;
+
+  await supabase.from("news_items").upsert(allItems, { onConflict: "url", ignoreDuplicates: true });
+
+  // Prune to the most recent NEWS_KEEP_COUNT so the page (and the table)
+  // stay small -- this is a rolling feed, not an archive.
+  const { data: keep } = await supabase
+    .from("news_items")
+    .select("id")
+    .order("published_at", { ascending: false, nullsFirst: false })
+    .limit(NEWS_KEEP_COUNT);
+  const keepIds = (keep || []).map((r) => r.id);
+  if (keepIds.length) {
+    await supabase.from("news_items").delete().not("id", "in", `(${keepIds.join(",")})`);
+  }
+
+  return allItems.length;
+}
+
 // Daily digest of reply notifications, plus at most one non-judgmental
 // re-engagement email per person. Runs once a day (Vercel Hobby cron
 // limit), which conveniently matches the design decision to batch
@@ -56,6 +121,11 @@ export async function GET(req: NextRequest) {
   // way, so it always runs first.
   await supabase.from("app_config").select("id").limit(1);
 
+  // Refresh the legality/news feed every run, independent of the email
+  // gate below -- it's free (no API key, no AI call) and is its own
+  // feature, not part of the notification system.
+  const newsFetched = await refreshNews(supabase);
+
   if (
     process.env.EMAIL_NOTIFICATIONS_ENABLED !== "true" ||
     !process.env.RESEND_API_KEY
@@ -63,6 +133,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({
       skipped: true,
       reason: "email notifications not enabled",
+      newsFetched,
     });
   }
 
@@ -150,5 +221,5 @@ export async function GET(req: NextRequest) {
     reengagementsSent += 1;
   }
 
-  return NextResponse.json({ digestsSent, reengagementsSent });
+  return NextResponse.json({ digestsSent, reengagementsSent, newsFetched });
 }

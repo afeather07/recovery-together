@@ -94,6 +94,7 @@ export default async function AdminPage({
             {r.target_type} · reported {new Date(r.created_at).toLocaleString()}
           </p>
           <p><strong>Content:</strong> {r.content?.body || "(not found, may be deleted)"}</p>
+          {r.reason && <p><strong>Reporter said:</strong> {r.reason}</p>}
           <p style={{ fontSize: 12, color: "var(--muted)" }}>author_id: {r.content?.author_id}</p>
           <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
             <form action={dismissReport}>

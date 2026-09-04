@@ -7,6 +7,7 @@ const ROUTES = [
   "/explore",
   "/journey",
   "/resources",
+  "/updates",
   "/resources/withdrawal-timeline",
   "/resources/sleep",
   "/resources/hydration-nutrition",
