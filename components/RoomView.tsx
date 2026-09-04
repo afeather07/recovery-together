@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { STAGE_CONTEXT, STAGE_RESOURCE } from "@/lib/stage-resource";
 
 type Profile = { id: string; nickname: string; avatar_seed: string };
 type ReplyRow = { id: string; post_id: string; author_id: string; body: string; created_at: string };
@@ -257,6 +258,18 @@ export default function RoomView({ slug }: { slug: string }) {
     <main className="section" style={{ maxWidth: 640, margin: "0 auto" }}>
       <span className="eyebrow">{room.stage_label}</span>
       <h1>{room.name}</h1>
+
+      {STAGE_CONTEXT[room.stage_label] && (
+        <div className="room-context">
+          <p>{STAGE_CONTEXT[room.stage_label]}</p>
+          {STAGE_RESOURCE[room.stage_label] && (
+            <a href={STAGE_RESOURCE[room.stage_label].href} className="room-context-link">
+              {STAGE_RESOURCE[room.stage_label].label} →
+            </a>
+          )}
+        </div>
+      )}
+
       {notice && <p style={{ color: "var(--accent)" }}>{notice}</p>}
 
       {myUnreadPostIds.length > 0 && (
@@ -286,10 +299,10 @@ export default function RoomView({ slug }: { slug: string }) {
                   : {}),
               }}
             >
-              <div className="message">
-                <span className="avatar">{profiles[post.author_id]?.avatar_seed || "?"}</span>
+              <div className={post.author_id === userId ? "message message-own" : "message"}>
+                <span className={post.author_id === userId ? "avatar avatar-own" : "avatar"}>{profiles[post.author_id]?.avatar_seed || "?"}</span>
                 <div style={{ flex: 1 }}>
-                  <strong>{profiles[post.author_id]?.nickname || "Someone"}</strong>
+                  <strong>{profiles[post.author_id]?.nickname || "Someone"}{post.author_id === userId ? " (you)" : ""}</strong>
                   <p>{post.body}</p>
                   <div style={{ display: "flex", gap: 12 }}>
                     {post.author_id === userId ? (
@@ -316,10 +329,10 @@ export default function RoomView({ slug }: { slug: string }) {
 
               <div style={{ marginLeft: 38, marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
                 {replies.filter((r) => r.post_id === post.id).map((reply) => (
-                  <div className="message" key={reply.id}>
-                    <span className="avatar">{profiles[reply.author_id]?.avatar_seed || "?"}</span>
+                  <div className={reply.author_id === userId ? "message message-own" : "message"} key={reply.id}>
+                    <span className={reply.author_id === userId ? "avatar avatar-own" : "avatar"}>{profiles[reply.author_id]?.avatar_seed || "?"}</span>
                     <div style={{ flex: 1 }}>
-                      <strong>{profiles[reply.author_id]?.nickname || "Someone"}</strong>
+                      <strong>{profiles[reply.author_id]?.nickname || "Someone"}{reply.author_id === userId ? " (you)" : ""}</strong>
                       <p>{reply.body}</p>
                       {reply.author_id === userId ? (
                         <button

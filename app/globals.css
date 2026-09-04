@@ -4,8 +4,11 @@
   --muted: #5b6270;
   --accent: #3f6b5c;
   --accent-soft: #e7efe9;
+  --accent-deep: #2c4d42;
   --danger: #b3413a;
   --radius: 16px;
+  --shadow-sm: 0 1px 2px rgba(31, 36, 48, 0.05), 0 1px 1px rgba(31, 36, 48, 0.04);
+  --shadow-md: 0 6px 16px rgba(31, 36, 48, 0.08), 0 1px 2px rgba(31, 36, 48, 0.05);
   color-scheme: light;
 }
 
@@ -89,6 +92,7 @@ textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible {
 .primary-btn {
   background: var(--accent); color: white; border: none; border-radius: 999px;
   padding: 16px 20px; font-size: 17px; font-weight: 600; cursor: pointer;
+  box-shadow: 0 4px 12px rgba(63, 107, 92, 0.28);
 }
 .secondary-btn { color: var(--accent); text-decoration: none; font-weight: 600; padding: 10px; }
 .microcopy { color: var(--muted); font-size: 13px; margin-top: 14px; }
@@ -100,10 +104,10 @@ textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible {
 .section { padding: 32px 20px; max-width: 640px; margin: 0 auto; }
 .section-heading h2 { font-size: 22px; margin: 6px 0 20px; }
 .steps { display: flex; flex-direction: column; gap: 16px; }
-.steps article { background: white; border-radius: var(--radius); padding: 16px; }
+.steps article { background: white; border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow-sm); }
 .step-number { display: inline-block; background: var(--accent); color: white; border-radius: 999px; width: 24px; height: 24px; text-align: center; line-height: 24px; font-size: 13px; margin-bottom: 8px; }
 
-.chat-card { background: white; border-radius: var(--radius); overflow: hidden; margin-top: 16px; }
+.chat-card { background: white; border-radius: var(--radius); overflow: hidden; margin-top: 16px; box-shadow: var(--shadow-md); }
 .chat-header { display: flex; justify-content: space-between; padding: 14px 16px; background: var(--accent-soft); }
 .status-dot { color: var(--accent); font-size: 12px; font-weight: 600; }
 .status-dot.example-dot { color: var(--muted, #6b7280); }
@@ -111,7 +115,24 @@ textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible {
 .messages { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
 .message { display: flex; gap: 10px; }
 .avatar { background: var(--accent); color: white; border-radius: 999px; width: 28px; height: 28px; text-align: center; line-height: 28px; font-size: 13px; flex-shrink: 0; }
+.avatar-own { background: var(--ink); }
 .message p { margin: 2px 0 0; font-size: 15px; }
+.message-own p {
+  background: var(--accent-soft); display: inline-block; padding: 8px 12px;
+  border-radius: 4px 14px 14px 14px; margin-top: 4px;
+}
+
+/* Per-room context: the "what this stage tends to involve" card, gives a
+   room real substance beyond a bare chat log -- see lib/stage-resource.ts */
+.room-context {
+  background: var(--accent-deep); color: white; border-radius: var(--radius);
+  padding: 16px 18px; margin: 14px 0 0; box-shadow: var(--shadow-md);
+}
+.room-context p { margin: 0; font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,0.92); }
+.room-context-link {
+  display: inline-block; margin-top: 10px; color: white; font-weight: 600;
+  font-size: 13.5px; text-decoration: underline;
+}
 .room-btn { width: 100%; border: none; background: var(--ink); color: white; padding: 14px; font-size: 15px; font-weight: 600; cursor: pointer; }
 .room-btn.full { border-radius: 999px; }
 
@@ -154,7 +175,9 @@ label { font-size: 13px; color: var(--muted); display: flex; flex-direction: col
   display: flex; justify-content: space-between; align-items: center;
   background: white; border-radius: var(--radius); padding: 14px 16px;
   text-decoration: none; color: var(--ink); font-weight: 600;
+  box-shadow: var(--shadow-sm); transition: box-shadow 0.15s ease;
 }
+.past-room-item:hover { box-shadow: var(--shadow-md); }
 .unread-badge {
   background: var(--accent); color: white; border-radius: 999px;
   padding: 4px 10px; font-size: 12px; font-weight: 600;
@@ -164,7 +187,9 @@ label { font-size: 13px; color: var(--muted); display: flex; flex-direction: col
 .recap-item {
   display: block; background: white; border-radius: var(--radius); padding: 14px 16px;
   text-decoration: none; color: var(--ink);
+  box-shadow: var(--shadow-sm); transition: box-shadow 0.15s ease;
 }
+.recap-item:hover { box-shadow: var(--shadow-md); }
 .recap-item strong { display: block; font-size: 14px; margin-bottom: 4px; }
 .recap-item span { display: block; font-size: 14px; color: var(--muted); }
 .needs-reply .recap-item { border-left: 3px solid var(--accent); }
@@ -178,7 +203,7 @@ label { font-size: 13px; color: var(--muted); display: flex; flex-direction: col
 .welcome-section { }
 .founder-note {
   background: white; border-radius: var(--radius); padding: 20px;
-  margin-bottom: 18px;
+  margin-bottom: 18px; box-shadow: var(--shadow-md);
 }
 .founder-quote { font-size: 17px; font-style: italic; color: var(--ink); margin: 0 0 12px; }
 .welcome-status { color: var(--muted); font-size: 14.5px; margin-bottom: 24px; }
@@ -190,7 +215,9 @@ label { font-size: 13px; color: var(--muted); display: flex; flex-direction: col
   display: flex; justify-content: space-between; align-items: center; gap: 12px;
   background: white; border-radius: var(--radius); padding: 16px;
   text-decoration: none; color: var(--ink);
+  box-shadow: var(--shadow-sm); transition: box-shadow 0.15s ease;
 }
+.explore-card:hover { box-shadow: var(--shadow-md); }
 .explore-card h2 { font-size: 17px; margin: 4px 0 0; }
 .explore-card p { margin: 4px 0 0; font-size: 13px; }
 .explore-meta { color: var(--muted); font-size: 13px; white-space: nowrap; flex-shrink: 0; }
@@ -200,8 +227,10 @@ label { font-size: 13px; color: var(--muted); display: flex; flex-direction: col
 .resource-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 8px; }
 .resource-card {
   display: block; background: white; border-radius: var(--radius); padding: 18px;
-  text-decoration: none; color: var(--ink);
+  text-decoration: none; color: var(--ink); border-left: 3px solid var(--accent);
+  box-shadow: var(--shadow-sm); transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
+.resource-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
 .resource-card h2 { font-size: 17px; margin: 4px 0 6px; }
 .resource-card p { margin: 0; font-size: 14px; color: var(--muted); }
 @media (min-width: 720px) {
@@ -241,10 +270,10 @@ label { font-size: 13px; color: var(--muted); display: flex; flex-direction: col
 .journey-empty .primary-btn.full { display: inline-block; text-decoration: none; margin-top: 18px; }
 
 /* FAQ */
-.faq-item { background: white; border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+.faq-item { background: white; border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; box-shadow: var(--shadow-sm); }
 .faq-item summary { font-weight: 600; cursor: pointer; font-size: 15.5px; }
 .faq-item p { margin: 10px 0 0; color: var(--muted); }
 
 /* Contact */
-.contact-card { background: white; border-radius: var(--radius); padding: 18px; margin-bottom: 12px; }
+.contact-card { background: white; border-radius: var(--radius); padding: 18px; margin-bottom: 12px; box-shadow: var(--shadow-sm); }
 .contact-card strong { display: block; margin-bottom: 4px; }
