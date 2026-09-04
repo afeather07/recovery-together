@@ -6,6 +6,13 @@ This file is for depth. For "what's the state right now and what do I need to do
 
 ---
 
+### 2026-09-04 — Crowded-room reply findability; location grouping explicitly declined
+Aaron pushed further on usability after confirming the outage fix worked: specifically, no way to tell which of your posts got a reply once a room fills up with other people's check-ins, and separately, an idea about grouping people by geographic area.
+
+Shipped the first one directly -- it's a straightforward, safe UX gap. `RoomView.tsx` now reads the viewer's previous `room_visits.last_seen_at` *before* overwriting it with the current visit (previously it only ever wrote, never read, so there was no baseline to diff against), uses that to compute which of the viewer's own posts got a reply since then, and surfaces it two ways: a highlighted left-border/background on those specific posts, and a sticky "N new replies to you" button that scrolls straight to each one in turn (cycling through if there's more than one). Reuses the existing `room_visits` table -- no new schema. Build and `tsc --noEmit` clean, 34/34 routes.
+
+Did not build the second one without asking first. Location-based grouping runs straight into `PRINCIPLES.md`'s explicit rule: "Nearby matching and in-person meetups are deferred until identity, consent, blocking, reporting, age restrictions, and safety controls are designed." None of those prerequisites exist -- there's no user-blocking feature at all (reporting only), no age gate. This audience is managing a stigmatized health condition; a "who's near me" feature in a small town is a real outing risk, not a hypothetical one. Presented that plainly with a recommendation to skip it, offered the safer stopgap alternative (a non-matching, self-reported region tag) as a fallback option, and Aaron confirmed: skip it for now. Logged in `FOUNDER_ACTION_ITEMS.md` as an explicit, dated decision rather than silently dropped or silently built -- exactly the kind of call `PRINCIPLES.md` and `CLAUDE.md` say is Aaron's to make, not something to infer from an in-chat "sounds good." Added user-blocking to the "Later" backlog as the real, standalone gap it is regardless of location grouping, since it's the specific prerequisite this rule names.
+
 ### 2026-09-03 — Usability audit: two missing interfaces shipped, content/marketing status checked
 Same session as the outage fix below, continued: Aaron asked for a broader pass -- missing interfaces, general improvement, content gaps, and getting the site found and used. Audited the app page by page rather than guessing at what "lacking interfaces" meant.
 
