@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 const TERMS = [
   { term: "7-OH (7-hydroxymitragynine)", def: "A compound found in and derived from kratom, sold in concentrated form in some products. It's the substance this community is centered around recovering from." },
   { term: "Kratom", def: "A plant whose leaves are used to make various products, including concentrated 7-OH extracts." },
+  { term: "MGM-15 / MGM-16", def: "Newer, lab-modified derivatives of 7-OH, sometimes sold as \"kratom extract\" even though they're semi-synthetic. The DEA moved to schedule them alongside 7-OH in 2026." },
   { term: "Withdrawal", def: "The physical and mental symptoms that can happen when a substance your body adjusted to is stopped or reduced." },
   { term: "Taper", def: "Gradually reducing use over time rather than stopping all at once. Just Another Friend does not provide taper plans or dosing guidance — talk to a doctor about whether tapering makes sense for you." },
   { term: "Stage room", def: "A chat space grouped by where someone is in their process — Preparing, Day 1, Day 2–3, Day 4–7, Week 2+, or Maintaining recovery." },

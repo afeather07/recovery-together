@@ -78,6 +78,26 @@ const RESOURCES = [
     title: "The 7-OH ban: what changes, and what doesn't",
     description: "A plain-language look at the 2026 scheduling and state bans, and what actually matters if you're stopping.",
   },
+  {
+    href: "/resources/mgm-15-and-mgm-16",
+    title: "What are MGM-15 and MGM-16?",
+    description: "The newer semi-synthetic kratom-derived compounds the DEA scheduled alongside 7-OH in 2026.",
+  },
+  {
+    href: "/resources/suboxone-and-mat",
+    title: "Suboxone and medication-assisted treatment",
+    description: "What MAT is, in plain terms, and questions worth bringing to a doctor -- not a recommendation to take anything.",
+  },
+  {
+    href: "/resources/paying-for-treatment",
+    title: "Paying for treatment",
+    description: "How insurance coverage for detox and rehab generally works, and free tools to find covered options.",
+  },
+  {
+    href: "/resources/detoxing-at-home",
+    title: "Detoxing at home: what's actually safe, and when it's not",
+    description: "Honest risk factors and when medical supervision matters more -- not a taper plan.",
+  },
 ];
 
 export default function ResourcesPage() {
