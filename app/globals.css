@@ -101,6 +101,25 @@ textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible {
 .trust-strip strong { display: block; font-size: 15px; }
 .trust-strip span { color: var(--muted); font-size: 12px; }
 
+/* Homepage news strip -- a distinct, scrollable band (not another card),
+   so real-time legal/news content reads as a different kind of thing than
+   the chat/resource cards around it. */
+.news-strip {
+  background: var(--ink); padding: 14px 20px; display: flex; align-items: center; gap: 14px;
+  overflow: hidden;
+}
+.news-strip .eyebrow { color: #a8c9bc; flex-shrink: 0; }
+.news-strip-items {
+  display: flex; gap: 28px; overflow-x: auto; scrollbar-width: none; flex: 1;
+}
+.news-strip-items::-webkit-scrollbar { display: none; }
+.news-strip-items a {
+  color: white; text-decoration: none; font-size: 13.5px; white-space: nowrap;
+  opacity: 0.85; border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 2px;
+}
+.news-strip-items a:hover { opacity: 1; }
+.news-strip-more { color: white; font-size: 12.5px; font-weight: 600; text-decoration: underline; flex-shrink: 0; white-space: nowrap; }
+
 .section { padding: 32px 20px; max-width: 640px; margin: 0 auto; }
 .section-heading h2 { font-size: 22px; margin: 6px 0 20px; }
 .steps { display: flex; flex-direction: column; gap: 16px; }
@@ -151,6 +170,16 @@ textarea, input, select { font-size: 16px; padding: 12px; border-radius: 10px; b
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 label { font-size: 13px; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
 .profile-result { background: var(--accent-soft); border-radius: 12px; padding: 14px; }
+.mic-btn {
+  align-self: flex-start; background: none; border: 1px solid var(--accent);
+  color: var(--accent); border-radius: 999px; padding: 8px 14px; font-size: 13px;
+  font-weight: 600; cursor: pointer; margin-top: -6px;
+}
+.mic-btn.listening { background: var(--danger); border-color: var(--danger); color: white; }
+.daily-prompt {
+  background: var(--accent-soft); color: var(--accent-deep); border-radius: var(--radius);
+  padding: 10px 14px; margin: 0; font-size: 13.5px; font-weight: 600;
+}
 
 @media (min-width: 720px) {
   .hero-actions { flex-direction: row; justify-content: center; }

@@ -329,3 +329,29 @@ create policy "news_items readable by anyone" on public.news_items
 
 grant select on public.news_items to anon, authenticated;
 grant all privileges on public.news_items to service_role;
+
+-- ---------------------------------------------------------------------------
+-- Opt-in featured posts for the homepage (2026-09-04)
+-- ---------------------------------------------------------------------------
+-- A member can choose to have their own post shown publicly on the
+-- homepage. Explicit, per-post, revocable consent -- never scraped from
+-- elsewhere, never shown unless the author themselves opted in (see
+-- PROJECT_BRIEF.md's "never fake activity" rule, which this respects by
+-- only ever surfacing real, consented content).
+alter table public.posts add column if not exists is_featured boolean not null default false;
+
+create policy "posts update own" on public.posts
+  for update using (auth.uid() = author_id) with check (auth.uid() = author_id);
+grant update on public.posts to authenticated;
+
+-- Logged-out homepage visitors (Postgres role "anon", no session yet) can
+-- read only rows a member explicitly marked featured -- nothing else.
+create policy "featured posts readable by anyone" on public.posts
+  for select using (is_featured = true);
+grant select on public.posts to anon;
+
+create policy "profiles of featured posts readable by anyone" on public.profiles
+  for select using (
+    exists (select 1 from public.posts p where p.author_id = profiles.id and p.is_featured = true)
+  );
+grant select on public.profiles to anon;
