@@ -6,6 +6,8 @@ type Profile = { id: string; nickname: string; avatar_seed: string };
 type ReplyRow = { id: string; post_id: string; author_id: string; body: string; created_at: string };
 type PostRow = { id: string; room_id: string; author_id: string; body: string; created_at: string };
 
+const EPOCH = "1970-01-01T00:00:00Z";
+
 export default function RoomView({ slug }: { slug: string }) {
   const supabase = useMemo(() => createClient(), []);
   const [userId, setUserId] = useState<string | null>(null);
@@ -19,6 +21,11 @@ export default function RoomView({ slug }: { slug: string }) {
   const [notice, setNotice] = useState("");
   const [showEmailPrompt, setShowEmailPrompt] = useState(false);
   const [emailDraft, setEmailDraft] = useState("");
+  // Snapshot of "when I was last actually here," captured before this visit
+  // overwrites it below -- lets a crowded room highlight exactly which of my
+  // posts got a reply since then, instead of making someone scan everything.
+  const [seenBefore, setSeenBefore] = useState<string | null>(null);
+  const [jumpIndex, setJumpIndex] = useState(0);
 
   useEffect(() => {
     let channel: ReturnType<typeof supabase.channel> | null = null;
@@ -69,6 +76,16 @@ export default function RoomView({ slug }: { slug: string }) {
       }
 
       setLoading(false);
+
+      // Read the previous visit before overwriting it -- this is the
+      // baseline "New reply" highlighting compares against below.
+      const { data: existingVisit } = await supabase
+        .from("room_visits")
+        .select("last_seen_at")
+        .eq("user_id", userData.user.id)
+        .eq("room_id", roomRow.id)
+        .maybeSingle();
+      setSeenBefore(existingVisit?.last_seen_at || EPOCH);
 
       // Record this visit so a return trip to the home screen can compute
       // "N new replies since you were last here" for this room.
@@ -169,6 +186,27 @@ export default function RoomView({ slug }: { slug: string }) {
     setReplies((prev) => prev.filter((r) => r.id !== replyId));
   }
 
+  // Posts of mine that got a reply since my last visit here -- the thing
+  // Aaron flagged: in a crowded room these are otherwise indistinguishable
+  // from every other post, so scanning for "did anyone answer me" doesn't
+  // scale. Ordered by post position so "jump to next" moves top to bottom.
+  const myUnreadPostIds = seenBefore
+    ? posts
+        .filter(
+          (p) =>
+            p.author_id === userId &&
+            replies.some((r) => r.post_id === p.id && r.author_id !== userId && r.created_at > seenBefore)
+        )
+        .map((p) => p.id)
+    : [];
+
+  function jumpToUnread() {
+    if (!myUnreadPostIds.length) return;
+    const targetId = myUnreadPostIds[jumpIndex % myUnreadPostIds.length];
+    document.getElementById(`post-${targetId}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setJumpIndex((i) => (i + 1) % myUnreadPostIds.length);
+  }
+
   if (loading) return <main className="section">Loading room…</main>;
   if (!room) return <main className="section">Room not found. <a href="/">Go back</a>.</main>;
 
@@ -178,11 +216,33 @@ export default function RoomView({ slug }: { slug: string }) {
       <h1>{room.name}</h1>
       {notice && <p style={{ color: "var(--accent)" }}>{notice}</p>}
 
+      {myUnreadPostIds.length > 0 && (
+        <button
+          onClick={jumpToUnread}
+          className="primary-btn full"
+          style={{ position: "sticky", top: 8, zIndex: 5, marginTop: 12 }}
+        >
+          {myUnreadPostIds.length === 1
+            ? "Someone replied to you ↓"
+            : `${myUnreadPostIds.length} new replies to you ↓ (${(jumpIndex % myUnreadPostIds.length) + 1}/${myUnreadPostIds.length})`}
+        </button>
+      )}
+
       <div className="chat-card" style={{ marginTop: 16 }}>
         <div className="messages">
           {posts.length === 0 && <p style={{ color: "var(--muted)" }}>No posts yet. Be the first to check in.</p>}
           {posts.map((post) => (
-            <div key={post.id} style={{ borderBottom: "1px solid #eee", paddingBottom: 12 }}>
+            <div
+              key={post.id}
+              id={`post-${post.id}`}
+              style={{
+                borderBottom: "1px solid #eee",
+                paddingBottom: 12,
+                ...(myUnreadPostIds.includes(post.id)
+                  ? { background: "var(--accent-soft, #eef6f2)", borderLeft: "3px solid var(--accent)", paddingLeft: 9, marginLeft: -12, paddingTop: 8 }
+                  : {}),
+              }}
+            >
               <div className="message">
                 <span className="avatar">{profiles[post.author_id]?.avatar_seed || "?"}</span>
                 <div style={{ flex: 1 }}>
