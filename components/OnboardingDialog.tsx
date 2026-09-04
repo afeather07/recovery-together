@@ -13,6 +13,40 @@ export default function OnboardingDialog() {
   const [loading, setLoading] = useState(false);
   const [entering, setEntering] = useState(false);
   const [error, setError] = useState("");
+  const [listening, setListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
+
+  // Browser speech-to-text (Chrome, Safari, Edge) -- no server, no cost,
+  // nothing sent anywhere until the person chooses to submit. The intake
+  // copy already says "speak or type"; this makes that literally true
+  // instead of just a textarea with no way to actually speak.
+  function toggleListening() {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) return;
+
+    if (listening) {
+      recognitionRef.current?.stop();
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.continuous = true;
+    recognition.onresult = (event: any) => {
+      let transcript = "";
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      setStory((prev) => (prev ? prev.trim() + " " : "") + transcript);
+    };
+    recognition.onend = () => setListening(false);
+    recognition.onerror = () => setListening(false);
+    recognitionRef.current = recognition;
+    recognition.start();
+    setListening(true);
+  }
 
   function open() {
     setReady(false);
@@ -128,6 +162,16 @@ export default function OnboardingDialog() {
             value={story}
             onChange={(e) => setStory(e.target.value)}
           />
+          {typeof window !== "undefined" &&
+            ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition) && (
+              <button
+                type="button"
+                onClick={toggleListening}
+                className={listening ? "mic-btn listening" : "mic-btn"}
+              >
+                {listening ? "● Listening… tap to stop" : "🎤 Or tap to speak instead"}
+              </button>
+            )}
 
           <div className="grid-2">
             <label>

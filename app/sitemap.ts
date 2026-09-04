@@ -18,6 +18,7 @@ const ROUTES = [
   "/resources/glossary",
   "/resources/faq",
   "/resources/is-7-oh-the-same-as-kratom",
+  "/resources/is-7-oh-an-opioid",
   "/resources/7-oh-ban-what-changes",
   "/safety",
   "/start-here",

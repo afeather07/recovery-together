@@ -1,7 +1,57 @@
+"use client";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import OnboardingDialog from "@/components/OnboardingDialog";
+import { createClient } from "@/lib/supabase/client";
+
+type FeaturedPost = { id: string; body: string; created_at: string; nickname: string };
+type NewsItem = { id: string; title: string; url: string; source: string | null };
+
+function snippet(body: string) {
+  return body.length > 220 ? body.slice(0, 220).trim() + "…" : body;
+}
 
 export default function MarketingHome() {
+  const [featured, setFeatured] = useState<FeaturedPost[]>([]);
+  const [news, setNews] = useState<NewsItem[]>([]);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase
+      .from("news_items")
+      .select("id, title, url, source")
+      .order("published_at", { ascending: false, nullsFirst: false })
+      .limit(3)
+      .then(({ data }) => setNews(data || []));
+    // No session needed -- "featured posts readable by anyone" is a public
+    // RLS policy scoped to only rows a member explicitly opted into sharing
+    // (see supabase/schema.sql). Real voices, real consent, nothing scraped.
+    supabase
+      .from("posts")
+      .select("id, body, created_at, author_id")
+      .eq("is_featured", true)
+      .order("created_at", { ascending: false })
+      .limit(6)
+      .then(async ({ data: posts }) => {
+        if (!posts?.length) return;
+        const authorIds = Array.from(new Set(posts.map((p) => p.author_id)));
+        const { data: profiles } = await supabase
+          .from("profiles")
+          .select("id, nickname")
+          .in("id", authorIds);
+        const nameById: Record<string, string> = {};
+        (profiles || []).forEach((p) => (nameById[p.id] = p.nickname));
+        setFeatured(
+          posts.map((p) => ({
+            id: p.id,
+            body: snippet(p.body),
+            created_at: p.created_at,
+            nickname: nameById[p.author_id] || "Someone",
+          }))
+        );
+      });
+  }, []);
+
   return (
     <>
       <main id="top">
@@ -32,6 +82,22 @@ export default function MarketingHome() {
           <div><strong>Simple</strong><span>Low cognitive load</span></div>
           <div><strong>Human</strong><span>People who understand</span></div>
         </section>
+
+        {news.length > 0 && (
+          <section className="news-strip" aria-label="Recent news">
+            <span className="eyebrow">In the news</span>
+            <div className="news-strip-items">
+              {news.map((n) => (
+                <a key={n.id} href={n.url} target="_blank" rel="noopener noreferrer">
+                  {n.title}
+                </a>
+              ))}
+            </div>
+            <Link href="/updates" className="news-strip-more">
+              See all updates →
+            </Link>
+          </section>
+        )}
 
         <section className="section" id="how-it-works">
           <div className="section-heading">
@@ -92,6 +158,28 @@ export default function MarketingHome() {
             </p>
           </div>
         </section>
+
+        {featured.length > 0 && (
+          <section className="section real-voices">
+            <div className="section-heading">
+              <span className="eyebrow">Real, not staged</span>
+              <h2>Voices from the community</h2>
+            </div>
+            <p className="hero-copy" style={{ textAlign: "left", fontSize: 15 }}>
+              Real check-ins, shared here only because that member chose to —
+              nothing on this site is ever pulled from elsewhere or shown
+              without someone's own OK.
+            </p>
+            <div className="recap-list">
+              {featured.map((p) => (
+                <div key={p.id} className="recap-item">
+                  <strong>{p.nickname}</strong>
+                  <span>{p.body}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         <section className="section welcome-section">
           <div className="section-heading">

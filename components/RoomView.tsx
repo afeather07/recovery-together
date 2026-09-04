@@ -2,10 +2,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { STAGE_CONTEXT, STAGE_RESOURCE } from "@/lib/stage-resource";
+import { todaysPrompt } from "@/lib/daily-prompt";
 
 type Profile = { id: string; nickname: string; avatar_seed: string };
 type ReplyRow = { id: string; post_id: string; author_id: string; body: string; created_at: string };
-type PostRow = { id: string; room_id: string; author_id: string; body: string; created_at: string };
+type PostRow = { id: string; room_id: string; author_id: string; body: string; created_at: string; is_featured?: boolean };
 
 const EPOCH = "1970-01-01T00:00:00Z";
 
@@ -218,6 +219,18 @@ export default function RoomView({ slug }: { slug: string }) {
     setTimeout(() => setNotice(""), 4000);
   }
 
+  async function toggleFeatured(postId: string, currentlyFeatured: boolean) {
+    const next = !currentlyFeatured;
+    setPosts((prev) => prev.map((p) => (p.id === postId ? { ...p, is_featured: next } : p)));
+    await supabase.from("posts").update({ is_featured: next }).eq("id", postId);
+    setNotice(
+      next
+        ? "Shared. This may appear (with your nickname) on the homepage."
+        : "Removed from the homepage."
+    );
+    setTimeout(() => setNotice(""), 4000);
+  }
+
   async function deletePost(postId: string) {
     if (!confirm("Delete this check-in? This can't be undone.")) return;
     await supabase.from("posts").delete().eq("id", postId);
@@ -306,12 +319,20 @@ export default function RoomView({ slug }: { slug: string }) {
                   <p>{post.body}</p>
                   <div style={{ display: "flex", gap: 12 }}>
                     {post.author_id === userId ? (
-                      <button
-                        onClick={() => deletePost(post.id)}
-                        style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
-                      >
-                        Delete
-                      </button>
+                      <>
+                        <button
+                          onClick={() => deletePost(post.id)}
+                          style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
+                        >
+                          Delete
+                        </button>
+                        <button
+                          onClick={() => toggleFeatured(post.id, !!post.is_featured)}
+                          style={{ background: "none", border: "none", color: post.is_featured ? "var(--accent)" : "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
+                        >
+                          {post.is_featured ? "✓ Shared on homepage" : "Share on homepage"}
+                        </button>
+                      </>
                     ) : (
                       <button
                         onClick={() => { setReporting({ targetType: "post", targetId: post.id }); setReportReason(""); }}
@@ -371,9 +392,10 @@ export default function RoomView({ slug }: { slug: string }) {
       </div>
 
       <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 8 }}>
+        <p className="daily-prompt">Today's prompt: {todaysPrompt()}</p>
         <textarea
           rows={3}
-          placeholder="Check in with this room..."
+          placeholder="Check in with this room... (or just answer today's prompt above)"
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
         />
