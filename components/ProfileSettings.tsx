@@ -173,7 +173,7 @@ export default function ProfileSettings() {
           </button>
         </div>
         <p style={{ fontSize: 13, color: "var(--muted)", margin: "8px 0 0" }}>
-          Optional. We&apos;ll only email you a batched summary if someone replies to you — never your posts or replies themselves, and never shared with anyone. Clear the field and save to turn this off at any time.
+          Optional. We&apos;ll only ever email you to say someone replied — never the actual message, and this address is never sold, traded, or shared with anyone for any reason. Clear the field and save to turn this off at any time.
         </p>
       </div>
 

@@ -30,7 +30,7 @@ export default function PrivacyPage() {
       <ul>
         <li>A real name or photo, kept in a separate, private table only you can read — never shown to other members.</li>
         <li>A general location, if you volunteer it.</li>
-        <li>An email address, only if you opt in after your first post, used solely to notify you of replies. This is stored separately from your public profile and is never shown to other members.</li>
+        <li>An email address, only if you opt in after your first post, used solely to notify you that someone replied. Stored separately from your public profile, never shown to other members, and never sold, traded, rented, or shared with any third party for any reason — the only thing it's ever used for is telling you "someone replied."</li>
       </ul>
 
       <h2>What we don&apos;t collect</h2>

@@ -411,8 +411,9 @@ export default function RoomView({ slug }: { slug: string }) {
       {showEmailPrompt && (
         <div className="stage-confirm" style={{ marginTop: 16 }}>
           <p>
-            Want us to email you if someone replies? Totally optional -- we'll never
-            require this or share it.
+            Want us to email you if someone replies? Totally optional. We'll
+            only ever use it to say "someone replied" -- never sold, traded,
+            or shared with anyone, for any reason.
           </p>
           <div className="stage-confirm-actions">
             <input
