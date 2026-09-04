@@ -212,6 +212,18 @@ Recovery isn't a single room, it's a path through several. The model: a person h
 
 ---
 
+## Scope expansion: broader substance-recovery hub (approved 2026-09-04, in progress)
+
+Aaron's direction: grow this from a 7-OH/kratom-specific community into a hub covering opiates, 7-OH, MGM-15, MGM-16, kratom, and other substances "eventually" — including content on treatment options, insurance, home detox, and medication-assisted treatment (Suboxone). He also wants monetization explored.
+
+**What shipped immediately (2026-09-04):** MGM-15/MGM-16 aren't a scope expansion at all — they're the same 7-OH compound family the DEA scheduled in the same 2026 action, same audience, same withdrawal pattern. Added a resource page and glossary entries. Also added, staying within existing `PRINCIPLES.md` guardrails (general/educational, never individualized advice, never medication dosing): a Suboxone/MAT explainer, a paying-for-treatment page (insurance basics, free neutral tools like findtreatment.gov, no specific facility recommendations), and an honest home-detox risk-factors page (not a taper plan).
+
+**What's deliberately not done yet: broadening to opiates generally and "other substances."** That's a bigger brand/scope call than MGM-15/16 — different substances carry different risk profiles (fentanyl's overdose risk isn't 7-OH's), and the room/stage model, safety copy, and community identity were all built around this specific population. Treat "eventually" as exactly that: a real direction, not something to execute by inference from one line in a chat. Revisit with Aaron once the current expansion (content only, same population) has actually shipped and been used.
+
+**Monetization: paid rehab/detox/suboxone-doctor advertising or referral placement — explicitly declined, not silently and not permanently.** This is a federal criminal law problem, not a judgment call: the Eliminating Kickbacks in Recovery Act (18 U.S.C. § 220) criminalizes accepting payment in exchange for referring people to addiction treatment providers, applies to all payers, carries up to 10 years/$200k-per-occurrence, and is being actively enforced (a 2025 Ninth Circuit ruling strengthened it). It exists specifically to kill the business model of a site getting paid by specific treatment providers to be visible to people searching for help — precisely what was proposed. Separately, "rapid detox" advertising carries its own clinical-safety flag (documented deaths, criticized by addiction medicine as not evidence-based for many patients) independent of the legal issue. Recommended path instead: generic, non-curated display advertising (Google AdSense / Ezoic-style networks) — no relationship with specific providers, no per-referral fee, standard and legal, the same model legitimate health-content sites use. Needs Aaron to create the ad-network account; revenue will be small until traffic grows. Do not build a pay-for-placement/referral system without Aaron first getting sign-off from an actual healthcare compliance attorney — this is a "legal partnership" decision reserved for Aaron per this file's "Aaron's responsibilities" section, not a technical one.
+
+---
+
 ## Future integration: Founder OS Dashboard data source (post-MVP — non-blocking)
 
 Just Another Friend will not build its own dashboard. Instead, whenever a separate "Founder OS Dashboard" gets built later, Just Another Friend should already be positioned to feed it clean, stable, read-only data — project/engineering status, deployment status, and operational/community health — without needing heavy new engineering at that point. Nothing in this section affects the current MVP or launch timeline.
