@@ -48,9 +48,20 @@ export default function OnboardingDialog() {
     setListening(true);
   }
 
+  // A suggested nickname so nobody faces a blank field (tap-before-type,
+  // research-B rule #1). One tap rerolls; typing over it works too.
+  const ADJECTIVES = ["steady", "quiet", "warm", "gentle", "calm", "still", "slow", "soft", "early", "patient"];
+  const NOUNS = ["river", "harbor", "willow", "ember", "meadow", "lantern", "dawn", "cedar", "moss", "tide"];
+  function suggestNickname() {
+    const a = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
+    const n = NOUNS[Math.floor(Math.random() * NOUNS.length)];
+    return `${a}${n}`;
+  }
+
   function open() {
     setReady(false);
     setError("");
+    if (!nickname.trim()) setNickname(suggestNickname());
     dialogRef.current?.showModal();
   }
 
@@ -139,6 +150,10 @@ export default function OnboardingDialog() {
           className="intake"
           onSubmit={(e) => e.preventDefault()}
         >
+          <div className="modal-dots" aria-hidden="true">
+            <span className={!ready ? "active" : ""} />
+            <span className={ready ? "active" : ""} />
+          </div>
           <div className="dialog-top">
             <div>
               <span className="eyebrow">Find your group</span>
@@ -173,27 +188,43 @@ export default function OnboardingDialog() {
               </button>
             )}
 
-          <div className="grid-2">
-            <label>
-              Nickname
+          <div className="field">
+            <span className="field-label" id="stage-label">Where are you right now? Tap one.</span>
+            <div className="chip-row" role="radiogroup" aria-labelledby="stage-label">
+              {STAGE_OPTIONS.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  role="radio"
+                  aria-checked={stage === s}
+                  className={stage === s ? "chip selected" : "chip"}
+                  onClick={() => setStage(s)}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <label>
+            Nickname — we picked one, change it if you like
+            <div className="nickname-row">
               <input
                 type="text"
                 placeholder="Anonymous is fine"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
               />
-            </label>
-            <label>
-              Current stage
-              <select value={stage} onChange={(e) => setStage(e.target.value)}>
-                {STAGE_OPTIONS.map((s) => (
-                  <option key={s} value={s}>
-                    {s}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
+              <button
+                type="button"
+                className="secondary-btn"
+                aria-label="Suggest a different nickname"
+                onClick={() => setNickname(suggestNickname())}
+              >
+                ↻
+              </button>
+            </div>
+          </label>
 
           {error && <p style={{ color: "var(--danger)", fontSize: 13 }}>{error}</p>}
 

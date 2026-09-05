@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { SITE_URL } from "@/lib/site";
+import { ROUTES, INDEXNOW_KEY } from "@/lib/routes";
 
 const RESEND_API_URL = "https://api.resend.com/emails";
 const FROM_ADDRESS =
@@ -90,6 +91,30 @@ async function refreshNews(supabase: ReturnType<typeof createAdminClient>) {
   return allItems.length;
 }
 
+// IndexNow: tells Bing, Yandex, Seznam, Naver (and everything that reads
+// Bing's index -- DuckDuckGo, Yahoo, Ecosia, several AI search products)
+// about every public URL. Keyless, free, no account. Google doesn't
+// participate; that still needs Search Console (Aaron's login). Resubmitting
+// the full list daily is harmless -- the endpoint dedupes.
+async function submitIndexNow() {
+  if (!SITE_URL.startsWith("https://")) return 0;
+  try {
+    const res = await fetch("https://api.indexnow.org/indexnow", {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify({
+        host: new URL(SITE_URL).host,
+        key: INDEXNOW_KEY,
+        keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
+        urlList: ROUTES.map((r) => `${SITE_URL}${r}`),
+      }),
+    });
+    return res.ok ? ROUTES.length : 0;
+  } catch {
+    return 0;
+  }
+}
+
 // Daily digest of reply notifications, plus at most one non-judgmental
 // re-engagement email per person. Runs once a day (Vercel Hobby cron
 // limit), which conveniently matches the design decision to batch
@@ -125,6 +150,7 @@ export async function GET(req: NextRequest) {
   // gate below -- it's free (no API key, no AI call) and is its own
   // feature, not part of the notification system.
   const newsFetched = await refreshNews(supabase);
+  const indexNowSubmitted = await submitIndexNow();
 
   if (
     process.env.EMAIL_NOTIFICATIONS_ENABLED !== "true" ||
@@ -134,6 +160,7 @@ export async function GET(req: NextRequest) {
       skipped: true,
       reason: "email notifications not enabled",
       newsFetched,
+      indexNowSubmitted,
     });
   }
 
@@ -221,5 +248,5 @@ export async function GET(req: NextRequest) {
     reengagementsSent += 1;
   }
 
-  return NextResponse.json({ digestsSent, reengagementsSent, newsFetched });
+  return NextResponse.json({ digestsSent, reengagementsSent, newsFetched, indexNowSubmitted });
 }
