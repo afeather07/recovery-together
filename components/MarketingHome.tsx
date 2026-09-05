@@ -66,6 +66,7 @@ export default function MarketingHome() {
             Join a calm, anonymous community of people preparing to stop, currently
             stopping, or recovering from 7-OH and concentrated kratom products.
           </p>
+          <div className="blob" aria-hidden="true" />
           <div className="hero-actions">
             <OnboardingDialog />
             <a className="secondary-btn" href="#how-it-works">How it works</a>
@@ -108,7 +109,7 @@ export default function MarketingHome() {
             <article>
               <span className="step-number">1</span>
               <h3>Tell us where you are</h3>
-              <p>Speak or type. A simple intake turns your story into a basic anonymous profile.</p>
+              <p>Tap your stage, type a few words, or just speak. No account, no email, under a minute.</p>
             </article>
             <article>
               <span className="step-number">2</span>
@@ -138,18 +139,9 @@ export default function MarketingHome() {
               <span className="status-dot example-dot">Example</span>
             </div>
             <div className="messages">
-              <div className="message">
-                <span className="avatar">J</span>
-                <div><strong>Jay</strong><p>Hour 38. I finally ate half a banana.</p></div>
-              </div>
-              <div className="message">
-                <span className="avatar">M</span>
-                <div><strong>MaybeTomorrow</strong><p>That counts. I'm going to try soup next.</p></div>
-              </div>
-              <div className="message">
-                <span className="avatar">A</span>
-                <div><strong>Anonymous</strong><p>I just needed somewhere to say I'm still here.</p></div>
-              </div>
+              <div className="bubble"><span className="who">Jay</span><p>Hour 38. I finally ate half a banana.</p></div>
+              <div className="bubble me"><span className="who">MaybeTomorrow</span><p>That counts. I&apos;m going to try soup next.</p></div>
+              <div className="bubble"><span className="who">Anonymous</span><p>I just needed somewhere to say I&apos;m still here.</p></div>
             </div>
             <p className="preview-caption">
               This community is brand new — these are example messages showing how a room

@@ -1,42 +1,12 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
-
-const ROUTES = [
-  "",
-  "/7oh-withdrawal",
-  "/explore",
-  "/journey",
-  "/resources",
-  "/updates",
-  "/resources/withdrawal-timeline",
-  "/resources/sleep",
-  "/resources/hydration-nutrition",
-  "/resources/anxiety-and-panic",
-  "/resources/mental-health-and-cravings",
-  "/resources/exercise-and-movement",
-  "/resources/when-to-seek-professional-help",
-  "/resources/glossary",
-  "/resources/faq",
-  "/resources/is-7-oh-the-same-as-kratom",
-  "/resources/is-7-oh-an-opioid",
-  "/resources/mgm-15-and-mgm-16",
-  "/resources/suboxone-and-mat",
-  "/resources/paying-for-treatment",
-  "/resources/detoxing-at-home",
-  "/resources/7-oh-ban-what-changes",
-  "/safety",
-  "/start-here",
-  "/founder-story",
-  "/about",
-  "/contact",
-  "/community-guidelines",
-  "/privacy",
-  "/terms",
-];
+import { ROUTES, LAST_CONTENT_UPDATE } from "@/lib/routes";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return ROUTES.map((route) => ({
     url: `${SITE_URL}${route}`,
-    lastModified: new Date(),
+    // /updates genuinely changes daily (news cron); everything else only
+    // when content is edited.
+    lastModified: route === "/updates" ? new Date() : LAST_CONTENT_UPDATE,
   }));
 }

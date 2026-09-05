@@ -304,31 +304,25 @@ export default function RoomView({ slug }: { slug: string }) {
             <div
               key={post.id}
               id={`post-${post.id}`}
-              style={{
-                borderBottom: "1px solid #eee",
-                paddingBottom: 12,
-                ...(myUnreadPostIds.includes(post.id)
-                  ? { background: "var(--accent-soft, #eef6f2)", borderLeft: "3px solid var(--accent)", paddingLeft: 9, marginLeft: -12, paddingTop: 8 }
-                  : {}),
-              }}
+              className={myUnreadPostIds.includes(post.id) ? "post-divider post-unread" : "post-divider"}
             >
-              <div className={post.author_id === userId ? "message message-own" : "message"}>
-                <span className={post.author_id === userId ? "avatar avatar-own" : "avatar"}>{profiles[post.author_id]?.avatar_seed || "?"}</span>
-                <div style={{ flex: 1 }}>
-                  <strong>{profiles[post.author_id]?.nickname || "Someone"}{post.author_id === userId ? " (you)" : ""}</strong>
+              <div className="post-block">
+                <div className={post.author_id === userId ? "bubble me" : "bubble"}>
+                  <span className="who">{profiles[post.author_id]?.nickname || "Someone"}{post.author_id === userId ? " (you)" : ""}</span>
                   <p>{post.body}</p>
-                  <div style={{ display: "flex", gap: 12 }}>
+                </div>
+                <div>
+                  <div className="post-actions">
                     {post.author_id === userId ? (
                       <>
                         <button
                           onClick={() => deletePost(post.id)}
-                          style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
-                        >
+                          >
                           Delete
                         </button>
                         <button
                           onClick={() => toggleFeatured(post.id, !!post.is_featured)}
-                          style={{ background: "none", border: "none", color: post.is_featured ? "var(--accent)" : "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
+                          className={post.is_featured ? "active" : ""}
                         >
                           {post.is_featured ? "✓ Shared on homepage" : "Share on homepage"}
                         </button>
@@ -336,7 +330,6 @@ export default function RoomView({ slug }: { slug: string }) {
                     ) : (
                       <button
                         onClick={() => { setReporting({ targetType: "post", targetId: post.id }); setReportReason(""); }}
-                        style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
                       >
                         Report
                       </button>
@@ -348,25 +341,24 @@ export default function RoomView({ slug }: { slug: string }) {
                 </div>
               </div>
 
-              <div style={{ marginLeft: 38, marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
+              <div className="reply-thread">
                 {replies.filter((r) => r.post_id === post.id).map((reply) => (
-                  <div className={reply.author_id === userId ? "message message-own" : "message"} key={reply.id}>
-                    <span className={reply.author_id === userId ? "avatar avatar-own" : "avatar"}>{profiles[reply.author_id]?.avatar_seed || "?"}</span>
-                    <div style={{ flex: 1 }}>
-                      <strong>{profiles[reply.author_id]?.nickname || "Someone"}{reply.author_id === userId ? " (you)" : ""}</strong>
+                  <div className="reply-block" key={reply.id}>
+                    <div className={reply.author_id === userId ? "bubble me" : "bubble"}>
+                      <span className="who">{profiles[reply.author_id]?.nickname || "Someone"}{reply.author_id === userId ? " (you)" : ""}</span>
                       <p>{reply.body}</p>
+                    </div>
+                    <div className="post-actions">
                       {reply.author_id === userId ? (
                         <button
                           onClick={() => deleteReply(reply.id)}
-                          style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
-                        >
+                          >
                           Delete
                         </button>
                       ) : (
                         <button
                           onClick={() => { setReporting({ targetType: "reply", targetId: reply.id }); setReportReason(""); }}
-                          style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 12, cursor: "pointer", padding: 0 }}
-                        >
+                          >
                           Report
                         </button>
                       )}
@@ -376,7 +368,7 @@ export default function RoomView({ slug }: { slug: string }) {
                     </div>
                   </div>
                 ))}
-                <div style={{ display: "flex", gap: 8 }}>
+                <div className="reply-row">
                   <input
                     placeholder="Reply..."
                     value={replyDraft[post.id] || ""}
