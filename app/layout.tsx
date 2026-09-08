@@ -64,6 +64,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        {/* Warms the font connection early. globals.css @imports Google
+            Fonts (next/font fetches at build time, which this project's
+            build sandbox can't reach); display=swap means text paints in
+            the fallback immediately either way. */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
