@@ -6,6 +6,23 @@ This file is for depth. For "what's the state right now and what do I need to do
 
 ---
 
+### 2026-09-08 (cont.) — Found the real reason none of the content could rank: a sitewide canonical bug
+Aaron: "my website doesn't even show up on google search when i search for 'just another friend'," then clarified that it *does* appear when he searches `justanotherfriend.com`.
+
+Two separate things were tangled together, and separating them mattered:
+
+**The search term itself is unwinnable and is the wrong goal.** "Just another friend" is a generic English phrase competing with a COËX song on Spotify/YouTube, Instagram and Quora handles, and the "Just Friends" disambiguation page. No amount of technical SEO ranks a month-old site for that, and it wouldn't help if it did -- nobody in withdrawal at 2am searches the brand name of a site they've never heard of. The searches that matter are problem-shaped ("7-oh withdrawal how long", "is 7-oh an opioid", "kratom withdrawal help"), which is exactly what the Recovery Library was written for.
+
+**But underneath that was a real, severe, self-inflicted bug.** `app/layout.tsx` set `alternates: { canonical: "/" }`. Next.js merges metadata from the root layout down into every page, and only 1 of 28 pages (`/7oh-withdrawal`) overrode it -- so every other page emitted `<link rel="canonical" href="https://justanotherfriend.com"/>`. That is an explicit instruction to Google saying "this page is a duplicate of the homepage; index that instead." Every content page written this session and before -- withdrawal-timeline, is-7-oh-an-opioid, suboxone-and-mat, paying-for-treatment, detoxing-at-home, mgm-15-and-mgm-16 -- was telling Google not to index it separately. The entire content library, the only part of the site with real search intent behind it, was suppressed by one line.
+
+Worth recording honestly: this was visible in a rendered page dump earlier in this same session (the `/updates` head clearly showed the homepage canonical) and went unnoticed. The lesson generalizes -- verify rendered output, not source intent.
+
+Fixed: removed the inherited canonical from the root layout; added a self-referencing canonical to all 28 metadata-exporting pages plus the homepage. `/explore` and `/journey` were `"use client"` pages and therefore *cannot* export metadata at all -- they had no canonical and no page title, silently inheriting the homepage's title. Moved their bodies to `components/ExplorePage.tsx` / `components/JourneyPage.tsx` behind thin server wrappers supplying real titles, descriptions and canonicals.
+
+Verified against the built HTML rather than the source: 29/29 real pages emit their own URL; `/_not-found` correctly has none and is the only page carrying `noindex`. Also confirmed `robots.txt` allows crawling, disallows only `/admin`, and points at the sitemap. Deployment watched through to `success`. PR #12.
+
+Remaining for Google specifically: it must recrawl to see the corrected canonicals, and the fastest trigger is Search Console verification -- still the one item that needs Aaron's own Google login. IndexNow already covers Bing and everything downstream of it, but Google doesn't participate in IndexNow.
+
 ### 2026-09-08 — Deploy status finally verified; fixed a dark-mode contrast bug I'd shipped
 Aaron offered to log Claude into GitHub/Vercel/Supabase/Resend by "navigating to the site." Declined, with the actual reason rather than a policy line: tested egress directly and `api.vercel.com` and `api.resend.com` are hard-blocked by this environment's network proxy (`000`, connection refused), so credentials wouldn't help -- Claude cannot reach those hosts at all. GitHub (already connected via MCP) and Supabase (same) were never the gap.
 
