@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/is-7-oh-an-opioid" },
   title: "Is 7-OH an opioid?",
   description: "Whether concentrated 7-OH counts as an opioid, why its withdrawal can feel like opiate withdrawal, and what that means if you're stopping.",
 };

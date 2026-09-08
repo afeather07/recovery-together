@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/withdrawal-timeline" },
   title: "What withdrawal can look like",
   description: "A general, non-clinical picture of how 7-OH and kratom withdrawal symptoms tend to change over the first weeks.",
 };

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/about" },
   title: "About",
   description: "Why Just Another Friend exists and how it's run.",
 };

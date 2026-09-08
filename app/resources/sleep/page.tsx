@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/sleep" },
   title: "Sleep during recovery",
   description: "Why sleep gets so hard during early recovery, and gentle things that can help.",
 };

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/mgm-15-and-mgm-16" },
   title: "What are MGM-15 and MGM-16?",
   description: "What MGM-15 and MGM-16 are, how they relate to 7-OH and kratom, and why the DEA moved on them alongside 7-OH in 2026.",
 };

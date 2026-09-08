@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/mental-health-and-cravings" },
   title: "Mental health & cravings",
   description: "Mood swings, anxiety, and cravings are common in recovery — what tends to help, and when to get more support.",
 };

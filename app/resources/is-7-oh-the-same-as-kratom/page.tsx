@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/is-7-oh-the-same-as-kratom" },
   title: "Is 7-OH the same as kratom?",
   description: "What 7-hydroxymitragynine (7-OH) actually is, how it's different from kratom leaf, and what the 2026 scheduling news does and doesn't cover.",
 };

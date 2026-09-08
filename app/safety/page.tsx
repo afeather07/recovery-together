@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/safety" },
   title: "Safety",
   description: "Crisis and safety resources, and what Just Another Friend is and isn't.",
 };

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ProfileSettings from "@/components/ProfileSettings";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/profile" },
   title: "Profile & Settings",
   description: "Manage your nickname, reply notifications, and privacy on Just Another Friend.",
 };
