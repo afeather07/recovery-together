@@ -6,6 +6,21 @@ This file is for depth. For "what's the state right now and what do I need to do
 
 ---
 
+### 2026-09-08 — Deploy status finally verified; fixed a dark-mode contrast bug I'd shipped
+Aaron offered to log Claude into GitHub/Vercel/Supabase/Resend by "navigating to the site." Declined, with the actual reason rather than a policy line: tested egress directly and `api.vercel.com` and `api.resend.com` are hard-blocked by this environment's network proxy (`000`, connection refused), so credentials wouldn't help -- Claude cannot reach those hosts at all. GitHub (already connected via MCP) and Supabase (same) were never the gap.
+
+**But the deploy question turned out to be answerable after all, and the previous session's "unverifiable" claim was wrong.** `api.github.com` returns 200 from this sandbox, the repo is public, and Vercel's GitHub integration writes deployment records and commit statuses back to GitHub. Querying `/commits/main/status` returned `"state": "success"`, `"context": "Vercel"`, `"description": "Deployment has completed"` for `ac3fcca` -- the Quiet Dawn redesign merge -- dated 2026-09-05 04:16 UTC. Walked the last eight deployments: all `success`, no failures (the `inactive` entries are just superseded older builds, which is normal). So Vercel is correctly wired to `main` and has been deploying every merge this whole time. Recorded the exact curl command in `FOUNDER_ACTION_ITEMS.md` so no future session repeats the "can't verify" dead end.
+
+That also resolves Aaron's original complaint honestly: the site *wasn't* visibly different when he looked, because the earlier passes were genuinely subtle (a shadow/elevation pass, not a redesign) and the real redesign hadn't merged yet at that moment. Nothing was broken.
+
+**Then reviewed the redesign's own output and found a real accessibility bug in it.** In the dark-mode token block, `--accent-deep` had been set *darker* than `--accent` (#5B7BE6 vs #7C9CFF). That token does double duty -- text on dark surfaces, and a filled background for the room-context card -- and `.primary-btn` paired `background: var(--accent)` with a hardcoded `color: white`, landing around 2.3:1 contrast. That fails WCAG AA outright, on a product whose stated core user is exhausted and reading at 3am; shipping a redesign that made the main call-to-action harder to read would have been worse than not redesigning.
+
+Fixed at the token layer rather than component by component: `--accent-deep` is now defined as "the readable text shade against `--bg` and `--accent-soft`" -- darker in light mode, lighter (`#AFC3FF`) in dark -- and two new tokens, `--accent-ink` and `--danger-ink`, carry text that sits *on* a filled accent/danger surface (white in light, near-black in dark). Every hardcoded `color: white` on a filled surface now reads from those: primary button, room button, room-context card, unread badge, safety icon, listening mic button, skip link. Because chips, step numbers, the daily prompt, links, and bubble attribution all already consumed `--accent-deep`, they corrected automatically. Audited the remaining `white` / `#fff` / `rgba(255,255,255,…)` matches -- all legitimate (the light-mode dark news band, and `white-space: nowrap` false positives).
+
+Also caught two smaller things in the same review: `.post-block` and `.reply-block` were introduced during the redesign's markup restructure and never given any CSS (unstyled block divs -- functional, but no deliberate spacing), and there were no font preconnect hints. Both added. Verified no orphaned `.message` / `.avatar` references survived the avatar removal.
+
+Verified: `tsc --noEmit` clean, `npm run build` clean, 40/40 pages. PR #10 merged.
+
 ### 2026-09-05 — Redesign applied (Quiet Dawn + Night Anchor), IndexNow, and an honest deploy correction
 Aaron asked three things: why the site doesn't look different, whether it looks and performs as well as it could, and to make it a genuine resource that "shows up everywhere," ethically.
 
