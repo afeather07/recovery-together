@@ -3,6 +3,7 @@ import Link from "next/link";
 import { createRouteClient } from "@/lib/supabase/route";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/updates" },
   title: "News & Legal Updates",
   description:
     "Recent news on 7-OH and kratom legality, bans, and scheduling — refreshed automatically every day from public news sources.",

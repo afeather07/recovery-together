@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/detoxing-at-home" },
   title: "Detoxing at home: what's actually safe, and when it's not",
   description: "Honest, general information about home detox risk factors and when medical supervision matters more -- not a taper plan or step-by-step instructions.",
 };

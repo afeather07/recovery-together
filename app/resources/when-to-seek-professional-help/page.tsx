@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/when-to-seek-professional-help" },
   title: "When to seek professional help",
   description: "Clear, non-alarmist guidance on when peer support isn't enough and it's time to involve a doctor or emergency care.",
 };

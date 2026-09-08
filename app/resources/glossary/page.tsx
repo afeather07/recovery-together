@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/glossary" },
   title: "Glossary",
   description: "Plain-language definitions for terms used on Just Another Friend and in recovery spaces generally.",
 };

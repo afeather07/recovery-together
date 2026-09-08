@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/7-oh-ban-what-changes" },
   title: "The 7-OH ban: what changes, and what doesn't",
   description: "A plain-language look at the 2026 7-OH scheduling and state bans — what they cover, what they don't, and what actually matters if you're stopping.",
 };

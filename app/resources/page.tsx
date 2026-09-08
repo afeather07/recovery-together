@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources" },
   title: "Recovery Library",
   description:
     "Plain-language recovery resources: withdrawal timelines, sleep, hydration and nutrition, mental health, exercise, when to seek professional help, a glossary, and FAQ.",

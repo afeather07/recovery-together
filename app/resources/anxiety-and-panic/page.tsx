@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/anxiety-and-panic" },
   title: "Anxiety & panic",
   description: "What panic can feel like during withdrawal, how to tell it apart from a medical emergency, and grounding techniques that can help.",
 };

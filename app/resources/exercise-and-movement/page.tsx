@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/exercise-and-movement" },
   title: "Exercise & movement",
   description: "Why gentle movement can help during recovery, and how to approach it on days when energy is low.",
 };

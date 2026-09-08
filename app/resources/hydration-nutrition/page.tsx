@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/hydration-nutrition" },
   title: "Hydration & nutrition",
   description: "Small, doable steps for days when eating and drinking feel impossible.",
 };

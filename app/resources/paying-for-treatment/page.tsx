@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/paying-for-treatment" },
   title: "Paying for treatment: does insurance cover detox or rehab?",
   description: "How insurance coverage for detox and rehab generally works, and free tools to find covered options -- no specific facility recommendations, no referrals.",
 };

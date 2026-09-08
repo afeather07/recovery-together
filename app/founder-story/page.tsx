@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/founder-story" },
   title: "Founder Story",
   description: "Why the founder of Just Another Friend built this.",
 };

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EduBadge from "@/components/EduBadge";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/suboxone-and-mat" },
   title: "Suboxone and medication-assisted treatment: what to ask your doctor",
   description: "What medication-assisted treatment (like Suboxone) is, in plain terms, and the questions worth bringing to a doctor -- not a recommendation to take anything.",
 };
