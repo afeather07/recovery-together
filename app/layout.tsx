@@ -15,6 +15,13 @@ export const metadata: Metadata = {
     template: "%s — Just Another Friend",
   },
   description: DESCRIPTION,
+  // Google Search Console ownership. Both supported methods are in place so
+  // either can verify independently: this meta tag, and the HTML file at
+  // public/google44ad8b7d236fc248.html. Neither is a secret -- both are
+  // published on the live site by design.
+  verification: {
+    google: "M6whianN8UbqL0-WrG5mr3p3Knjr0GMlcZH7Nvn_1DM",
+  },
   openGraph: {
     title: "Just Another Friend",
     description: "You do not have to go through this alone.",
